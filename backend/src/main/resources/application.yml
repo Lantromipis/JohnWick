@@ -1,2 +1,26 @@
-greeting:
-  message: "hello"
+quarkus:
+  http:
+    root-path: /api/v1
+    auth:
+      basic: true
+  datasource:
+    db-kind: postgresql
+    username:
+    password:
+    jdbc:
+      url: jdbc:postgresql://localhost:5432/johnwick
+  flyway:
+    migrate-at-start: true
+
+"%dev":
+  quarkus:
+    datasource:
+      db-kind: postgresql
+      username: postgres
+      password: postgres
+      jdbc:
+        url: jdbc:postgresql://localhost:5432/johnwick
+    flyway:
+      clean-at-start: true
+    log:
+      level: INFO

@@ -6,10 +6,6 @@ import {
   Drawer,
   IconButton,
   List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
   Menu,
   MenuItem,
   Toolbar,
@@ -21,9 +17,16 @@ import AssignmentIcon from "@mui/icons-material/Assignment";
 import { Link, useNavigate } from "react-router-dom";
 import {
   LOGIN_PAGE_PATH,
+  MANAGE_ORDERS_PAGE_PATH,
   MANAGE_USERS_PAGE_PATH,
 } from "../constants/route.constants.ts";
 import { AccountCircle } from "@mui/icons-material";
+import AccessControlComponent from "../components/menu/access-control.component.tsx";
+import DrawerPageLinkListItem from "../components/menu/drawer-page-link-list-item.componetn.tsx";
+import { useDispatch, useSelector } from "react-redux";
+import { selectCurrentUserRole } from "../store/current-user/current-user.selectors.ts";
+import { AUTHORIZATION_HEADER_STORAGE_KEY } from "../constants/local-storage.constant.ts";
+import { clearCurrentUser } from "../store/current-user/current-user.slice.ts";
 
 type MainLayoutProps = {
   children: ReactNode;
@@ -37,6 +40,9 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
   const [accountMenuAnchorEl, setAccountMenuAnchorAnchorEl] =
     useState<null | HTMLElement>(null);
 
+  const currentUserRole = useSelector(selectCurrentUserRole);
+  const dispatch = useDispatch();
+
   const handleAccountMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAccountMenuAnchorAnchorEl(event.currentTarget);
   };
@@ -47,7 +53,8 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
 
   const handleAccountMenuLogout = () => {
     handleAccountMenuClose();
-    //TODO logout
+    localStorage.removeItem(AUTHORIZATION_HEADER_STORAGE_KEY);
+    dispatch(clearCurrentUser());
     navigate(LOGIN_PAGE_PATH);
   };
 
@@ -111,28 +118,20 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
       >
         <Toolbar />
         <Divider />
-        <List>
-          <ListItem>
-            <ListItemButton
-              onClick={() => {
-                navigate(MANAGE_USERS_PAGE_PATH);
-              }}
-            >
-              <ListItemIcon>
-                <SupervisedUserCircleIcon />
-              </ListItemIcon>
-              <ListItemText>Manage users</ListItemText>
-            </ListItemButton>
-          </ListItem>
-          <ListItem>
-            <ListItemButton>
-              <ListItemIcon>
-                <AssignmentIcon />
-              </ListItemIcon>
-              <ListItemText>Manage orders</ListItemText>
-            </ListItemButton>
-          </ListItem>
-        </List>
+        <AccessControlComponent showFor="admin" role={currentUserRole}>
+          <List>
+            <DrawerPageLinkListItem
+              label="Manage users"
+              pageLink={MANAGE_USERS_PAGE_PATH}
+              icon={<SupervisedUserCircleIcon />}
+            />
+            <DrawerPageLinkListItem
+              label="Manage orders"
+              pageLink={MANAGE_ORDERS_PAGE_PATH}
+              icon={<AssignmentIcon />}
+            />
+          </List>
+        </AccessControlComponent>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <Toolbar />

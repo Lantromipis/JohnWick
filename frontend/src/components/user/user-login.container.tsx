@@ -2,19 +2,38 @@ import React, { FC, memo, useCallback } from "react";
 import { Alert, Avatar, Paper, Stack, Typography } from "@mui/material";
 import UserLoginForm from "./forms/user-login-from.component.tsx";
 import { SubmitHandler } from "react-hook-form";
-import { UserLoginFormModel } from "../../models/user.model.ts";
+import { UserLoginFormModel, UserStateModel } from "../../models/user.model.ts";
 import { LockOutlined } from "@mui/icons-material";
+import { currentUserApi } from "../../store/current-user/current-user.api.ts";
+import { AUTHORIZATION_HEADER_STORAGE_KEY } from "../../constants/local-storage.constant.ts";
+import { useNavigate } from "react-router-dom";
+import { HOME_PAGE_PATH } from "../../constants/route.constants.ts";
+import { useDispatch } from "react-redux";
+import { setCurrentUser } from "../../store/current-user/current-user.slice.ts";
 
 type UserLoginContainerProps = {};
 
 const UserLoginContainer: FC<UserLoginContainerProps> = () => {
   const [loginError, setLoginError] = React.useState<boolean>(false);
+  const [getCurrentUser, getCurrenUserResponse] =
+    currentUserApi.useLazyGetCurrentUserInfoQuery();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit: SubmitHandler<UserLoginFormModel> = useCallback(
-    (data) => {
-      // TODO long
-      setLoginError(true);
-      console.log(data);
+    async (formData) => {
+      setLoginError(false);
+      let auth = btoa(`${formData.username}:${formData.password}`);
+      localStorage.setItem(AUTHORIZATION_HEADER_STORAGE_KEY, auth);
+      try {
+        await getCurrentUser().unwrap();
+        let model = getCurrenUserResponse.data as UserStateModel;
+        dispatch(setCurrentUser(model));
+        navigate(HOME_PAGE_PATH);
+      } catch (err) {
+        localStorage.removeItem(AUTHORIZATION_HEADER_STORAGE_KEY);
+        setLoginError(true);
+      }
     },
     [],
   );
@@ -44,7 +63,10 @@ const UserLoginContainer: FC<UserLoginContainerProps> = () => {
             Incorrect username or password provided
           </Alert>
         )}
-        <UserLoginForm onSubmit={handleSubmit} loading={false} />
+        <UserLoginForm
+          onSubmit={handleSubmit}
+          loading={getCurrenUserResponse.isFetching}
+        />
       </Stack>
     </Paper>
   );

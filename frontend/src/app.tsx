@@ -1,27 +1,41 @@
-import { CssBaseline, Typography } from "@mui/material";
-import MainLayout from "./layouts/main.layout.tsx";
+import { CssBaseline } from "@mui/material";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import LoginPage from "./pages/login.page.tsx";
+import HomePage from "./pages/home.page.tsx";
+import MangeUsersPage from "./pages/manage-users.page.tsx";
+import {
+  LOGIN_PAGE_PATH,
+  MANAGE_ORDERS_PAGE_PATH,
+  MANAGE_USERS_PAGE_PATH,
+} from "./constants/route.constants.ts";
+import { Provider } from "react-redux";
+import { persistor, store } from "./store/store.tsx";
+import ManageOrdersPage from "./pages/manage-orders.page.tsx";
+import { PersistGate } from "redux-persist/integration/react";
 
 function App() {
   return (
     <>
       <CssBaseline />
-      <MainLayout>
-        <Typography>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus
-          dolor purus non enim praesent elementum facilisis leo vel. Risus at
-          ultrices mi tempus imperdiet. Semper risus in hendrerit gravida rutrum
-          quisque non tellus. Convallis convallis tellus id interdum velit
-          laoreet id donec ultrices. Odio morbi quis commodo odio aenean sed
-          adipiscing. Amet nisl suscipit adipiscing bibendum est ultricies
-          integer quis. Cursus euismod quis viverra nibh cras. Metus vulputate
-          eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo
-          quis imperdiet massa tincidunt. Cras tincidunt lobortis feugiat
-          vivamus at augue. At augue eget arcu dictum varius duis at consectetur
-          lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa sapien
-          faucibus et molestie ac.
-        </Typography>
-      </MainLayout>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path={LOGIN_PAGE_PATH} element={<LoginPage />} />
+              <Route
+                path={MANAGE_USERS_PAGE_PATH}
+                element={<MangeUsersPage />}
+              />
+              <Route
+                path={MANAGE_ORDERS_PAGE_PATH}
+                element={<ManageOrdersPage />}
+              />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </BrowserRouter>
+        </PersistGate>
+      </Provider>
     </>
   );
 }

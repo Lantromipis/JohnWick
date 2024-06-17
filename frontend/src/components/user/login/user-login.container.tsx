@@ -1,18 +1,18 @@
 import React, { FC, memo, useCallback } from "react";
 import { Alert, Avatar, Paper, Stack, Typography } from "@mui/material";
-import UserLoginForm from "./forms/user-login.form.tsx";
+import UserLoginForm from "./user-login.form.tsx";
 import { SubmitHandler } from "react-hook-form";
 import {
   CurrentUserStateModel,
   UserLoginFormModel,
-} from "../../models/user.model.ts";
+} from "../../../models/user.model.ts";
 import { LockOutlined } from "@mui/icons-material";
-import { currentUserApi } from "../../store/current-user/current-user.api.ts";
-import { AUTHORIZATION_HEADER_STORAGE_KEY } from "../../constants/local-storage.constant.ts";
+import { currentUserApi } from "../../../store/current-user/current-user.api.ts";
+import { AUTHORIZATION_HEADER_STORAGE_KEY } from "../../../constants/local-storage.constant.ts";
 import { useNavigate } from "react-router-dom";
-import { HOME_PAGE_PATH } from "../../constants/route.constants.ts";
+import { HOME_PAGE_PATH } from "../../../constants/route.constants.ts";
 import { useDispatch } from "react-redux";
-import { setCurrentUser } from "../../store/current-user/current-user.slice.ts";
+import { setCurrentUser } from "../../../store/current-user/current-user.slice.ts";
 
 type UserLoginContainerProps = {};
 

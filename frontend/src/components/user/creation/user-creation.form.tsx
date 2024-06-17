@@ -49,7 +49,7 @@ const UserCreationForm: FC<CreateUserFormProps> = ({ onSubmit }) => {
       noValidate
       id={USER_CREATION_FORM_ID}
     >
-      <Stack direction={"column"} spacing={3} sx={{ minWidth: "400px" }}>
+      <Stack direction={"column"} spacing={3} sx={{ minWidth: "500px" }}>
         <Controller
           name="displayName"
           control={control}
@@ -57,6 +57,7 @@ const UserCreationForm: FC<CreateUserFormProps> = ({ onSubmit }) => {
           render={({ field }) => (
             <TextField
               {...field}
+              required
               variant="outlined"
               label="Display name"
               error={!!errors.displayName}
@@ -71,6 +72,7 @@ const UserCreationForm: FC<CreateUserFormProps> = ({ onSubmit }) => {
           render={({ field }) => (
             <TextField
               {...field}
+              required
               variant="outlined"
               label="Username"
               error={!!errors.username}
@@ -111,6 +113,7 @@ const UserCreationForm: FC<CreateUserFormProps> = ({ onSubmit }) => {
           render={({ field }) => (
             <TextField
               {...field}
+              required
               variant="outlined"
               error={!!errors.password}
               helperText={errors.password?.message}
@@ -133,6 +136,7 @@ const UserCreationForm: FC<CreateUserFormProps> = ({ onSubmit }) => {
           render={({ field }) => (
             <TextField
               {...field}
+              required
               variant="outlined"
               error={!!errors.retypedPassword}
               helperText={errors.retypedPassword?.message}

@@ -20,6 +20,11 @@ export interface UserCreateFormModel {
   role: UserRole;
 }
 
+export interface UserChangePasswordFormModel {
+  password: string;
+  retypedPassword: string;
+}
+
 // dto
 export interface UserDtoModel {
   displayName: string;
@@ -28,6 +33,11 @@ export interface UserDtoModel {
 }
 
 export interface UserWithPasswordDtoModel extends UserDtoModel {
+  password: string;
+}
+
+export interface UserChangePasswordDtoModel {
+  username: string;
   password: string;
 }
 

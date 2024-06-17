@@ -10,10 +10,10 @@ import {
 } from "@mui/material";
 import { PersonAdd } from "@mui/icons-material";
 import { SubmitHandler } from "react-hook-form";
-import { UserCreateFormModel } from "../../models/user.model.ts";
-import { userApi } from "../../store/user/user.api.ts";
-import UserCreationForm from "./forms/user-creation.form.tsx";
-import { USER_CREATION_FORM_ID } from "../../constants/form.constants.ts";
+import { UserCreateFormModel } from "../../../models/user.model.ts";
+import { userApi } from "../../../store/user/user.api.ts";
+import UserCreationForm from "./user-creation.form.tsx";
+import { USER_CREATION_FORM_ID } from "../../../constants/form.constants.ts";
 
 type UserCreationContainerProps = {};
 
@@ -59,13 +59,14 @@ const UserCreationContainer: FC<UserCreationContainerProps> = () => {
         variant="outlined"
         onClick={handleDialogOpen}
         startIcon={<PersonAdd />}
+        sx={{ width: "200px" }}
       >
         Create new user
       </Button>
       <Dialog open={dialogOpen} onClose={handleDialogClose}>
         <DialogTitle>Create new user</DialogTitle>
         <DialogContent>
-          <Stack spacing={2} sx={{ paddingTop: "10px", minHeight: "570px" }}>
+          <Stack spacing={2} sx={{ paddingTop: "10px" }}>
             {creationError && (
               <Alert severity="error">
                 Failed to create user. Please try again.

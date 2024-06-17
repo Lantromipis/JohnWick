@@ -9,6 +9,7 @@ import { AUTHORIZATION_HEADER_STORAGE_KEY } from "../constants/local-storage.con
 import { setCommonHeaders } from "./store.utils.ts";
 import { REDIRECT_TO_LOGIN_API_BLACKLIST } from "../constants/store.contants.ts";
 import { clearCurrentUser } from "./current-user/current-user.slice.ts";
+import { LOGIN_PAGE_PATH } from "../constants/route.constants.ts";
 
 const baseQuery = fetchBaseQuery({
   prepareHeaders: (headers) => setCommonHeaders(headers),
@@ -31,6 +32,7 @@ const baseQueryWithRedirectIfUnauthorized: BaseQueryFn<
   ) {
     localStorage.removeItem(AUTHORIZATION_HEADER_STORAGE_KEY);
     api.dispatch(clearCurrentUser);
+    window.location.href = LOGIN_PAGE_PATH;
   }
   return result;
 };

@@ -1,7 +1,6 @@
 package ru.ifmo.se.johnwick.rest;
 
 import io.quarkus.elytron.security.common.BcryptUtil;
-import io.quarkus.panache.common.Page;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -23,9 +22,8 @@ public class UserResource {
     UserMapper userMapper;
 
     @GET
-    public Collection<UserDto> getUsers(@QueryParam("limit") @DefaultValue("0") int limit,
-                                        @QueryParam("offset") @DefaultValue("10") int offset) {
-        Collection<UserEntity> entityCollection = UserEntity.findByPage(Page.of(offset, limit));
+    public Collection<UserDto> getUsers() {
+        Collection<UserEntity> entityCollection = UserEntity.findAll().list();
         return userMapper.mapEntitiesToDtos(entityCollection);
     }
 

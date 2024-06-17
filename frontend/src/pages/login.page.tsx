@@ -1,6 +1,6 @@
 import { FC, memo } from "react";
 import { Stack, Typography, useTheme } from "@mui/material";
-import UserLoginContainer from "../components/user/user-login.container.tsx";
+import UserLoginContainer from "../components/user/login/user-login.container.tsx";
 import LoginLayout from "../layouts/login.layout.tsx";
 
 type LoginPageProps = {};

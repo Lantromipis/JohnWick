@@ -7,6 +7,7 @@ import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.SecurityContext;
+import ru.ifmo.se.johnwick.constant.ApiConstant;
 import ru.ifmo.se.johnwick.entity.UserEntity;
 import ru.ifmo.se.johnwick.mapper.UserMapper;
 import ru.ifmo.se.johnwick.model.PasswordInput;
@@ -15,7 +16,7 @@ import ru.ifmo.se.johnwick.model.UserInput;
 
 import java.util.Collection;
 
-@Path("/user")
+@Path(ApiConstant.API_V1 + "/user")
 @RolesAllowed("ADMIN")
 public class UserResource {
     @Inject

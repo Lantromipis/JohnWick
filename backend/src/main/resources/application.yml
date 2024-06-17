@@ -1,6 +1,5 @@
 quarkus:
   http:
-    root-path: /api/v1
     auth:
       basic: true
   datasource:

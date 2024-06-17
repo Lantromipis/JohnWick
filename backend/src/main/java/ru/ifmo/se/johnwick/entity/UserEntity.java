@@ -10,10 +10,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 import ru.ifmo.se.johnwick.model.Role;
 
 import java.util.Collection;
 
+@Getter
+@Setter
 @Entity
 @UserDefinition
 @Table(name = "application_user")
@@ -31,17 +35,9 @@ public class UserEntity extends BasicEntity {
     @Column(name = "role", nullable = false)
     private Role role;
 
-    public Role getRole() {
-        return role;
-    }
-
     @Roles
     public String getRoleString() {
-        return role.getString();
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
+        return role.name();
     }
 
     @Password
@@ -49,25 +45,9 @@ public class UserEntity extends BasicEntity {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
-    }
-
     @Username
     public String getUsername() {
         return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public static UserEntity findByUsername(String username) {

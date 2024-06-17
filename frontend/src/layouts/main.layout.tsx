@@ -27,6 +27,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentUserRole } from "../store/current-user/current-user.selectors.ts";
 import { AUTHORIZATION_HEADER_STORAGE_KEY } from "../constants/local-storage.constant.ts";
 import { clearCurrentUser } from "../store/current-user/current-user.slice.ts";
+import { UserRole } from "../models/user.model.ts";
 
 type MainLayoutProps = {
   children: ReactNode;
@@ -40,7 +41,7 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
   const [accountMenuAnchorEl, setAccountMenuAnchorAnchorEl] =
     useState<null | HTMLElement>(null);
 
-  const currentUserRole = useSelector(selectCurrentUserRole);
+  const currentUserRole: UserRole = useSelector(selectCurrentUserRole);
   const dispatch = useDispatch();
 
   const handleAccountMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -118,7 +119,7 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
       >
         <Toolbar />
         <Divider />
-        <AccessControlComponent showFor="admin" role={currentUserRole}>
+        <AccessControlComponent showFor={UserRole.ADMIN} role={currentUserRole}>
           <List>
             <DrawerPageLinkListItem
               label="Manage users"

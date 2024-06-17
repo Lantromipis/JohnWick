@@ -5,12 +5,7 @@ import io.quarkus.panache.common.Page;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.PUT;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.SecurityContext;
 import ru.ifmo.se.johnwick.entity.UserEntity;
@@ -28,8 +23,8 @@ public class UserResource {
     UserMapper userMapper;
 
     @GET
-    public Collection<UserDto> getUsers(@QueryParam("limit") int limit,
-                                        @QueryParam("offset") int offset) {
+    public Collection<UserDto> getUsers(@QueryParam("limit") @DefaultValue("0") int limit,
+                                        @QueryParam("offset") @DefaultValue("10") int offset) {
         Collection<UserEntity> entityCollection = UserEntity.findByPage(Page.of(offset, limit));
         return userMapper.mapEntitiesToDtos(entityCollection);
     }

@@ -1,10 +1,22 @@
 CREATE TABLE application_user
 (
     id BIGSERIAL PRIMARY KEY,
-    username VARCHAR(255) UNIQUE NOT NULL,
-    display_name VARCHAR(255) NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    role VARCHAR(255) NOT NULL
+    username TEXT UNIQUE NOT NULL,
+    display_name TEXT NOT NULL,
+    password TEXT NOT NULL,
+    role TEXT NOT NULL
+);
+
+CREATE TABLE application_order
+(
+    id BIGSERIAL PRIMARY KEY,
+    type TEXT NOT NULL,
+    assignee_id BIGINT REFERENCES application_user(id),
+    debtor_id BIGINT REFERENCES application_user(id),
+    customer TEXT NOT NULL,
+    target TEXT,
+    price BIGINT NOT NULL,
+    description TEXT
 );
 
 INSERT INTO application_user (username, display_name, password, role) VALUES

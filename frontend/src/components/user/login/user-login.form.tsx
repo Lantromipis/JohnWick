@@ -33,6 +33,7 @@ const UserLoginForm: FC<UserLoginFormProps> = ({ onSubmit, loading }) => {
           render={({ field }) => (
             <TextField
               {...field}
+              required
               variant="outlined"
               label="Username"
               error={!!errors.username}
@@ -47,6 +48,7 @@ const UserLoginForm: FC<UserLoginFormProps> = ({ onSubmit, loading }) => {
           render={({ field }) => (
             <TextField
               {...field}
+              required
               variant="outlined"
               error={!!errors.password}
               helperText={errors.password?.message}

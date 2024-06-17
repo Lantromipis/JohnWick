@@ -1,13 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { UserStateModel } from "../../models/user.model.ts";
+import { CurrentUserStateModel } from "../../models/user.model.ts";
 
-const initialState = {} as UserStateModel;
+const initialState = {} as CurrentUserStateModel;
 
 export const currentUserSlice = createSlice({
   name: "currentUser",
   initialState: initialState,
   reducers: {
-    setCurrentUser: (state, { payload }: PayloadAction<UserStateModel>) => {
+    setCurrentUser: (
+      state,
+      { payload }: PayloadAction<CurrentUserStateModel>,
+    ) => {
       return { ...state, ...payload };
     },
     clearCurrentUser: () => initialState,

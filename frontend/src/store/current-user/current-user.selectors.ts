@@ -1,7 +1,7 @@
-import { UserStateModel } from "../../models/user.model.ts";
+import { CurrentUserStateModel } from "../../models/user.model.ts";
 import { RootState } from "../store.tsx";
 
-const selectCurrentUser: (state: RootState) => UserStateModel = (
+const selectCurrentUser: (state: RootState) => CurrentUserStateModel = (
   state: RootState,
 ) => state.currentUser;
 

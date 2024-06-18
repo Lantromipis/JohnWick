@@ -1,8 +1,8 @@
 import { UserDtoModel } from "./user.model.ts";
 
 export enum OrderType {
-  REGULAR = "DEFAULT",
-  PROMISSORY_NOTE = "BILL",
+  REGULAR = "REGULAR",
+  PROMISSORY_NOTE = "PROMISSORY_NOTE",
   HEAD_HUNT = "HEAD_HUNT",
 }
 
@@ -19,7 +19,7 @@ export interface OrderCreationFormModel {
 }
 
 export interface OrderSelectExecutorFormModel {
-  executorUsername: string;
+  selectedApplicationId: string;
 }
 
 // dto
@@ -45,4 +45,10 @@ export interface HeadHuntOrderDto extends BaseOrderDto {}
 
 export interface PromissoryNoteOrderDto extends BaseOrderDto {
   beneficiary: UserDtoModel;
+}
+
+export interface OrderApplicationDto {
+  id: string;
+  appliedKiller: UserDtoModel;
+  order: OrderDtoModel;
 }

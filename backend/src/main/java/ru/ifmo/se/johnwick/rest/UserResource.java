@@ -10,9 +10,9 @@ import jakarta.ws.rs.core.SecurityContext;
 import ru.ifmo.se.johnwick.constant.ApiConstant;
 import ru.ifmo.se.johnwick.entity.UserEntity;
 import ru.ifmo.se.johnwick.mapper.UserMapper;
-import ru.ifmo.se.johnwick.model.PasswordInput;
-import ru.ifmo.se.johnwick.model.UserDto;
-import ru.ifmo.se.johnwick.model.UserInput;
+import ru.ifmo.se.johnwick.model.input.PasswordInput;
+import ru.ifmo.se.johnwick.model.dto.UserDto;
+import ru.ifmo.se.johnwick.model.input.UserInput;
 
 import java.util.Collection;
 

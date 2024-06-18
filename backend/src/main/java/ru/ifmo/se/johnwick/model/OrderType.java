@@ -1,7 +1,7 @@
 package ru.ifmo.se.johnwick.model;
 
 public enum OrderType {
-    DEFAULT,
-    BILL,
+    REGULAR,
+    PROMISSORY_NOTE,
     HEAD_HUNT
 }

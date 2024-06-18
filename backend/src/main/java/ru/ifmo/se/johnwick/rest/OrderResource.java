@@ -17,12 +17,13 @@ import ru.ifmo.se.johnwick.entity.OrderEntity;
 import ru.ifmo.se.johnwick.entity.UserEntity;
 import ru.ifmo.se.johnwick.mapper.OrderApplicationMapper;
 import ru.ifmo.se.johnwick.mapper.OrderMapper;
-import ru.ifmo.se.johnwick.model.BillOrderInput;
-import ru.ifmo.se.johnwick.model.OrderApplicationDto;
-import ru.ifmo.se.johnwick.model.OrderDto;
-import ru.ifmo.se.johnwick.model.OrderInput;
+import ru.ifmo.se.johnwick.model.input.HeadHuntOrderInput;
+import ru.ifmo.se.johnwick.model.input.PromissoryNoteOrderInput;
+import ru.ifmo.se.johnwick.model.dto.OrderApplicationDto;
+import ru.ifmo.se.johnwick.model.dto.OrderDto;
+import ru.ifmo.se.johnwick.model.input.OrderInput;
 import ru.ifmo.se.johnwick.model.OrderType;
-import ru.ifmo.se.johnwick.model.TargetOrderInput;
+import ru.ifmo.se.johnwick.model.input.RegularOrderInput;
 
 import java.util.Collection;
 
@@ -47,26 +48,26 @@ public class OrderResource {
         String username = sec.getUserPrincipal().getName();
         UserEntity userEntity = UserEntity.findByUsername(username);
 
-        Collection<OrderEntity> bills = OrderEntity.findBillsByDebtor(userEntity);
-        return orderMapper.entitiesToDtos(bills);
+        Collection<OrderEntity> promissoryNotes = OrderEntity.findPromissoryNotesByDebtor(userEntity);
+        return orderMapper.entitiesToDtos(promissoryNotes);
     }
 
     @GET
     @Path("/available")
     @RolesAllowed("KILLER")
     public Collection<OrderDto> getAvailableOrders() {
-        Collection<OrderEntity> bills = OrderEntity.findAvailableOrders();
-        return orderMapper.entitiesToDtos(bills);
+        Collection<OrderEntity> availableOrders = OrderEntity.findAvailableOrders();
+        return orderMapper.entitiesToDtos(availableOrders);
     }
 
     @PUT
     @Transactional
     @RolesAllowed("KILLER")
     @Path("/{orderId}/apply")
-    public OrderApplicationDto applyForDefaultOrder(@PathParam("orderId") long orderId,
+    public OrderApplicationDto applyForRegularOrder(@PathParam("orderId") long orderId,
                                                     @Context SecurityContext sec) {
         OrderEntity orderEntity = OrderEntity.findById(orderId);
-        if (!orderEntity.getType().equals(OrderType.DEFAULT)) {
+        if (!orderEntity.getType().equals(OrderType.REGULAR)) {
             throw new IllegalArgumentException();
         }
 
@@ -98,14 +99,11 @@ public class OrderResource {
     @POST
     @Transactional
     public OrderDto createOrder(OrderInput orderInput) {
-        OrderEntity entity;
-        if (orderInput instanceof TargetOrderInput) {
-            entity = orderMapper.mapInputToEntity((TargetOrderInput) orderInput);
-        } else if (orderInput instanceof BillOrderInput) {
-            entity = orderMapper.mapInputToEntity((BillOrderInput) orderInput);
-        } else {
-            throw new IllegalStateException();
-        }
+        OrderEntity entity = switch (orderInput.getType()) {
+            case REGULAR -> orderMapper.mapInputToEntity((RegularOrderInput) orderInput);
+            case PROMISSORY_NOTE -> orderMapper.mapInputToEntity((PromissoryNoteOrderInput) orderInput);
+            case HEAD_HUNT -> orderMapper.mapInputToEntity((HeadHuntOrderInput) orderInput);
+        };
 
         entity.persist();
         return orderMapper.entityToDto(entity);

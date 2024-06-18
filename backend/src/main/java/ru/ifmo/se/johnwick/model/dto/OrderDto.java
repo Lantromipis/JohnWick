@@ -1,4 +1,4 @@
-package ru.ifmo.se.johnwick.model;
+package ru.ifmo.se.johnwick.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;

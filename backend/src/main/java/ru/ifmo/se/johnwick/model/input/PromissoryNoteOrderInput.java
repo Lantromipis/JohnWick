@@ -1,10 +1,10 @@
-package ru.ifmo.se.johnwick.model;
+package ru.ifmo.se.johnwick.model.input;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class BillOrderInput extends OrderInput {
+public class PromissoryNoteOrderInput extends OrderInput {
     private String debtorUsername;
 }

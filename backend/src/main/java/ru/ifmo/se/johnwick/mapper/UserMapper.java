@@ -5,8 +5,8 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.Mappings;
 import ru.ifmo.se.johnwick.entity.UserEntity;
-import ru.ifmo.se.johnwick.model.UserDto;
-import ru.ifmo.se.johnwick.model.UserInput;
+import ru.ifmo.se.johnwick.model.dto.UserDto;
+import ru.ifmo.se.johnwick.model.input.UserInput;
 
 import java.util.Collection;
 

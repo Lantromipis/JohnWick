@@ -1,4 +1,4 @@
-package ru.ifmo.se.johnwick.model;
+package ru.ifmo.se.johnwick.model.input;
 
 import lombok.Data;
 

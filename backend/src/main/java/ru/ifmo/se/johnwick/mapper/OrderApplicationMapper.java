@@ -3,7 +3,7 @@ package ru.ifmo.se.johnwick.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import ru.ifmo.se.johnwick.entity.OrderApplicationEntity;
-import ru.ifmo.se.johnwick.model.OrderApplicationDto;
+import ru.ifmo.se.johnwick.model.dto.OrderApplicationDto;
 
 import java.util.Collection;
 

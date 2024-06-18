@@ -5,7 +5,8 @@ import lombok.Data;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Order {
+public class OrderDto {
+    private long id;
     private String type;
     private UserDto assignee;
     private UserDto debtor;
@@ -13,4 +14,5 @@ public class Order {
     private Long price;
     private String target;
     private String description;
+    private String canceled;
 }

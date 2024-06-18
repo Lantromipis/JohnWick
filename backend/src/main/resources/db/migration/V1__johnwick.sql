@@ -1,4 +1,4 @@
-CREATE TABLE application_user
+CREATE TABLE "user"
 (
     id BIGSERIAL PRIMARY KEY,
     username TEXT UNIQUE NOT NULL,
@@ -7,18 +7,26 @@ CREATE TABLE application_user
     role TEXT NOT NULL
 );
 
-CREATE TABLE application_order
+CREATE TABLE "order"
 (
     id BIGSERIAL PRIMARY KEY,
     type TEXT NOT NULL,
-    assignee_id BIGINT REFERENCES application_user(id),
-    debtor_id BIGINT REFERENCES application_user(id),
+    assignee_id BIGINT REFERENCES "user"(id),
+    debtor_id BIGINT REFERENCES "user"(id),
     customer TEXT NOT NULL,
     target TEXT,
     price BIGINT NOT NULL,
-    description TEXT
+    description TEXT,
+    canceled BOOLEAN NOT NULL DEFAULT FALSE
 );
 
-INSERT INTO application_user (username, display_name, password, role) VALUES
+CREATE TABLE order_application
+(
+    id BIGSERIAL PRIMARY KEY,
+    applied_killer_id BIGINT NOT NULL REFERENCES "user"(id),
+    order_id BIGINT NOT NULL REFERENCES "order"(id)
+);
+
+INSERT INTO "user" (username, display_name, password, role) VALUES
     ('admin', 'admin adminovich', '$2a$10$/FarO5LVt.6SAUGBlYf.8O0LQ0jgu5bE3t/y7w8mf8/HzVXn8m12G', 'ADMIN'),
     ('killer', 'killer killerovich', '$2a$10$PuLEUApJSoMxQ4vLNDnMSePfhOCdCc83U9W9P77OOTW/GxoJ0wefW', 'KILLER');

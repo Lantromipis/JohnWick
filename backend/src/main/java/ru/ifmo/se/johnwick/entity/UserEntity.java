@@ -20,7 +20,7 @@ import java.util.Collection;
 @Setter
 @Entity
 @UserDefinition
-@Table(name = "application_user")
+@Table(name = "\"user\"")
 public class UserEntity extends BasicEntity {
     @Column(name = "username", nullable = false, unique = true)
     private String username;

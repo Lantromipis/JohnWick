@@ -6,5 +6,5 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class PromissoryNoteOrderInput extends OrderInput {
-    private String debtorUsername;
+    private UsernameInput beneficiary;
 }

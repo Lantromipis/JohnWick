@@ -18,6 +18,7 @@ import ru.ifmo.se.johnwick.model.OrderType;
 })
 public abstract class OrderInput {
     private OrderType type;
+    private UsernameInput assignee;
     private String target;
     private String customer;
     private Long price;

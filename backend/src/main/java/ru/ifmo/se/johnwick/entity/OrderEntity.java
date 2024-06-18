@@ -11,6 +11,7 @@ import lombok.Getter;
 import lombok.Setter;
 import ru.ifmo.se.johnwick.model.OrderType;
 
+import java.time.Instant;
 import java.util.Collection;
 
 @Getter
@@ -22,13 +23,16 @@ public class OrderEntity extends BasicEntity {
     @Column(name = "type", nullable = false)
     private OrderType type;
 
+    @Column(name = "created_timestamp", nullable = false)
+    private Instant createdTimestamp;
+
     @ManyToOne
     @JoinColumn(name = "assignee_id")
     private UserEntity assignee;
 
     @ManyToOne
-    @JoinColumn(name = "debtor_id")
-    private UserEntity debtor;
+    @JoinColumn(name = "beneficiary_id")
+    private UserEntity beneficiary;
 
     @Column(name = "customer", nullable = false)
     private String customer;
@@ -49,12 +53,12 @@ public class OrderEntity extends BasicEntity {
         return find("canceled = false").list();
     }
 
-    public static Collection<OrderEntity> findBillsByDebtor(UserEntity entity) {
-        return find("canceled = false and type = ?1 and debtor = ?2", OrderType.BILL, entity).list();
+    public static Collection<OrderEntity> findPromissoryNotesByDebtor(UserEntity entity) {
+        return find("canceled = false and type = ?1 and debtor = ?2", OrderType.PROMISSORY_NOTE, entity).list();
     }
 
     public static Collection<OrderEntity> findAvailableOrders() {
-        return find("canceled = false and ( type = ?1 or (type = ?2 and assignee is null) )", OrderType.HEAD_HUNT, OrderType.DEFAULT).list();
+        return find("canceled = false and ( type = ?1 or (type = ?2 and assignee is null) )", OrderType.HEAD_HUNT, OrderType.REGULAR).list();
     }
 
     public static OrderEntity cancelOrderById(long id) {

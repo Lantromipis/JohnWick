@@ -1,8 +1,10 @@
 package ru.ifmo.se.johnwick.mapper;
 
+import org.mapstruct.InheritConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
+import org.mapstruct.Mappings;
 import ru.ifmo.se.johnwick.entity.OrderEntity;
 import ru.ifmo.se.johnwick.model.input.HeadHuntOrderInput;
 import ru.ifmo.se.johnwick.model.input.PromissoryNoteOrderInput;
@@ -18,7 +20,10 @@ public interface OrderMapper {
 
     OrderEntity mapInputToEntity(HeadHuntOrderInput input);
 
-    @Mapping(expression = "java( ru.ifmo.se.johnwick.entity.UserEntity.findByUsername(input.getDebtorUsername()) )", target = "debtor")
+    @Mappings({
+            @Mapping(expression = "java( ru.ifmo.se.johnwick.entity.UserEntity.findByUsername(input.getBeneficiary().getUsername()) )", target = "beneficiary"),
+            @Mapping(expression = "java( ru.ifmo.se.johnwick.entity.UserEntity.findByUsername(input.getAssignee().getUsername()) )", target = "assignee")
+    })
     OrderEntity mapInputToEntity(PromissoryNoteOrderInput input);
 
     OrderDto entityToDto(OrderEntity entity);

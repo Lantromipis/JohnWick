@@ -11,8 +11,9 @@ CREATE TABLE "order"
 (
     id BIGSERIAL PRIMARY KEY,
     type TEXT NOT NULL,
+    created_timestamp TIMESTAMP DEFAULT (now() AT TIME ZONE 'utc'),
     assignee_id BIGINT REFERENCES "user"(id),
-    debtor_id BIGINT REFERENCES "user"(id),
+    beneficiary_id BIGINT REFERENCES "user"(id),
     customer TEXT NOT NULL,
     target TEXT,
     price BIGINT NOT NULL,

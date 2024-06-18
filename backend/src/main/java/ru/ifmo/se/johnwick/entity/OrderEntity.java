@@ -16,7 +16,7 @@ import java.util.Collection;
 @Getter
 @Setter
 @Entity
-@Table(name = "application_order")
+@Table(name = "\"order\"")
 public class OrderEntity extends BasicEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)
@@ -42,11 +42,23 @@ public class OrderEntity extends BasicEntity {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "canceled", nullable = false)
+    private Boolean canceled = false;
+
+    public static Collection<OrderEntity> findNotCanceled() {
+        return find("canceled = false").list();
+    }
+
     public static Collection<OrderEntity> findBillsByDebtor(UserEntity entity) {
-        return find("type = ?1 and debtor = ?2", OrderType.BILL, entity).list();
+        return find("canceled = false and type = ?1 and debtor = ?2", OrderType.BILL, entity).list();
     }
 
     public static Collection<OrderEntity> findAvailableOrders() {
-        return find("type = ?1 or ( type = ?2 and assignee is null )", OrderType.HEAD_HUNT, OrderType.DEFAULT).list();
+        return find("canceled = false and ( type = ?1 or (type = ?2 and assignee is null) )", OrderType.HEAD_HUNT, OrderType.DEFAULT).list();
+    }
+
+    public static OrderEntity cancelOrderById(long id) {
+        update("canceled = true where id = ?1", id);
+        return findById(id);
     }
 }

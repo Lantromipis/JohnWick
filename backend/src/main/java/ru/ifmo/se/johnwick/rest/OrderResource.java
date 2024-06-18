@@ -48,7 +48,7 @@ public class OrderResource {
         String username = sec.getUserPrincipal().getName();
         UserEntity userEntity = UserEntity.findByUsername(username);
 
-        Collection<OrderEntity> promissoryNotes = OrderEntity.findPromissoryNotesByDebtor(userEntity);
+        Collection<OrderEntity> promissoryNotes = OrderEntity.findByAssignee(userEntity);
         return orderMapper.entitiesToDtos(promissoryNotes);
     }
 
@@ -86,6 +86,19 @@ public class OrderResource {
         OrderEntity orderEntity = OrderEntity.findById(orderId);
         Collection<OrderApplicationEntity> applications = OrderApplicationEntity.findByOrder(orderEntity);
         return orderApplicationMapper.entitiesToDtos(applications);
+    }
+
+    @PUT
+    @Transactional
+    @Path("/application/{applicationId}/choose")
+    public OrderDto chooseApplication(@PathParam("applicationId") long applicationId) {
+        OrderApplicationEntity orderApplicationEntity = OrderApplicationEntity.findById(applicationId);
+        OrderEntity orderEntity = orderApplicationEntity.getOrder();
+        UserEntity userEntity = orderApplicationEntity.getAppliedKiller();
+
+        orderEntity.setAssignee(userEntity);
+
+        return orderMapper.entityToDto(orderEntity);
     }
 
     @PUT

@@ -11,7 +11,7 @@ CREATE TABLE "order"
 (
     id BIGSERIAL PRIMARY KEY,
     type TEXT NOT NULL,
-    created_timestamp TIMESTAMP DEFAULT (now() AT TIME ZONE 'utc'),
+    created_timestamp TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     assignee_id BIGINT REFERENCES "user"(id),
     beneficiary_id BIGINT REFERENCES "user"(id),
     customer TEXT NOT NULL,
@@ -27,6 +27,11 @@ CREATE TABLE order_application
     applied_killer_id BIGINT NOT NULL REFERENCES "user"(id),
     order_id BIGINT NOT NULL REFERENCES "order"(id)
 );
+
+CREATE FUNCTION count_order_applications_by_order_id(_order_id BIGINT)
+RETURNS BIGINT AS '
+    SELECT COUNT(*) FROM order_application WHERE order_application.order_id = _order_id
+' LANGUAGE SQL;
 
 INSERT INTO "user" (username, display_name, password, role) VALUES
     ('admin', 'admin adminovich', '$2a$10$/FarO5LVt.6SAUGBlYf.8O0LQ0jgu5bE3t/y7w8mf8/HzVXn8m12G', 'ADMIN'),

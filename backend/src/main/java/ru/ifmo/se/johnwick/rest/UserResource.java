@@ -1,18 +1,13 @@
 package ru.ifmo.se.johnwick.rest;
 
 import io.quarkus.elytron.security.common.BcryptUtil;
-import io.quarkus.panache.common.Page;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.PUT;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.SecurityContext;
+import ru.ifmo.se.johnwick.constant.ApiConstant;
 import ru.ifmo.se.johnwick.entity.UserEntity;
 import ru.ifmo.se.johnwick.mapper.UserMapper;
 import ru.ifmo.se.johnwick.model.PasswordInput;
@@ -21,16 +16,15 @@ import ru.ifmo.se.johnwick.model.UserInput;
 
 import java.util.Collection;
 
-@Path("/user")
+@Path(ApiConstant.API_V1 + "/user")
 @RolesAllowed("ADMIN")
 public class UserResource {
     @Inject
     UserMapper userMapper;
 
     @GET
-    public Collection<UserDto> getUsers(@QueryParam("limit") int limit,
-                                        @QueryParam("offset") int offset) {
-        Collection<UserEntity> entityCollection = UserEntity.findByPage(Page.of(offset, limit));
+    public Collection<UserDto> getUsers() {
+        Collection<UserEntity> entityCollection = UserEntity.findAll().list();
         return userMapper.mapEntitiesToDtos(entityCollection);
     }
 

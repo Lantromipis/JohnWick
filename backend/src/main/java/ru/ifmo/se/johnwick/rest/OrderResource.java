@@ -8,6 +8,7 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.SecurityContext;
+import ru.ifmo.se.johnwick.constant.ApiConstant;
 import ru.ifmo.se.johnwick.entity.OrderEntity;
 import ru.ifmo.se.johnwick.entity.UserEntity;
 import ru.ifmo.se.johnwick.mapper.OrderMapper;
@@ -18,7 +19,7 @@ import ru.ifmo.se.johnwick.model.TargetOrderInput;
 
 import java.util.Collection;
 
-@Path("/order")
+@Path(ApiConstant.API_V1 + "/order")
 @RolesAllowed("ADMIN")
 public class OrderResource {
     @Inject
@@ -54,9 +55,9 @@ public class OrderResource {
     public Order createOrder(OrderInput orderInput) {
         OrderEntity entity;
         if (orderInput instanceof TargetOrderInput) {
-            entity = orderMapper.mapInputToEntity((TargetOrderInput)orderInput);
+            entity = orderMapper.mapInputToEntity((TargetOrderInput) orderInput);
         } else if (orderInput instanceof BillOrderInput) {
-            entity = orderMapper.mapInputToEntity((BillOrderInput)orderInput);
+            entity = orderMapper.mapInputToEntity((BillOrderInput) orderInput);
         } else {
             throw new IllegalStateException();
         }

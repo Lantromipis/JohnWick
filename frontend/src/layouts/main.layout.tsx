@@ -20,6 +20,7 @@ import {
   LOGIN_PAGE_PATH,
   MANAGE_ORDERS_PAGE_PATH,
   MANAGE_USERS_PAGE_PATH,
+  MY_ORDERS_PAGE_PATH,
 } from "../constants/route.constants.ts";
 import { AccountCircle, Explore } from "@mui/icons-material";
 import AccessControlComponent from "../components/menu/access-control.component.tsx";
@@ -134,12 +135,20 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
             />
           </List>
         </AccessControlComponent>
-        <AccessControlComponent showFor={UserRole.ADMIN} role={currentUserRole}>
+        <AccessControlComponent
+          showFor={UserRole.KILLER}
+          role={currentUserRole}
+        >
           <List>
             <DrawerPageLinkListItem
               label="Explore orders"
               pageLink={EXPLORE_ORDERS_PAGE_PATH}
               icon={<Explore />}
+            />
+            <DrawerPageLinkListItem
+              label="My orders"
+              pageLink={MY_ORDERS_PAGE_PATH}
+              icon={<AssignmentIcon />}
             />
           </List>
         </AccessControlComponent>

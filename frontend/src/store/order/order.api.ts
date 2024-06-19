@@ -2,7 +2,10 @@ import { commonApi } from "../common.api.ts";
 import {
   getOrderApplicationsChooseUrl,
   getOrderApplicationsUrl,
+  getOrderApplyForOrderUrl,
   ORDER_BASE_URL,
+  ORDER_EXPLORE_URL,
+  ORDER_MY_URL,
 } from "../../constants/api.constants.ts";
 import {
   OrderApplicationDto,
@@ -37,6 +40,25 @@ export const orderApi = commonApi.injectEndpoints({
         method: "PUT",
       }),
       invalidatesTags: ["Orders"],
+    }),
+    getExploreOrders: builder.query<OrderDtoModel[], void>({
+      query: () => ({
+        url: ORDER_EXPLORE_URL,
+      }),
+      providesTags: ["Explore orders"],
+    }),
+    applyForOrder: builder.mutation<OrderApplicationDto, string>({
+      query: (orderId) => ({
+        url: getOrderApplyForOrderUrl(orderId),
+        method: "PUT",
+      }),
+      invalidatesTags: ["Order applications", "Explore orders", "My orders"],
+    }),
+    getMyOrders: builder.query<OrderDtoModel[], void>({
+      query: () => ({
+        url: ORDER_MY_URL,
+      }),
+      providesTags: ["My orders"],
     }),
   }),
 });

@@ -1,31 +1,33 @@
-import { FC, memo } from "react";
-import { OrderDtoModel, OrderType } from "../../../models/order.model.ts";
+import { FC, memo, useCallback, useEffect } from "react";
 import OrderExploreListComponent from "./order-explore-lsit.component.tsx";
+import { orderApi } from "../../../store/order/order.api.ts";
 
 type OrderExploreListContainerProps = {};
 
 const OrderExploreListContainer: FC<OrderExploreListContainerProps> = () => {
-  const data: OrderDtoModel[] = [
-    {
-      id: "123",
-      type: OrderType.REGULAR,
-      customer: "Ivan ivanovich",
-      description: "Yes yes yes skibidi dabidi dop dop",
-      price: 1000,
-      target: "Sikibi toilet",
-    },
-    {
-      id: "345",
-      type: OrderType.PROMISSORY_NOTE,
-      customer: "Petr  petrov",
-      description:
-        "sdfjadsnkjfnaskjd fsadfn sjdknfkjsad sdnfjskadn fsdajkfn sdakjfnasdjknf sjadnf sdkjafn skjdanf sjkadnf jksadfn jksadnf sad",
-      price: 1234,
-      target: "Abobus",
-    },
-  ];
+  const { data, refetch } = orderApi.useGetExploreOrdersQuery();
+  const [applyForOrder] = orderApi.useApplyForOrderMutation();
 
-  return <OrderExploreListComponent orders={data ?? []} />;
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
+
+  const handleApplyForOrder: (orderId: string) => void = useCallback(
+    (orderId) => {
+      applyForOrder(orderId)
+        .unwrap()
+        .then(() => {})
+        .catch(() => {});
+    },
+    [],
+  );
+
+  return (
+    <OrderExploreListComponent
+      orders={data ?? []}
+      onApplyForOrder={handleApplyForOrder}
+    />
+  );
 };
 
 export default memo(OrderExploreListContainer);

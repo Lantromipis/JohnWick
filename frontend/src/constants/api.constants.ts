@@ -8,6 +8,8 @@ export function getChangeUserPasswordUrl(username: string) {
 }
 
 export const ORDER_BASE_URL = BASE_PATH + "/order";
+export const ORDER_EXPLORE_URL = ORDER_BASE_URL + "/available";
+export const ORDER_MY_URL = ORDER_BASE_URL + "/my";
 
 export function getOrderApplicationsUrl(orderId: string) {
   return `${ORDER_BASE_URL}/${orderId}/application`;
@@ -15,4 +17,8 @@ export function getOrderApplicationsUrl(orderId: string) {
 
 export function getOrderApplicationsChooseUrl(applicationId: string) {
   return `${ORDER_BASE_URL}/application/${applicationId}/choose`;
+}
+
+export function getOrderApplyForOrderUrl(orderId: string) {
+  return `${ORDER_BASE_URL}/${orderId}/apply`;
 }

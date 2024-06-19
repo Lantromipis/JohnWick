@@ -49,7 +49,7 @@ const OrderManagementListComponent: FC<OrderListComponentProps> = ({
                 <TableCell>{orderTypeToLabel(order.type)}</TableCell>
                 <TableCell>{order.customer}</TableCell>
                 <TableCell>{order.target}</TableCell>
-                {order.type == OrderType.REGULAR && (
+                {order.type == OrderType.REGULAR && !order.assignee && (
                   <TableCell>
                     <Button
                       variant="outlined"

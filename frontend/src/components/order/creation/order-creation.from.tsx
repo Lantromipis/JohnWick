@@ -177,7 +177,14 @@ const OrderCreationForm: FC<OrderCreationFormProps> = ({
             />
             <Controller
               name="debtorUsername"
-              rules={{ required: "Debtor is required" }}
+              rules={{
+                required: "Debtor is required",
+                validate: (value: string) => {
+                  if (watch("beneficiaryUsername") === value) {
+                    return "Debtor can not be beneficiary!";
+                  }
+                },
+              }}
               control={control}
               render={({ field }) => (
                 <FormControl required error={!!errors.debtorUsername}>

@@ -57,4 +57,8 @@ public class UserEntity extends BasicEntity {
     public static Collection<UserEntity> findByPage(Page page) {
         return findAll().page(page).list();
     }
+
+    public static Collection<UserEntity> findByRole(Role role) {
+        return find("role = ?1", role).list();
+    }
 }

@@ -28,6 +28,14 @@ CREATE TABLE order_application
     order_id BIGINT NOT NULL REFERENCES "order"(id)
 );
 
+CREATE TABLE notification
+(
+    id BIGSERIAL PRIMARY KEY,
+    title TEXT NOT NULL,
+    created_timestamp TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    target_id BIGINT REFERENCES "user"(id)
+);
+
 CREATE FUNCTION count_order_applications_by_order_id(_order_id BIGINT)
 RETURNS BIGINT AS '
     SELECT COUNT(*) FROM order_application WHERE order_application.order_id = _order_id

@@ -1,0 +1,1 @@
+A new Head Hunt was created for {order.target} for {order.price} coins

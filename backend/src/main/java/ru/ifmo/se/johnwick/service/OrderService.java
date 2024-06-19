@@ -10,6 +10,12 @@ import org.jboss.logging.Logger;
 import ru.ifmo.se.johnwick.entity.OrderApplicationEntity;
 import ru.ifmo.se.johnwick.entity.OrderEntity;
 import ru.ifmo.se.johnwick.entity.UserEntity;
+import ru.ifmo.se.johnwick.mapper.OrderMapper;
+import ru.ifmo.se.johnwick.model.dto.OrderDto;
+import ru.ifmo.se.johnwick.model.input.HeadHuntOrderInput;
+import ru.ifmo.se.johnwick.model.input.OrderInput;
+import ru.ifmo.se.johnwick.model.input.PromissoryNoteOrderInput;
+import ru.ifmo.se.johnwick.model.input.RegularOrderInput;
 
 import java.time.Duration;
 
@@ -17,6 +23,12 @@ import java.time.Duration;
 public class OrderService {
     @Inject
     Logger LOG;
+
+    @Inject
+    OrderMapper orderMapper;
+
+    @Inject
+    NotificationService notificationService;
 
     @ConfigProperty(name = "johnwick.regular-order.max-age")
     String regularOrdersMaxAge;
@@ -43,6 +55,20 @@ public class OrderService {
     void increaseHeadHuntsPrice() {
         int count = OrderEntity.increaseHeadHuntsPrice(headHuntPrintIncreaseFactor);
         LOG.info("increased " + count + " head hunts prices");
+    }
+
+    public OrderEntity createOrder(OrderInput orderInput) {
+        OrderEntity entity = switch (orderInput.getType()) {
+            case REGULAR -> orderMapper.mapInputToEntity((RegularOrderInput) orderInput);
+            case PROMISSORY_NOTE -> orderMapper.mapInputToEntity((PromissoryNoteOrderInput) orderInput);
+            case HEAD_HUNT -> orderMapper.mapInputToEntity((HeadHuntOrderInput) orderInput);
+        };
+        entity.persist();
+
+        OrderDto orderDto = orderMapper.entityToDto(entity);
+        notificationService.notifyAboutOrderCreation(orderDto);
+
+        return entity;
     }
 
     public boolean hasKillerAppliedToOrder(OrderEntity order, UserEntity killer) {

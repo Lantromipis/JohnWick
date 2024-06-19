@@ -17,11 +17,21 @@ export const userApi = commonApi.injectEndpoints({
         method: "POST",
         body: { ...user },
       }),
+      invalidatesTags: ["Users"],
+      /*      async onQueryStarted(__, { dispatch, queryFulfilled }) {
+                    try {
+                      const { data: createdUser } = await queryFulfilled;
+                      dispatch(userApi.util.updateQueryData('getUsers', undefined, (users)=>{
+                        users.push(createdUser);
+                      }));
+                    } catch {}
+                  },*/
     }),
     getUsers: builder.query<UserDtoModel[], void>({
       query: () => ({
         url: USER_BASE_URL,
       }),
+      providesTags: ["Users"],
     }),
     changeUserPassword: builder.mutation<
       UserDtoModel,

@@ -3,12 +3,7 @@ package ru.ifmo.se.johnwick.rest;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.PUT;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.SecurityContext;
 import ru.ifmo.se.johnwick.constant.ApiConstant;
@@ -17,12 +12,12 @@ import ru.ifmo.se.johnwick.entity.OrderEntity;
 import ru.ifmo.se.johnwick.entity.UserEntity;
 import ru.ifmo.se.johnwick.mapper.OrderApplicationMapper;
 import ru.ifmo.se.johnwick.mapper.OrderMapper;
-import ru.ifmo.se.johnwick.model.input.HeadHuntOrderInput;
-import ru.ifmo.se.johnwick.model.input.PromissoryNoteOrderInput;
+import ru.ifmo.se.johnwick.model.OrderType;
 import ru.ifmo.se.johnwick.model.dto.OrderApplicationDto;
 import ru.ifmo.se.johnwick.model.dto.OrderDto;
+import ru.ifmo.se.johnwick.model.input.HeadHuntOrderInput;
 import ru.ifmo.se.johnwick.model.input.OrderInput;
-import ru.ifmo.se.johnwick.model.OrderType;
+import ru.ifmo.se.johnwick.model.input.PromissoryNoteOrderInput;
 import ru.ifmo.se.johnwick.model.input.RegularOrderInput;
 
 import java.util.Collection;
@@ -81,8 +76,8 @@ public class OrderResource {
     }
 
     @GET
-    @Path("/application")
-    public Collection<OrderApplicationDto> getApplications(@QueryParam("orderId") long orderId) {
+    @Path("/{orderId}/application")
+    public Collection<OrderApplicationDto> getApplications(@PathParam("orderId") long orderId) {
         OrderEntity orderEntity = OrderEntity.findById(orderId);
         Collection<OrderApplicationEntity> applications = OrderApplicationEntity.findByOrder(orderEntity);
         return orderApplicationMapper.entitiesToDtos(applications);

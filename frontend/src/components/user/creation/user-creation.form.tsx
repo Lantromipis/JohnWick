@@ -86,7 +86,7 @@ const UserCreationForm: FC<CreateUserFormProps> = ({ onSubmit }) => {
           control={control}
           render={({ field }) => (
             <FormControl required error={!!errors.role}>
-              <InputLabel id="role-label">Played role</InputLabel>
+              <InputLabel id="role-label">User role</InputLabel>
               <Select
                 labelId="role-label"
                 {...field}

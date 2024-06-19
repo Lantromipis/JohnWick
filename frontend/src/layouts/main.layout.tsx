@@ -16,11 +16,13 @@ import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import { Link, useNavigate } from "react-router-dom";
 import {
+  EXPLORE_ORDERS_PAGE_PATH,
   LOGIN_PAGE_PATH,
   MANAGE_ORDERS_PAGE_PATH,
   MANAGE_USERS_PAGE_PATH,
+  MY_ORDERS_PAGE_PATH,
 } from "../constants/route.constants.ts";
-import { AccountCircle } from "@mui/icons-material";
+import { AccountCircle, Explore } from "@mui/icons-material";
 import AccessControlComponent from "../components/menu/access-control.component.tsx";
 import DrawerPageLinkListItem from "../components/menu/drawer-page-link-list-item.componetn.tsx";
 import { useDispatch, useSelector } from "react-redux";
@@ -129,6 +131,23 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
             <DrawerPageLinkListItem
               label="Manage orders"
               pageLink={MANAGE_ORDERS_PAGE_PATH}
+              icon={<AssignmentIcon />}
+            />
+          </List>
+        </AccessControlComponent>
+        <AccessControlComponent
+          showFor={UserRole.KILLER}
+          role={currentUserRole}
+        >
+          <List>
+            <DrawerPageLinkListItem
+              label="Explore orders"
+              pageLink={EXPLORE_ORDERS_PAGE_PATH}
+              icon={<Explore />}
+            />
+            <DrawerPageLinkListItem
+              label="My orders"
+              pageLink={MY_ORDERS_PAGE_PATH}
               icon={<AssignmentIcon />}
             />
           </List>

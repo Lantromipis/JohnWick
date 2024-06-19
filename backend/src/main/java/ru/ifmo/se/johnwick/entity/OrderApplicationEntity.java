@@ -29,4 +29,8 @@ public class OrderApplicationEntity extends BasicEntity {
     public static Collection<OrderApplicationEntity> findByOrder(OrderEntity order) {
         return find("order = ?1", order).list();
     }
+
+    public static long countByOrderAndAppliedKiller(OrderEntity order, UserEntity appliedKiller) {
+        return find("order = ?1 and appliedKiller = ?2", order, appliedKiller).count();
+    }
 }

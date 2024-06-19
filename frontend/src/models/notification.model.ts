@@ -1,4 +1,5 @@
 export interface NotificationDto {
   title: string;
-  content: string;
+  createdTimestamp: string;
+  content?: string;
 }

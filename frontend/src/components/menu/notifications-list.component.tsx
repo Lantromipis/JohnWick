@@ -25,11 +25,16 @@ const NotificationListComponent: FC<NotificationListComponentProps> = ({
       )}
       {notifications.map((notification) => (
         <Card variant="outlined">
-          <CardHeader title={notification.title} />
+          <CardHeader
+            title={notification.title}
+            subheader={notification.createdTimestamp}
+          />
           <CardContent>
-            <Typography variant="body2" color="text.secondary">
-              {notification.content}
-            </Typography>
+            {notification.content && (
+              <Typography variant="body2" color="text.secondary">
+                {notification.content}
+              </Typography>
+            )}
           </CardContent>
         </Card>
       ))}

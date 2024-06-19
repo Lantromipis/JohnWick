@@ -8,6 +8,7 @@ import {
   ORDER_MY_URL,
 } from "../../constants/api.constants.ts";
 import {
+  AvailableOrderDtoModel,
   OrderApplicationDto,
   OrderDtoModel,
 } from "../../models/order.model.ts";
@@ -41,7 +42,7 @@ export const orderApi = commonApi.injectEndpoints({
       }),
       invalidatesTags: ["Orders"],
     }),
-    getExploreOrders: builder.query<OrderDtoModel[], void>({
+    getExploreOrders: builder.query<AvailableOrderDtoModel[], void>({
       query: () => ({
         url: ORDER_EXPLORE_URL,
       }),

@@ -1,5 +1,8 @@
 import { FC, memo } from "react";
-import { OrderDtoModel, OrderType } from "../../../models/order.model.ts";
+import {
+  AvailableOrderDtoModel,
+  OrderType,
+} from "../../../models/order.model.ts";
 import {
   Alert,
   Button,
@@ -13,7 +16,7 @@ import {
 import { orderTypeToLabel } from "../../../utils/order-utils.ts";
 
 type OrderExploreListComponentProps = {
-  orders: OrderDtoModel[];
+  orders: AvailableOrderDtoModel[];
   onApplyForOrder: (orderId: string) => void;
 };
 
@@ -48,14 +51,20 @@ const OrderExploreListComponent: FC<OrderExploreListComponentProps> = ({
                 price for the order will constantly grow.
               </Alert>
             )}
-            {order.type === OrderType.REGULAR && (
-              <Alert severity="info">
-                Apply for order if you like it. If you will be selected as
-                executor, this order will appear in "My orders" page.
-              </Alert>
-            )}
+            {order.type === OrderType.REGULAR &&
+              (order.alreadyApplied ? (
+                <Alert severity="success">
+                  You have already applied for this order. You will be notified
+                  in case you will be selected as an executor of this order.
+                </Alert>
+              ) : (
+                <Alert severity="info">
+                  Apply for order if you like it. If you will be selected as
+                  executor, this order will appear in "My orders" page.
+                </Alert>
+              ))}
           </CardContent>
-          {order.type === OrderType.REGULAR && (
+          {order.type === OrderType.REGULAR && !order.alreadyApplied && (
             <CardActions>
               <Button
                 variant="outlined"

@@ -22,3 +22,5 @@ export function getOrderApplicationsChooseUrl(applicationId: string) {
 export function getOrderApplyForOrderUrl(orderId: string) {
   return `${ORDER_BASE_URL}/${orderId}/apply`;
 }
+
+export const NOTIFICATION_BASE_URL = BASE_PATH + "/notification";

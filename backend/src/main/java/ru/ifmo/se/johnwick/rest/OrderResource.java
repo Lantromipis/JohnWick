@@ -16,10 +16,9 @@ import ru.ifmo.se.johnwick.model.OrderType;
 import ru.ifmo.se.johnwick.model.dto.AvailableOrderDto;
 import ru.ifmo.se.johnwick.model.dto.OrderApplicationDto;
 import ru.ifmo.se.johnwick.model.dto.OrderDto;
-import ru.ifmo.se.johnwick.model.input.HeadHuntOrderInput;
 import ru.ifmo.se.johnwick.model.input.OrderInput;
-import ru.ifmo.se.johnwick.model.input.PromissoryNoteOrderInput;
-import ru.ifmo.se.johnwick.model.input.RegularOrderInput;
+import ru.ifmo.se.johnwick.service.NotificationService;
+import ru.ifmo.se.johnwick.service.OrderService;
 
 import java.util.Collection;
 
@@ -28,6 +27,12 @@ import java.util.Collection;
 public class OrderResource {
     @Inject
     OrderMapper orderMapper;
+
+    @Inject
+    OrderService orderService;
+
+    @Inject
+    NotificationService notificationService;
 
     @Inject
     OrderApplicationMapper orderApplicationMapper;
@@ -97,6 +102,8 @@ public class OrderResource {
 
         orderEntity.setAssignee(userEntity);
 
+        notificationService.notifyAboutAcceptedApplication(orderApplicationMapper.entityToDto(orderApplicationEntity));
+
         return orderMapper.entityToDto(orderEntity);
     }
 
@@ -111,13 +118,7 @@ public class OrderResource {
     @POST
     @Transactional
     public OrderDto createOrder(OrderInput orderInput) {
-        OrderEntity entity = switch (orderInput.getType()) {
-            case REGULAR -> orderMapper.mapInputToEntity((RegularOrderInput) orderInput);
-            case PROMISSORY_NOTE -> orderMapper.mapInputToEntity((PromissoryNoteOrderInput) orderInput);
-            case HEAD_HUNT -> orderMapper.mapInputToEntity((HeadHuntOrderInput) orderInput);
-        };
-
-        entity.persist();
+        OrderEntity entity = orderService.createOrder(orderInput);
         return orderMapper.entityToDto(entity);
     }
 }

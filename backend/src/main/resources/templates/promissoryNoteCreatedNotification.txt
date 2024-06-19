@@ -1,0 +1,1 @@
+A new Promissory Note for {order.target} was assigned to you (beneficiary is {order.beneficiary})

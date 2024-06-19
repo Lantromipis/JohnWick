@@ -40,5 +40,12 @@ const baseQueryWithRedirectIfUnauthorized: BaseQueryFn<
 export const commonApi = createApi({
   reducerPath: "api",
   baseQuery: baseQueryWithRedirectIfUnauthorized,
+  tagTypes: [
+    "Users",
+    "Orders",
+    "Order applications",
+    "Explore orders",
+    "My orders",
+  ],
   endpoints: (_) => ({}),
 });

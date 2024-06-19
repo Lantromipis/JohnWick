@@ -13,6 +13,7 @@ import ru.ifmo.se.johnwick.entity.UserEntity;
 import ru.ifmo.se.johnwick.mapper.OrderApplicationMapper;
 import ru.ifmo.se.johnwick.mapper.OrderMapper;
 import ru.ifmo.se.johnwick.model.OrderType;
+import ru.ifmo.se.johnwick.model.dto.AvailableOrderDto;
 import ru.ifmo.se.johnwick.model.dto.OrderApplicationDto;
 import ru.ifmo.se.johnwick.model.dto.OrderDto;
 import ru.ifmo.se.johnwick.model.input.HeadHuntOrderInput;
@@ -50,9 +51,12 @@ public class OrderResource {
     @GET
     @Path("/available")
     @RolesAllowed("KILLER")
-    public Collection<OrderDto> getAvailableOrders() {
+    public Collection<AvailableOrderDto> getAvailableOrders(@Context SecurityContext sec) {
+        String username = sec.getUserPrincipal().getName();
+        UserEntity userEntity = UserEntity.findByUsername(username);
+
         Collection<OrderEntity> availableOrders = OrderEntity.findAvailableOrders();
-        return orderMapper.entitiesToDtos(availableOrders);
+        return orderMapper.entitiesToAvailableDtos(availableOrders, userEntity);
     }
 
     @PUT

@@ -30,6 +30,7 @@ import { selectCurrentUserRole } from "../store/current-user/current-user.select
 import { AUTHORIZATION_HEADER_STORAGE_KEY } from "../constants/local-storage.constant.ts";
 import { clearCurrentUser } from "../store/current-user/current-user.slice.ts";
 import { UserRole } from "../models/user.model.ts";
+import NotificationsListContainer from "../components/menu/notifications-list.container.tsx";
 
 type MainLayoutProps = {
   children: ReactNode;
@@ -86,6 +87,7 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
               </Typography>
             </Link>
           </Box>
+          <NotificationsListContainer />
           <IconButton color="inherit" onClick={handleAccountMenuOpen}>
             <AccountCircle />
           </IconButton>

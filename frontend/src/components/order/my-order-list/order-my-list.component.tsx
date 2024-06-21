@@ -34,7 +34,7 @@ const MyOrdersComponent: FC<MyOrdersComponentProps> = ({ orders }) => {
       )}
       {orders.map((order) => (
         <Card variant="outlined">
-          <CardHeader title={orderTypeToLabel(order.type)} />
+          <CardHeader title={orderTypeToLabel(order.type) + " #" + order.id} />
           <CardContent>
             <Typography gutterBottom variant="h6" component="div">
               Target: {order.target}

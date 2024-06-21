@@ -29,6 +29,16 @@ export type OrderDtoModel =
   | HeadHuntOrderDto
   | PromissoryNoteOrderDto;
 
+export interface AvailableOrderDtoModel {
+  id?: string;
+  type: OrderType;
+  customer: string;
+  price: number;
+  description: string;
+  target: string;
+  alreadyApplied: boolean;
+}
+
 export interface BaseOrderDto {
   id?: string;
   type: OrderType;

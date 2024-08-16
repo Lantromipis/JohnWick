@@ -7,7 +7,6 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.logging.Logger;
-import ru.ifmo.se.johnwick.entity.OrderApplicationEntity;
 import ru.ifmo.se.johnwick.entity.OrderEntity;
 import ru.ifmo.se.johnwick.entity.UserEntity;
 import ru.ifmo.se.johnwick.mapper.OrderMapper;
@@ -16,6 +15,8 @@ import ru.ifmo.se.johnwick.model.input.HeadHuntOrderInput;
 import ru.ifmo.se.johnwick.model.input.OrderInput;
 import ru.ifmo.se.johnwick.model.input.PromissoryNoteOrderInput;
 import ru.ifmo.se.johnwick.model.input.RegularOrderInput;
+import ru.ifmo.se.johnwick.repository.OrderApplicationRepository;
+import ru.ifmo.se.johnwick.repository.OrderRepository;
 
 import java.time.Duration;
 
@@ -29,6 +30,12 @@ public class OrderService {
 
     @Inject
     NotificationService notificationService;
+
+    @Inject
+    OrderApplicationRepository orderApplicationRepository;
+
+    @Inject
+    OrderRepository orderRepository;
 
     @ConfigProperty(name = "johnwick.regular-order.max-age")
     String regularOrdersMaxAge;
@@ -46,14 +53,14 @@ public class OrderService {
     @Transactional
     @Scheduled(every = "{johnwick.regular-order.cleaning-interval}")
     void cancelOldRegularOrdersWithoutApplications() {
-        int count = OrderEntity.cancelRegularOrdersWithoutApplicationsOlderThan(regularOrdersMaxAgeDuration);
+        int count = orderRepository.cancelRegularOrdersWithoutApplicationsOlderThan(regularOrdersMaxAgeDuration);
         LOG.info("canceled " + count + " regular orders without applications");
     }
 
     @Transactional
     @Scheduled(every = "{johnwick.head-hunt.price-increase-interval}")
     void increaseHeadHuntsPrice() {
-        int count = OrderEntity.increaseHeadHuntsPrice(headHuntPrintIncreaseFactor);
+        int count = orderRepository.increaseHeadHuntsPrice(headHuntPrintIncreaseFactor);
         LOG.info("increased " + count + " head hunts prices");
     }
 
@@ -72,6 +79,6 @@ public class OrderService {
     }
 
     public boolean hasKillerAppliedToOrder(OrderEntity order, UserEntity killer) {
-        return OrderApplicationEntity.countByOrderAndAppliedKiller(order, killer) > 0;
+        return orderApplicationRepository.countByOrderAndAppliedKiller(order, killer) > 0;
     }
 }

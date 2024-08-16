@@ -1,6 +1,5 @@
 package ru.ifmo.se.johnwick.entity;
 
-import io.quarkus.panache.common.Page;
 import io.quarkus.security.jpa.Password;
 import io.quarkus.security.jpa.Roles;
 import io.quarkus.security.jpa.UserDefinition;
@@ -13,8 +12,6 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import ru.ifmo.se.johnwick.model.Role;
-
-import java.util.Collection;
 
 @Getter
 @Setter
@@ -48,17 +45,5 @@ public class UserEntity extends BasicEntity {
     @Username
     public String getUsername() {
         return username;
-    }
-
-    public static UserEntity findByUsername(String username) {
-        return find("username", username).firstResult();
-    }
-
-    public static Collection<UserEntity> findByPage(Page page) {
-        return findAll().page(page).list();
-    }
-
-    public static Collection<UserEntity> findByRole(Role role) {
-        return find("role = ?1", role).list();
     }
 }

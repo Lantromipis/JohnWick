@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.ZonedDateTime;
-import java.util.Collection;
 
 @Getter
 @Setter
@@ -31,9 +30,5 @@ public class NotificationEntity extends BasicEntity {
     public NotificationEntity(String title, UserEntity target) {
         this.title = title;
         this.target = target;
-    }
-
-    public static Collection<NotificationEntity> findByTargetSortedByCreatedDesc(UserEntity target) {
-        return find("target = ?1 order by createdTimestamp desc", target).list();
     }
 }

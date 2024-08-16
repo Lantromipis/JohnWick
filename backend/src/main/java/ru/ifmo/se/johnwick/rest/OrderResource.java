@@ -17,6 +17,9 @@ import ru.ifmo.se.johnwick.model.dto.AvailableOrderDto;
 import ru.ifmo.se.johnwick.model.dto.OrderApplicationDto;
 import ru.ifmo.se.johnwick.model.dto.OrderDto;
 import ru.ifmo.se.johnwick.model.input.OrderInput;
+import ru.ifmo.se.johnwick.repository.OrderApplicationRepository;
+import ru.ifmo.se.johnwick.repository.OrderRepository;
+import ru.ifmo.se.johnwick.repository.UserRepository;
 import ru.ifmo.se.johnwick.service.NotificationService;
 import ru.ifmo.se.johnwick.service.OrderService;
 
@@ -37,9 +40,18 @@ public class OrderResource {
     @Inject
     OrderApplicationMapper orderApplicationMapper;
 
+    @Inject
+    OrderApplicationRepository orderApplicationRepository;
+
+    @Inject
+    OrderRepository orderRepository;
+
+    @Inject
+    UserRepository userRepository;
+
     @GET
     public Collection<OrderDto> getAllOrders() {
-        return orderMapper.entitiesToDtos(OrderEntity.findNotCanceled());
+        return orderMapper.entitiesToDtos(orderRepository.findNotCanceled());
     }
 
     @GET
@@ -47,9 +59,9 @@ public class OrderResource {
     @RolesAllowed("KILLER")
     public Collection<OrderDto> getMyOrders(@Context SecurityContext sec) {
         String username = sec.getUserPrincipal().getName();
-        UserEntity userEntity = UserEntity.findByUsername(username);
+        UserEntity userEntity = userRepository.findByUsername(username);
 
-        Collection<OrderEntity> promissoryNotes = OrderEntity.findByAssignee(userEntity);
+        Collection<OrderEntity> promissoryNotes = orderRepository.findByAssignee(userEntity);
         return orderMapper.entitiesToDtos(promissoryNotes);
     }
 
@@ -58,9 +70,9 @@ public class OrderResource {
     @RolesAllowed("KILLER")
     public Collection<AvailableOrderDto> getAvailableOrders(@Context SecurityContext sec) {
         String username = sec.getUserPrincipal().getName();
-        UserEntity userEntity = UserEntity.findByUsername(username);
+        UserEntity userEntity = userRepository.findByUsername(username);
 
-        Collection<OrderEntity> availableOrders = OrderEntity.findAvailableOrders();
+        Collection<OrderEntity> availableOrders = orderRepository.findAvailableOrders();
         return orderMapper.entitiesToAvailableDtos(availableOrders, userEntity);
     }
 
@@ -76,7 +88,7 @@ public class OrderResource {
         }
 
         String username = sec.getUserPrincipal().getName();
-        UserEntity userEntity = UserEntity.findByUsername(username);
+        UserEntity userEntity = userRepository.findByUsername(username);
 
         OrderApplicationEntity orderApplicationEntity = new OrderApplicationEntity(userEntity, orderEntity);
         orderApplicationEntity.persist();
@@ -88,7 +100,7 @@ public class OrderResource {
     @Path("/{orderId}/application")
     public Collection<OrderApplicationDto> getApplications(@PathParam("orderId") long orderId) {
         OrderEntity orderEntity = OrderEntity.findById(orderId);
-        Collection<OrderApplicationEntity> applications = OrderApplicationEntity.findByOrder(orderEntity);
+        Collection<OrderApplicationEntity> applications = orderApplicationRepository.findByOrder(orderEntity);
         return orderApplicationMapper.entitiesToDtos(applications);
     }
 
@@ -111,7 +123,7 @@ public class OrderResource {
     @Transactional
     @Path("/{orderId}/cancel")
     public OrderDto cancelOrder(@PathParam("orderId") long orderId) {
-        OrderEntity orderEntity = OrderEntity.cancelOrderById(orderId);
+        OrderEntity orderEntity = orderRepository.cancelOrderById(orderId);
         return orderMapper.entityToDto(orderEntity);
     }
 

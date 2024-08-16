@@ -14,6 +14,7 @@ import ru.ifmo.se.johnwick.model.input.HeadHuntOrderInput;
 import ru.ifmo.se.johnwick.model.input.PromissoryNoteOrderInput;
 import ru.ifmo.se.johnwick.model.dto.OrderDto;
 import ru.ifmo.se.johnwick.model.input.RegularOrderInput;
+import ru.ifmo.se.johnwick.repository.UserRepository;
 import ru.ifmo.se.johnwick.service.OrderService;
 
 import java.util.Collection;
@@ -24,13 +25,16 @@ public abstract class OrderMapper {
     @Inject
     OrderService orderService;
 
+    @Inject
+    UserRepository userRepository;
+
     public abstract OrderEntity mapInputToEntity(RegularOrderInput input);
 
     public abstract OrderEntity mapInputToEntity(HeadHuntOrderInput input);
 
     @Mappings({
-            @Mapping(expression = "java( ru.ifmo.se.johnwick.entity.UserEntity.findByUsername(input.getBeneficiary().getUsername()) )", target = "beneficiary"),
-            @Mapping(expression = "java( ru.ifmo.se.johnwick.entity.UserEntity.findByUsername(input.getAssignee().getUsername()) )", target = "assignee")
+            @Mapping(expression = "java( userRepository.findByUsername(input.getBeneficiary().getUsername()) )", target = "beneficiary"),
+            @Mapping(expression = "java( userRepository.findByUsername(input.getAssignee().getUsername()) )", target = "assignee")
     })
     public abstract OrderEntity mapInputToEntity(PromissoryNoteOrderInput input);
 

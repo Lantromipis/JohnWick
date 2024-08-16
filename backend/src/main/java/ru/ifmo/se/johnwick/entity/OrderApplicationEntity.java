@@ -9,8 +9,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Collection;
-
 @Getter
 @Setter
 @Entity
@@ -25,12 +23,4 @@ public class OrderApplicationEntity extends BasicEntity {
     @ManyToOne(optional = false)
     @JoinColumn(name = "order_id", nullable = false)
     private OrderEntity order;
-
-    public static Collection<OrderApplicationEntity> findByOrder(OrderEntity order) {
-        return find("order = ?1", order).list();
-    }
-
-    public static long countByOrderAndAppliedKiller(OrderEntity order, UserEntity appliedKiller) {
-        return find("order = ?1 and appliedKiller = ?2", order, appliedKiller).count();
-    }
 }

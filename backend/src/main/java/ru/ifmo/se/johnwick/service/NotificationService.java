@@ -3,18 +3,23 @@ package ru.ifmo.se.johnwick.service;
 import io.quarkus.qute.Location;
 import io.quarkus.qute.Template;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import ru.ifmo.se.johnwick.entity.NotificationEntity;
 import ru.ifmo.se.johnwick.entity.UserEntity;
 import ru.ifmo.se.johnwick.model.Role;
 import ru.ifmo.se.johnwick.model.dto.OrderApplicationDto;
 import ru.ifmo.se.johnwick.model.dto.OrderDto;
+import ru.ifmo.se.johnwick.repository.UserRepository;
 
 import java.util.Collection;
 import java.util.Collections;
 
 @ApplicationScoped
 public class NotificationService {
+    @Inject
+    UserRepository userRepository;
+
     @Location("headHuntOrderCreatedNotification.txt")
     Template headHuntOrderCreated;
 
@@ -33,15 +38,15 @@ public class NotificationService {
         switch (orderDto.getType()) {
             case REGULAR -> {
                 template = regularOrderCreated;
-                targets = UserEntity.findByRole(Role.KILLER);
+                targets = userRepository.findByRole(Role.KILLER);
             }
             case HEAD_HUNT -> {
                 template = headHuntOrderCreated;
-                targets = UserEntity.findByRole(Role.KILLER);
+                targets = userRepository.findByRole(Role.KILLER);
             }
             case PROMISSORY_NOTE -> {
                 template = promissoryNoteCreated;
-                UserEntity assignee = UserEntity.findByUsername(orderDto.getAssignee().getUsername());
+                UserEntity assignee = userRepository.findByUsername(orderDto.getAssignee().getUsername());
                 targets = Collections.singletonList(assignee);
             }
         };
@@ -51,7 +56,7 @@ public class NotificationService {
     }
 
     public void notifyAboutAcceptedApplication(OrderApplicationDto applicationDto) {
-        UserEntity assignee = UserEntity.findByUsername(applicationDto.getAppliedKiller().getUsername());
+        UserEntity assignee = userRepository.findByUsername(applicationDto.getAppliedKiller().getUsername());
         String title = orderApplicationAccepted.data("order", applicationDto.getOrder()).render();
         createNotifications(title, Collections.singletonList(assignee));
     }

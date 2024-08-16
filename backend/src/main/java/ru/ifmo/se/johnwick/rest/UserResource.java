@@ -13,6 +13,7 @@ import ru.ifmo.se.johnwick.mapper.UserMapper;
 import ru.ifmo.se.johnwick.model.input.PasswordInput;
 import ru.ifmo.se.johnwick.model.dto.UserDto;
 import ru.ifmo.se.johnwick.model.input.UserInput;
+import ru.ifmo.se.johnwick.repository.UserRepository;
 
 import java.util.Collection;
 
@@ -21,6 +22,9 @@ import java.util.Collection;
 public class UserResource {
     @Inject
     UserMapper userMapper;
+
+    @Inject
+    UserRepository userRepository;
 
     @GET
     public Collection<UserDto> getUsers() {
@@ -40,7 +44,7 @@ public class UserResource {
     @Transactional
     @Path("/{username}/password")
     public UserDto changeUserPassword(@PathParam("username") String username, PasswordInput passwordInput) {
-        UserEntity entity = UserEntity.findByUsername(username);
+        UserEntity entity = userRepository.findByUsername(username);
         entity.setPassword(BcryptUtil.bcryptHash(passwordInput.getPassword()));
         entity.persist();
         return userMapper.mapEntityToDto(entity);
@@ -51,7 +55,7 @@ public class UserResource {
     @Path("/me")
     public UserDto getCurrentUser(@Context SecurityContext sec) {
         String username = sec.getUserPrincipal().getName();
-        UserEntity userEntity = UserEntity.findByUsername(username);
+        UserEntity userEntity = userRepository.findByUsername(username);
         return userMapper.mapEntityToDto(userEntity);
     }
 }

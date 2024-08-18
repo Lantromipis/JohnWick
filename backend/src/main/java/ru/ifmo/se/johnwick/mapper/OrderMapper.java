@@ -8,7 +8,6 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.Mappings;
 import ru.ifmo.se.johnwick.entity.OrderEntity;
-import ru.ifmo.se.johnwick.entity.UserEntity;
 import ru.ifmo.se.johnwick.model.dto.AvailableOrderDto;
 import ru.ifmo.se.johnwick.model.input.HeadHuntOrderInput;
 import ru.ifmo.se.johnwick.model.input.PromissoryNoteOrderInput;
@@ -42,10 +41,10 @@ public abstract class OrderMapper {
 
     public abstract Collection<OrderDto> entitiesToDtos(Collection<OrderEntity> entity);
 
-    @Mapping(expression = "java( orderService.hasKillerAppliedToOrder(orderEntity, killer) )", target = "alreadyApplied")
-    public abstract AvailableOrderDto entityToAvailableDto(OrderEntity orderEntity, @Context UserEntity killer);
+    @Mapping(expression = "java( orderService.hasKillerAppliedToOrder(orderEntity, killerUsername) )", target = "alreadyApplied")
+    public abstract AvailableOrderDto entityToAvailableDto(OrderEntity orderEntity, @Context String killerUsername);
 
     @InheritConfiguration(name = "entityToAvailableDto")
     public abstract Collection<AvailableOrderDto> entitiesToAvailableDtos(Collection<OrderEntity> entities,
-                                                                          @Context UserEntity killer);
+                                                                          @Context String killerUsername);
 }

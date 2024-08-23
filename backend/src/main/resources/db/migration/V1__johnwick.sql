@@ -13,12 +13,24 @@ CREATE TABLE "order"
     type TEXT NOT NULL,
     created_timestamp TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     assignee_id BIGINT REFERENCES "user"(id),
-    beneficiary_id BIGINT REFERENCES "user"(id),
     customer TEXT NOT NULL,
     target TEXT,
     price BIGINT NOT NULL,
     description TEXT,
-    canceled BOOLEAN NOT NULL DEFAULT FALSE
+    canceled BOOLEAN NOT NULL DEFAULT FALSE ---TODO: move to status
+);
+
+CREATE TABLE regular_order (
+    id BIGINT PRIMARY KEY REFERENCES "order"(id)
+);
+
+CREATE TABLE promissory_note_order (
+    id BIGINT PRIMARY KEY REFERENCES "order"(id),
+    beneficiary_id BIGINT REFERENCES "user"(id)
+);
+
+CREATE TABLE head_hunt_order (
+    id BIGINT PRIMARY KEY REFERENCES "order"(id)
 );
 
 CREATE TABLE order_application

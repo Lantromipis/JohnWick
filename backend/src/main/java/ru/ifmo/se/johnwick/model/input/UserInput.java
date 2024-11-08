@@ -8,4 +8,5 @@ public class UserInput {
     String displayName;
     String role;
     String password;
+    String status;
 }

@@ -7,8 +7,8 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.SecurityContext;
 import ru.ifmo.se.johnwick.constant.ApiConstant;
-import ru.ifmo.se.johnwick.model.input.PasswordInput;
 import ru.ifmo.se.johnwick.model.dto.UserDto;
+import ru.ifmo.se.johnwick.model.input.PasswordInput;
 import ru.ifmo.se.johnwick.model.input.UserInput;
 import ru.ifmo.se.johnwick.service.UserService;
 
@@ -16,7 +16,7 @@ import java.util.Collection;
 
 @Path(ApiConstant.API_V1 + "/user")
 @RolesAllowed("ADMIN")
-public class UserResource {
+public class UserController {
     @Inject
     UserService userService;
 

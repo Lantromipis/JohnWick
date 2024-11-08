@@ -14,6 +14,7 @@ import java.util.Collection;
 
 @ApplicationScoped
 public class UserService {
+
     @Inject
     UserRepository userRepository;
 

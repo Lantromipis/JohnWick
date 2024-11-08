@@ -24,7 +24,7 @@ quarkus:
     datasource:
       db-kind: postgresql
       username: postgres
-      password: postgres
+      password: 123
       jdbc:
         url: jdbc:postgresql://localhost:5432/johnwick
     flyway:

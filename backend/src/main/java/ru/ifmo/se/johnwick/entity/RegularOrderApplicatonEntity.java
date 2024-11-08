@@ -11,26 +11,20 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name = "\"notification\"")
-public class NotificationEntity extends PanacheEntityBase {
+@Table(name = "\"regular_order_application\"")
+public class RegularOrderApplicatonEntity extends PanacheEntityBase {
     @Id
     @Column(name = "id", nullable = false)
     private UUID id = UUID.randomUUID();
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private UserEntity addressee;
+    @JoinColumn(name = "applied_killer_id")
+    private UserEntity killer;
 
-    @Column(name = "title")
-    private String title;
-
-    @Column(name = "message")
-    private String message;
+    @ManyToOne
+    @JoinColumn(name = "regular_order_id")
+    private RegularOrderEntity regularOrder;
 
     @Column(name = "created_timestamp", nullable = false, insertable = false, updatable = false)
     private Instant createdTimestamp;
-
-    @Column(name = "is_read", nullable = false)
-    private Boolean isRead = false;
-
 }

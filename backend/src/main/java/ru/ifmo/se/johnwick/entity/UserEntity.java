@@ -52,4 +52,8 @@ public class UserEntity extends PanacheEntityBase {
     public String getUsername() {
         return username;
     }
+
+    public UUID getId() {
+        return id;
+    }
 }

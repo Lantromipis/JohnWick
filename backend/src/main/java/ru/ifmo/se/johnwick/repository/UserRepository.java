@@ -7,11 +7,16 @@ import ru.ifmo.se.johnwick.entity.UserEntity;
 import ru.ifmo.se.johnwick.model.Role;
 
 import java.util.Collection;
+import java.util.UUID;
 
 @ApplicationScoped
 public class UserRepository implements PanacheRepository<UserEntity> {
     public UserEntity findByUsername(String username) {
         return find("username", username).firstResult();
+    }
+
+    public UserEntity findByID(UUID id) {
+        return find("id", id).firstResult();
     }
 
     public Collection<UserEntity> findByPage(Page page) {

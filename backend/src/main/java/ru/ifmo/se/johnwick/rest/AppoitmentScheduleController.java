@@ -24,11 +24,11 @@ public class AppoitmentScheduleController {
     @Inject
     AppoitmentScheduleService appoitmentScheduleService;
 
-    /*@POST
+    @POST
     @Transactional
     public AppointmentScheduleDto createAppointmentSchedule(AppoitmentScheduleInput appoitmentScheduleInput){
         return appoitmentScheduleService.createAppointmentSchedule(appoitmentScheduleInput);
-    }*/
+    }
 
     @GET
     public Collection<AppointmentScheduleDto> getAppointmentScheduleByDate(AppoitmentScheduleInput appoitmentScheduleInput) {

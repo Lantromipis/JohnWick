@@ -8,6 +8,7 @@ import lombok.Setter;
 import java.sql.Time;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.TimeZone;
@@ -31,8 +32,8 @@ public class AppointmentScheduleEntity extends PanacheEntityBase {
     private LocalDate date;
 
     @Column(name = "from_time")
-    private ZonedDateTime startTime;
+    private LocalTime startTime;
 
     @Column(name = "to_time")
-    private ZonedDateTime endTime;
+    private LocalTime endTime;
 }

@@ -1,6 +1,7 @@
 package ru.ifmo.se.johnwick.service;
 
 import io.quarkus.elytron.security.common.BcryptUtil;
+import io.quarkus.security.identity.SecurityIdentity;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import ru.ifmo.se.johnwick.entity.UserEntity;
@@ -17,6 +18,7 @@ public class UserService {
 
     @Inject
     UserRepository userRepository;
+
 
     @Inject
     UserMapper userMapper;

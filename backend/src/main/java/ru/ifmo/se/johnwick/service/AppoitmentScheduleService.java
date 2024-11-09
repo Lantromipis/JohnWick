@@ -32,7 +32,6 @@ public class AppoitmentScheduleService {
 
     public AppointmentScheduleDto createAppointmentSchedule(AppoitmentScheduleInput appoitmentScheduleInput){
         AppointmentScheduleEntity appointmentScheduleEntity = appoitmentScheduleMapper.mapInputToEntity(appoitmentScheduleInput);
-        appointmentScheduleEntity.persist();
         String username = securityIdentity.getPrincipal().getName();
         UserEntity hooster =  userRepository.findByUsername(username);
         appointmentScheduleEntity.setHoster(hooster);

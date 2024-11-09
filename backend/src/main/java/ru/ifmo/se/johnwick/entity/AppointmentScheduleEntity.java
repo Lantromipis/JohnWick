@@ -27,12 +27,12 @@ public class AppointmentScheduleEntity extends PanacheEntityBase {
     @JoinColumn(name = "host_user_id", nullable = false)
     private UserEntity hoster;
 
-    @Column(name = "date", nullable = false, insertable = false, updatable = false)
+    @Column(name = "date")
     private LocalDate date;
 
-    @Column(name = "from_time", nullable = false, insertable = false, updatable = false)
+    @Column(name = "from_time")
     private ZonedDateTime startTime;
 
-    @Column(name = "to_time", nullable = false, insertable = false, updatable = false)
+    @Column(name = "to_time")
     private ZonedDateTime endTime;
 }

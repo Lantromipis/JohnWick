@@ -76,8 +76,8 @@ CREATE TABLE IF NOT EXISTS appointment_schedule
                                                      id UUID PRIMARY KEY,
                                                      host_user_id UUID,
                                                      date DATE,
-                                                     from_time TIME WITH TIME ZONE not null,
-                                                     to_time TIME WITH TIME ZONE not null
+                                                     from_time TIME WITH TIME ZONE ,
+                                                     to_time TIME WITH TIME ZONE
 );
 
 CREATE TABLE IF NOT EXISTS appointment
@@ -86,8 +86,8 @@ CREATE TABLE IF NOT EXISTS appointment
                                            booked_by_user_id UUID,
                                            appointment_schedule_id UUID,
                                            date DATE,
-                                           from_timestamp TIME WITH TIME ZONE not null,
-                                           to_timestamp TIME WITH TIME ZONE not null,
+                                           from_timestamp TIME WITH TIME ZONE ,
+                                           to_timestamp TIME WITH TIME ZONE ,
                                            message TEXT
 );
 

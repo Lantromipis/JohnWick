@@ -1,24 +1,17 @@
 package ru.ifmo.se.johnwick.entity;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.sql.Time;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.ZonedDateTime;
-import java.util.Date;
-import java.util.TimeZone;
 import java.util.UUID;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "\"appointment_schedule\"")
-public class AppointmentScheduleEntity extends PanacheEntityBase {
+public class AppointmentScheduleEntity {
 
     @Id
     @Column(name = "id", nullable = false)

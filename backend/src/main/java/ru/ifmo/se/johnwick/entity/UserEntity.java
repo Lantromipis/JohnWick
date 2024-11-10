@@ -1,6 +1,6 @@
 package ru.ifmo.se.johnwick.entity;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+
 import io.quarkus.security.jpa.Password;
 import io.quarkus.security.jpa.Roles;
 import io.quarkus.security.jpa.UserDefinition;
@@ -17,7 +17,7 @@ import java.util.UUID;
 @Entity
 @UserDefinition
 @Table(name = "\"user\"")
-public class UserEntity extends PanacheEntityBase {
+public class UserEntity  {
     @Id
     @Column(name = "id", nullable = false)
     private UUID id = UUID.randomUUID();

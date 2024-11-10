@@ -13,7 +13,7 @@ import java.util.UUID;
 @Setter
 @Entity
 @Table(name = "\"appointment\"")
-public class AppointmentEntity extends PanacheEntityBase {
+public class AppointmentEntity{
     @Id
     @Column(name = "id", nullable = false)
     private UUID id = UUID.randomUUID();

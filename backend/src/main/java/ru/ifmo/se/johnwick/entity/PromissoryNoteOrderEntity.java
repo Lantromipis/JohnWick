@@ -1,6 +1,6 @@
 package ru.ifmo.se.johnwick.entity;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,7 +11,7 @@ import java.util.UUID;
 @Setter
 @Entity
 @Table(name = "\"promissory_note_order\"")
-public class PromissoryNoteOrderEntity extends PanacheEntityBase {
+public class PromissoryNoteOrderEntity {
     @Id
     @Column(name = "order_id", nullable = false)
     private UUID orderId = UUID.randomUUID();

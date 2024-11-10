@@ -1,6 +1,6 @@
 package ru.ifmo.se.johnwick.entity;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +12,7 @@ import java.util.UUID;
 @Setter
 @Entity
 @Table(name = "\"notification\"")
-public class NotificationEntity extends PanacheEntityBase {
+public class NotificationEntity {
     @Id
     @Column(name = "id", nullable = false)
     private UUID id = UUID.randomUUID();

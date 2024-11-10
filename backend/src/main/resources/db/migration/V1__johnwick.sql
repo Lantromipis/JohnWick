@@ -5,12 +5,12 @@ CREATE TABLE IF NOT EXISTS "user"
                                      username VARCHAR(63) UNIQUE NOT NULL,
                                      display_name TEXT NOT NULL,
                                      password TEXT NOT NULL,
-                                     role VARCHAR(63) NOT NULL,
-                                     status VARCHAR(63) NOT NULL
+                                     role VARCHAR(63) NOT NULL
+
 );
-INSERT INTO "user" (id,username, display_name, password, role,status) VALUES
-                                                                (gen_random_uuid(),'admin', 'admin adminovich', '$2a$10$/FarO5LVt.6SAUGBlYf.8O0LQ0jgu5bE3t/y7w8mf8/HzVXn8m12G', 'ADMIN','ACTIVE'),
-                                                                (gen_random_uuid(),'killer', 'killer killerovich', '$2a$10$PuLEUApJSoMxQ4vLNDnMSePfhOCdCc83U9W9P77OOTW/GxoJ0wefW', 'KILLER','ACTIVE');
+INSERT INTO "user" (id,username, display_name, password, role) VALUES
+                                                                (gen_random_uuid(),'admin', 'admin adminovich', '$2a$10$/FarO5LVt.6SAUGBlYf.8O0LQ0jgu5bE3t/y7w8mf8/HzVXn8m12G', 'ADMIN'),
+                                                                (gen_random_uuid(),'killer', 'killer killerovich', '$2a$10$PuLEUApJSoMxQ4vLNDnMSePfhOCdCc83U9W9P77OOTW/GxoJ0wefW', 'KILLER');
 CREATE TABLE IF NOT EXISTS "order"
 (
                                       id UUID PRIMARY KEY,
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS promissory_note_order
 CREATE TABLE IF NOT EXISTS regular_order
 (
                                              order_id UUID PRIMARY KEY,
-                                             assigned_killer_id UUID NOT NULL,
+                                             assigned_killer_id UUID,
                                              price DOUBLE PRECISION NOT NULL,
                                              customer_name TEXT NOT NULL
 );
@@ -86,8 +86,8 @@ CREATE TABLE IF NOT EXISTS appointment
                                            booked_by_user_id UUID,
                                            appointment_schedule_id UUID,
                                            date DATE,
-                                           from_timestamp TIME WITH TIME ZONE ,
-                                           to_timestamp TIME WITH TIME ZONE ,
+                                           from_time TIME WITH TIME ZONE ,
+                                           to_time TIME WITH TIME ZONE ,
                                            message TEXT
 );
 
@@ -102,7 +102,6 @@ ALTER TABLE if exists promissory_note_order
     ADD FOREIGN KEY (deptor_user_id) REFERENCES "user"(id);
 
 ALTER TABLE if exists regular_order
-    ADD FOREIGN KEY (order_id) REFERENCES "order"(id),
     ADD FOREIGN KEY (assigned_killer_id) REFERENCES "user"(id);
 
 ALTER TABLE if exists regular_order_application

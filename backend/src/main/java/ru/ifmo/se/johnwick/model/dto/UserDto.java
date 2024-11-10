@@ -8,5 +8,4 @@ public class UserDto {
     String username;
     String displayName;
     Role role;
-    String status;
 }

@@ -18,10 +18,10 @@ public class RegularOrderEntity extends PanacheEntityBase {
     private UUID orderId = UUID.randomUUID();
 
     @ManyToOne
-    @JoinColumn(name = "assigned_killer_id", nullable = false)
+    @JoinColumn(name = "assigned_killer_id")
     private UserEntity assignee;
 
-    @Column(name = "price", nullable = false)
+    @Column(name = "price")
     private Double price;
 
     @Column(name = "customer_name")

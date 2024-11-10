@@ -35,9 +35,6 @@ public class UserEntity extends PanacheEntityBase {
     @Column(name = "role", nullable = false)
     private Role role;
 
-    @Column(name = "status", nullable = false)
-    private String status;
-
     @Roles
     public String getRoleString() {
         return role.name();

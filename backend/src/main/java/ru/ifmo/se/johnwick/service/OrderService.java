@@ -8,7 +8,6 @@ import ru.ifmo.se.johnwick.mapper.OrderMapper;
 import ru.ifmo.se.johnwick.model.dto.OrderDto;
 import ru.ifmo.se.johnwick.model.input.OrderInput;
 
-import java.text.Format;
 import java.time.Instant;
 
 @ApplicationScoped

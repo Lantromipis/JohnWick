@@ -14,10 +14,10 @@ INSERT INTO "user" (id,username, display_name, password, role,status) VALUES
 CREATE TABLE IF NOT EXISTS "order"
 (
                                       id UUID PRIMARY KEY,
-                                      created_timestamp TIMESTAMP WITH TIME ZONE ,
-                                      type VARCHAR(63) ,
+                                      created_timestamp TIMESTAMP WITH TIME ZONE NOT NULL,
+                                      type VARCHAR(63) NOT NULL,
                                       description TEXT ,
-                                      status VARCHAR(63) ,
+                                      status VARCHAR(63) NOT NULL,
                                       target_name TEXT
 );
 

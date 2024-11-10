@@ -7,6 +7,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.SecurityContext;
 import ru.ifmo.se.johnwick.constant.ApiConstant;
+import ru.ifmo.se.johnwick.model.Role;
 import ru.ifmo.se.johnwick.model.dto.UserDto;
 import ru.ifmo.se.johnwick.model.input.PasswordInput;
 import ru.ifmo.se.johnwick.model.input.UserInput;
@@ -23,6 +24,13 @@ public class UserController {
     @GET
     public Collection<UserDto> getUsers() {
         return userService.getAllUsers();
+    }
+
+    @GET
+    @Path("/{role}")
+    @RolesAllowed("KILLER")
+    public Collection<UserDto> getUsersByRole(@PathParam("role") Role role) {
+        return userService.getAllByRoles(role);
     }
 
     @POST

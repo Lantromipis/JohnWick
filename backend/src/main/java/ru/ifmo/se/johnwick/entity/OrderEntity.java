@@ -18,19 +18,20 @@ public class OrderEntity extends PanacheEntityBase {
     @Column(name = "id", nullable = false)
     private UUID id = UUID.randomUUID();
 
-    @Column(name = "created_timestamp", nullable = false, insertable = false, updatable = false)
+    @Column(name = "created_timestamp")
     private Instant createdTimestamp;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "type", nullable = false)
+    @Column(name = "type")
     private OrderType type;
 
     @Column(name = "description")
     private String description;
 
-    @Column(name = "status", nullable = false)
+    @Column(name = "status")
     private String status;
 
     @Column(name = "target_name")
     private String targetName;
+
 }

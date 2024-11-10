@@ -6,6 +6,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import ru.ifmo.se.johnwick.entity.UserEntity;
 import ru.ifmo.se.johnwick.mapper.UserMapper;
+import ru.ifmo.se.johnwick.model.Role;
 import ru.ifmo.se.johnwick.model.dto.UserDto;
 import ru.ifmo.se.johnwick.model.input.PasswordInput;
 import ru.ifmo.se.johnwick.model.input.UserInput;
@@ -29,6 +30,11 @@ public class UserService {
 
     public Collection<UserDto> getAllUsers() {
         Collection<UserEntity> entityCollection = userRepository.findAll().list();
+        return userMapper.mapEntitiesToDtos(entityCollection);
+    }
+
+    public Collection<UserDto> getAllByRoles(Role role) {
+        Collection<UserEntity> entityCollection = userRepository.findByRole(role);
         return userMapper.mapEntitiesToDtos(entityCollection);
     }
 

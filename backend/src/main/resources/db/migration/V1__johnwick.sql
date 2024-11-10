@@ -14,11 +14,11 @@ INSERT INTO "user" (id,username, display_name, password, role,status) VALUES
 CREATE TABLE IF NOT EXISTS "order"
 (
                                       id UUID PRIMARY KEY,
-                                      created_timestamp TIMESTAMP WITH TIME ZONE NOT NULL,
-                                      type VARCHAR(63) NOT NULL,
-                                      description TEXT NOT NULL,
-                                      status VARCHAR(63) NOT NULL,
-                                      target_name TEXT NOT NULL
+                                      created_timestamp TIMESTAMP WITH TIME ZONE ,
+                                      type VARCHAR(63) ,
+                                      description TEXT ,
+                                      status VARCHAR(63) ,
+                                      target_name TEXT
 );
 
 CREATE TABLE IF NOT EXISTS head_haunt_order

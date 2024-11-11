@@ -3,6 +3,7 @@ package ru.ifmo.se.johnwick.service;
 import io.quarkus.security.identity.SecurityIdentity;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
 import ru.ifmo.se.johnwick.entity.AppointmentScheduleEntity;
 import ru.ifmo.se.johnwick.entity.UserEntity;
 import ru.ifmo.se.johnwick.mapper.AppoitmentScheduleMapper;
@@ -27,6 +28,9 @@ public class AppoitmentScheduleService {
     UserRepository userRepository;
 
     @Inject
+    EntityManager entityManager;
+
+    @Inject
     AppoitmentScheduleMapper appoitmentScheduleMapper;
 
     public AppointmentScheduleDto createAppointmentSchedule(AppoitmentScheduleInput appoitmentScheduleInput) {
@@ -34,7 +38,7 @@ public class AppoitmentScheduleService {
         String username = securityIdentity.getPrincipal().getName();
         UserEntity hooster = userRepository.findByUsername(username);
         appointmentScheduleEntity.setHoster(hooster);
-        appointmentScheduleEntity.persist();
+        entityManager.persist(appointmentScheduleEntity);
         return appoitmentScheduleMapper.mapEntityToDto(appointmentScheduleEntity);
     }
 

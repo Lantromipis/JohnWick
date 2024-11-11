@@ -2,6 +2,7 @@ package ru.ifmo.se.johnwick.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
 import ru.ifmo.se.johnwick.entity.OrderEntity;
 
 import ru.ifmo.se.johnwick.mapper.OrderMapper;
@@ -14,12 +15,15 @@ import java.time.Instant;
 public class OrderService {
 
     @Inject
+    EntityManager entityManager;
+
+    @Inject
     OrderMapper orderMapper;
 
     public OrderDto createOrder(OrderInput orderInput) {
         OrderEntity entity = orderMapper.mapInputToEntity(orderInput);
         entity.setCreatedTimestamp(Instant.now());
-        entity.persist();
+        entityManager.persist(entity);
         return orderMapper.mapEntityToDto(entity);
     }
 }

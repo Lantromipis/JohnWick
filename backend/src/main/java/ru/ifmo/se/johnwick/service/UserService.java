@@ -1,9 +1,9 @@
 package ru.ifmo.se.johnwick.service;
 
 import io.quarkus.elytron.security.common.BcryptUtil;
-import io.quarkus.security.identity.SecurityIdentity;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
 import ru.ifmo.se.johnwick.entity.UserEntity;
 import ru.ifmo.se.johnwick.mapper.UserMapper;
 import ru.ifmo.se.johnwick.model.Role;
@@ -20,6 +20,8 @@ public class UserService {
     @Inject
     UserRepository userRepository;
 
+    @Inject
+    EntityManager entityManager;
 
     @Inject
     UserMapper userMapper;
@@ -40,14 +42,14 @@ public class UserService {
 
     public UserDto createUser(UserInput userInput) {
         UserEntity entity = userMapper.mapInputToEntity(userInput);
-        entity.persist();
+        entityManager.persist(entity);
         return userMapper.mapEntityToDto(entity);
     }
 
     public UserDto changeUserPassword(String username, PasswordInput passwordInput) {
         UserEntity entity = userRepository.findByUsername(username);
         entity.setPassword(BcryptUtil.bcryptHash(passwordInput.getPassword()));
-        entity.persist();
+        entityManager.persist(entity);
         return userMapper.mapEntityToDto(entity);
     }
 

@@ -17,11 +17,11 @@ public class PromissoryNoteOrderEntity {
     private UUID orderId = UUID.randomUUID();
 
     @ManyToOne
-    @JoinColumn(name = "beneficiary_user_id", nullable = false)
+    @JoinColumn(name = "beneficiary_user_id")
     private UserEntity beneficiary;
 
     @ManyToOne
-    @JoinColumn(name = "deptor_user_id", nullable = false)
+    @JoinColumn(name = "deptor_user_id")
     private UserEntity deptor;
 
 }

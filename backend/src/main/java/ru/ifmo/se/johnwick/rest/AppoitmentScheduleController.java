@@ -10,6 +10,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import org.jboss.logging.annotations.Pos;
 import ru.ifmo.se.johnwick.constant.ApiConstant;
+import ru.ifmo.se.johnwick.model.Role;
 import ru.ifmo.se.johnwick.model.dto.AppointmentScheduleDto;
 import ru.ifmo.se.johnwick.model.dto.UserDto;
 import ru.ifmo.se.johnwick.model.input.AppoitmentScheduleInput;

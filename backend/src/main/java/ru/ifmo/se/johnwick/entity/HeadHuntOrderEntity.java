@@ -17,7 +17,7 @@ public class HeadHuntOrderEntity {
     private UUID orderId = UUID.randomUUID();
 
     @ManyToOne
-    @JoinColumn(name = "succeded_killer_id", nullable = false)
+    @JoinColumn(name = "succeded_killer_id")
     private UserEntity successer;
 
     @Column(name = "current_price", nullable = false)

@@ -26,6 +26,8 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+
+    //TODO ПЕРЕПИСАТЬ ДЛЯ ДВУХ РОЛЕЙ
     @GET
     @Path("/{role}")
     @RolesAllowed("KILLER")

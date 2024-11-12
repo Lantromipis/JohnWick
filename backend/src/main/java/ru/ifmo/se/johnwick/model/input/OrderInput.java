@@ -11,5 +11,4 @@ public class OrderInput {
     private String status;
     private String description;
     private String targetName;
-
 }

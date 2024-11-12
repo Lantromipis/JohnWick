@@ -4,10 +4,7 @@ package ru.ifmo.se.johnwick.rest;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.*;
 import org.jboss.logging.annotations.Pos;
 import ru.ifmo.se.johnwick.constant.ApiConstant;
 import ru.ifmo.se.johnwick.model.Role;
@@ -31,9 +28,10 @@ public class AppoitmentScheduleController {
         return appoitmentScheduleService.createAppointmentSchedule(appoitmentScheduleInput);
     }
 
+
     @GET
-    public Collection<AppointmentScheduleDto> getAppointmentScheduleByDate(AppoitmentScheduleInput appoitmentScheduleInput) {
-        LocalDate date = appoitmentScheduleInput.getDate();
+    public Collection<AppointmentScheduleDto> getAppointmentScheduleByDate(@QueryParam("date") String dateString) {
+        LocalDate date = LocalDate.parse(dateString);
         return appoitmentScheduleService.getAppointmentScheduleByDate(date);
     }
 }

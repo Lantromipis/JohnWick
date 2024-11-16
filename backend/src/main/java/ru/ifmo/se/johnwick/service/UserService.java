@@ -59,6 +59,7 @@ public class UserService {
     UserEntity getUserEntity(String username) {
         return userRepository.findByUsername(username);
     }
+
     public UserDto getUserById(UUID id) {
         UserEntity user = userRepository.findByID(id);
         return userMapper.mapEntityToDto(user);

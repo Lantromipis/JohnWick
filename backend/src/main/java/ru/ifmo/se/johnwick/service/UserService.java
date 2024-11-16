@@ -12,7 +12,9 @@ import ru.ifmo.se.johnwick.model.input.PasswordInput;
 import ru.ifmo.se.johnwick.model.input.UserInput;
 import ru.ifmo.se.johnwick.repository.UserRepository;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.UUID;
 
 @ApplicationScoped
 public class UserService {
@@ -35,8 +37,9 @@ public class UserService {
         return userMapper.mapEntitiesToDtos(entityCollection);
     }
 
-    public Collection<UserDto> getAllByRoles(Role role) {
-        Collection<UserEntity> entityCollection = userRepository.findByRole(role);
+    public Collection<UserDto> getAllByRoles() {
+        Collection<Role> rolesToFind = Arrays.asList(Role.TAILOR, Role.SOMMELIER);
+        Collection<UserEntity> entityCollection = userRepository.findByRole(rolesToFind);
         return userMapper.mapEntitiesToDtos(entityCollection);
     }
 
@@ -55,5 +58,9 @@ public class UserService {
 
     UserEntity getUserEntity(String username) {
         return userRepository.findByUsername(username);
+    }
+    public UserDto getUserById(UUID id) {
+        UserEntity user = userRepository.findByID(id);
+        return userMapper.mapEntityToDto(user);
     }
 }

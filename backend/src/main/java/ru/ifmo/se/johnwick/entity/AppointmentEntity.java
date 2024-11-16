@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
@@ -30,10 +31,10 @@ public class AppointmentEntity{
     private LocalDate date;
 
     @Column(name = "from_time", nullable = false)
-    private ZonedDateTime startTime;
+    private LocalTime startTime;
 
     @Column(name = "to_time", nullable = false)
-    private ZonedDateTime endTime;
+    private LocalTime endTime;
 
     @Column(name = "message")
     private String message;

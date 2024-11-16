@@ -14,6 +14,7 @@ import ru.ifmo.se.johnwick.model.input.UserInput;
 import ru.ifmo.se.johnwick.service.UserService;
 
 import java.util.Collection;
+import java.util.UUID;
 
 @Path(ApiConstant.API_V1 + "/user")
 @RolesAllowed("ADMIN")
@@ -22,17 +23,22 @@ public class UserController {
     UserService userService;
 
     @GET
+    @Path("/all")
     public Collection<UserDto> getUsers() {
         return userService.getAllUsers();
     }
 
-
-    //TODO ПЕРЕПИСАТЬ ДЛЯ ДВУХ РОЛЕЙ
     @GET
-    @Path("/{role}")
+    @Path("/{id}")
+    public UserDto getUsers(@PathParam("id") UUID id) {
+        return userService.getUserById(id);
+    }
+
+    @GET
     @RolesAllowed("KILLER")
-    public Collection<UserDto> getUsersByRole(@PathParam("role") Role role) {
-        return userService.getAllByRoles(role);
+    @Path("/roles")
+    public Collection<UserDto> getUsersByRole() {
+        return userService.getAllByRoles();
     }
 
     @POST

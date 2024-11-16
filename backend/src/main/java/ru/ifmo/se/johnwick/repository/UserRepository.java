@@ -23,7 +23,7 @@ public class UserRepository implements PanacheRepository<UserEntity> {
         return findAll().page(page).list();
     }
 
-    public Collection<UserEntity> findByRole(Role role) {
-        return find("role = ?1", role).list();
+    public Collection<UserEntity> findByRole(Collection<Role> roles) {
+        return find("role IN ?1", roles).list();
     }
 }

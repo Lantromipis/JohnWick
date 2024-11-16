@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
 import AssignmentIcon from "@mui/icons-material/Assignment";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { Link, useNavigate } from "react-router-dom";
 import {
   EXPLORE_ORDERS_PAGE_PATH,
@@ -21,14 +22,15 @@ import {
   MANAGE_ORDERS_PAGE_PATH,
   MANAGE_USERS_PAGE_PATH,
   MY_ORDERS_PAGE_PATH,
+  MY_SCHEDULE_PAGE_PATH,
 } from "../constants/route.constants.ts";
 import { AccountCircle, Explore } from "@mui/icons-material";
 import AccessControlComponent from "../components/menu/access-control.component.tsx";
-import DrawerPageLinkListItem from "../components/menu/drawer-page-link-list-item.componetn.tsx";
+import DrawerPageLinkListItem from "../components/menu/drawer-page-link-list-item.component.tsx";
 import { useDispatch, useSelector } from "react-redux";
-import { selectCurrentUserRole } from "../store/current-user/current-user.selectors.ts";
+import { selectCurrentUserRole } from "../store/user/user.selectors.ts";
 import { AUTHORIZATION_HEADER_STORAGE_KEY } from "../constants/local-storage.constant.ts";
-import { clearCurrentUser } from "../store/current-user/current-user.slice.ts";
+import { clearCurrentUser } from "../store/user/user.slice.ts";
 import { UserRole } from "../models/user.model.ts";
 import NotificationsListContainer from "../components/menu/notifications-list.container.tsx";
 
@@ -44,7 +46,9 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
   const [accountMenuAnchorEl, setAccountMenuAnchorAnchorEl] =
     useState<null | HTMLElement>(null);
 
-  const currentUserRole: UserRole = useSelector(selectCurrentUserRole);
+  const currentUserRole: UserRole | undefined = useSelector(
+    selectCurrentUserRole,
+  );
   const dispatch = useDispatch();
 
   const handleAccountMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -151,6 +155,18 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
               label="My orders"
               pageLink={MY_ORDERS_PAGE_PATH}
               icon={<AssignmentIcon />}
+            />
+          </List>
+        </AccessControlComponent>
+        <AccessControlComponent
+          showFor={UserRole.TAILOR}
+          role={currentUserRole}
+        >
+          <List>
+            <DrawerPageLinkListItem
+              label="My schedule"
+              pageLink={MY_SCHEDULE_PAGE_PATH}
+              icon={<CalendarMonthIcon />}
             />
           </List>
         </AccessControlComponent>

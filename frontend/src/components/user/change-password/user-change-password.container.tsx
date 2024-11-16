@@ -15,26 +15,28 @@ import { USER_CHANGE_PASSWORD_FORM_ID } from "../../../constants/form.constants.
 import UserChangePasswordForm from "./user-change-password.form.tsx";
 
 type UserChangePasswordContainerProps = {
-  username: string;
+  userId?: string;
+  username?: string;
   open: boolean;
   onClose: () => void;
 };
 
 const UserChangePasswordContainer: FC<UserChangePasswordContainerProps> = ({
+  userId,
   username,
   open,
   onClose,
 }) => {
   const [changeError, setChangeError] = useState<boolean>(false);
   const [changeUserPassword, changeUserPasswordResponse] =
-    userApi.useChangeUserPasswordMutation();
+    userApi.usePatchUserMutation();
 
   const handleSubmit: SubmitHandler<UserChangePasswordFormModel> = useCallback(
     (formData) => {
       setChangeError(false);
       changeUserPassword({
+        id: userId,
         password: formData.password,
-        username: username,
       })
         .unwrap()
         .then(() => {
@@ -44,7 +46,7 @@ const UserChangePasswordContainer: FC<UserChangePasswordContainerProps> = ({
           setChangeError(true);
         });
     },
-    [username],
+    [changeUserPassword, onClose, userId],
   );
 
   return (

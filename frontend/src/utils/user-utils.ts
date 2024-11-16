@@ -1,6 +1,9 @@
 import { UserRole } from "../models/user.model.ts";
 
-export function userRoleToLabel(role: UserRole): string {
+export function userRoleToLabel(role?: UserRole): string {
+  if (!role) {
+    return "";
+  }
   switch (role) {
     case UserRole.ADMIN:
       return "Admin";

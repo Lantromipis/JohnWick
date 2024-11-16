@@ -27,18 +27,11 @@ export interface UserChangePasswordFormModel {
 
 // dto
 export interface UserDtoModel {
-  displayName: string;
-  username: string;
-  role: UserRole;
-}
-
-export interface UserWithPasswordDtoModel extends UserDtoModel {
-  password: string;
-}
-
-export interface UserChangePasswordDtoModel {
-  username: string;
-  password: string;
+  id?: string;
+  username?: string;
+  displayName?: string;
+  password?: string;
+  role?: UserRole;
 }
 
 // state

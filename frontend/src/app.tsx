@@ -9,6 +9,7 @@ import {
   MANAGE_ORDERS_PAGE_PATH,
   MANAGE_USERS_PAGE_PATH,
   MY_ORDERS_PAGE_PATH,
+  MY_SCHEDULE_PAGE_PATH,
 } from "./constants/route.constants.ts";
 import { Provider } from "react-redux";
 import { persistor, store } from "./store/store.tsx";
@@ -16,6 +17,7 @@ import ManageOrdersPage from "./pages/manage-orders.page.tsx";
 import { PersistGate } from "redux-persist/integration/react";
 import ExploreOrdersPage from "./pages/explore-orders.page.tsx";
 import MyOrdersPage from "./pages/my-orders-page.tsx";
+import MySchedulePage from "./pages/my-schedule-page.tsx";
 
 function App() {
   return (
@@ -40,6 +42,10 @@ function App() {
                 element={<ExploreOrdersPage />}
               />
               <Route path={MY_ORDERS_PAGE_PATH} element={<MyOrdersPage />} />
+              <Route
+                path={MY_SCHEDULE_PAGE_PATH}
+                element={<MySchedulePage />}
+              />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </BrowserRouter>

@@ -1,7 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { commonApi } from "./common.api.ts";
 import { setupListeners } from "@reduxjs/toolkit/query";
-import { currentUserReducer as currentUser } from "./current-user/current-user.slice.ts";
+import { currentUserReducer as currentUser } from "./user/user.slice.ts";
 import storage from "redux-persist/lib/storage";
 import {
   FLUSH,

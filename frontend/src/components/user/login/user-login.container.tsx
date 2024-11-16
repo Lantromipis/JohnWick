@@ -7,31 +7,31 @@ import {
   UserLoginFormModel,
 } from "../../../models/user.model.ts";
 import { LockOutlined } from "@mui/icons-material";
-import { currentUserApi } from "../../../store/current-user/current-user.api.ts";
+import { userApi } from "../../../store/user/user.api.ts";
 import { AUTHORIZATION_HEADER_STORAGE_KEY } from "../../../constants/local-storage.constant.ts";
 import { useNavigate } from "react-router-dom";
 import { HOME_PAGE_PATH } from "../../../constants/route.constants.ts";
 import { useDispatch } from "react-redux";
-import { setCurrentUser } from "../../../store/current-user/current-user.slice.ts";
+import { setCurrentUser } from "../../../store/user/user.slice.ts";
 
 type UserLoginContainerProps = {};
 
 const UserLoginContainer: FC<UserLoginContainerProps> = () => {
   const [loginError, setLoginError] = React.useState<boolean>(false);
   const [getCurrentUser, getCurrenUserResponse] =
-    currentUserApi.useLazyGetCurrentUserInfoQuery();
+    userApi.useLazyGetCurrentUserInfoQuery();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleSubmit: SubmitHandler<UserLoginFormModel> = useCallback(
     (formData) => {
       setLoginError(false);
-      let auth = btoa(`${formData.username}:${formData.password}`);
+      const auth = btoa(`${formData.username}:${formData.password}`);
       localStorage.setItem(AUTHORIZATION_HEADER_STORAGE_KEY, auth);
       getCurrentUser()
         .unwrap()
         .then((response) => {
-          let model = response as CurrentUserStateModel;
+          const model = response as CurrentUserStateModel;
           console.log(getCurrenUserResponse);
           dispatch(setCurrentUser(model));
           navigate(HOME_PAGE_PATH);

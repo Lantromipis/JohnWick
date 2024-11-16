@@ -3,7 +3,7 @@ import { CurrentUserStateModel } from "../../models/user.model.ts";
 
 const initialState = {} as CurrentUserStateModel;
 
-export const currentUserSlice = createSlice({
+export const userSlice = createSlice({
   name: "currentUser",
   initialState: initialState,
   reducers: {
@@ -17,6 +17,6 @@ export const currentUserSlice = createSlice({
   },
 });
 
-export const { setCurrentUser, clearCurrentUser } = currentUserSlice.actions;
+export const { setCurrentUser, clearCurrentUser } = userSlice.actions;
 
-export const currentUserReducer = currentUserSlice.reducer;
+export const currentUserReducer = userSlice.reducer;

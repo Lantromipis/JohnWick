@@ -18,7 +18,7 @@ type UserListComponentProps = {
 
 const UserListComponent: FC<UserListComponentProps> = ({ users }) => {
   const [currentChangePasswordUser, setCurrentChangePasswordUser] =
-    useState<string>("");
+    useState<UserDtoModel>({});
   const [changePasswordDialogOpen, setChangePasswordDialogOpen] =
     useState<boolean>(false);
 
@@ -47,12 +47,12 @@ const UserListComponent: FC<UserListComponentProps> = ({ users }) => {
               <TableRow>
                 <TableCell>{user.username}</TableCell>
                 <TableCell>{user.displayName}</TableCell>
-                <TableCell>{userRoleToLabel(user.role)}</TableCell>
+                <TableCell>{userRoleToLabel(user?.role)}</TableCell>
                 <TableCell>
                   <Button
                     variant="outlined"
                     onClick={() => {
-                      setCurrentChangePasswordUser(user.username);
+                      setCurrentChangePasswordUser(user);
                       handleChangePasswordDialogOpen();
                     }}
                   >
@@ -65,7 +65,8 @@ const UserListComponent: FC<UserListComponentProps> = ({ users }) => {
         </Table>
       </TableContainer>
       <UserChangePasswordContainer
-        username={currentChangePasswordUser}
+        userId={currentChangePasswordUser.id}
+        username={currentChangePasswordUser.username}
         onClose={handleChangePasswordDialogClose}
         open={changePasswordDialogOpen}
       />

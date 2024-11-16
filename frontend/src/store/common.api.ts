@@ -8,7 +8,7 @@ import {
 import { AUTHORIZATION_HEADER_STORAGE_KEY } from "../constants/local-storage.constant.ts";
 import { setCommonHeaders } from "./store.utils.ts";
 import { REDIRECT_TO_LOGIN_API_BLACKLIST } from "../constants/store.contants.ts";
-import { clearCurrentUser } from "./current-user/current-user.slice.ts";
+import { clearCurrentUser } from "./user/user.slice.ts";
 import { LOGIN_PAGE_PATH } from "../constants/route.constants.ts";
 
 const baseQuery = fetchBaseQuery({

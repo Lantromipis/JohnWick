@@ -1,11 +1,15 @@
-import { FC, memo } from "react";
+import { FC, memo, useEffect } from "react";
 import UserListComponent from "./user-list.component.tsx";
 import { userApi } from "../../../store/user/user.api.ts";
 
 type UserListContainerProps = {};
 
 const UserListContainer: FC<UserListContainerProps> = () => {
-  const { data } = userApi.useGetUsersQuery();
+  const { data, refetch } = userApi.useGetUsersQuery();
+
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
 
   return <UserListComponent users={data ?? []} />;
 };

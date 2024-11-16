@@ -1,4 +1,4 @@
-import { FC, memo, useEffect, useState } from "react";
+import { FC, memo, useState } from "react";
 import NotificationsListComponent from "./notifications-list.component.tsx";
 import {
   Button,
@@ -26,10 +26,6 @@ const NotificationsListContainer: FC<NotificationsListContainerProps> = () => {
   const handleDialogClose = () => {
     setDialogOpen(false);
   };
-
-  useEffect(() => {
-    refetch();
-  }, [refetch]);
 
   return (
     <>

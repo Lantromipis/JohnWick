@@ -5,5 +5,5 @@ public enum UserRole {
     KILLER,
     TAILOR,
     SOMMELIER,
-    CLEANER
+    CLEANER;
 }

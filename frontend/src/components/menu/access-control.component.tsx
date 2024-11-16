@@ -2,7 +2,7 @@ import { FC, memo, ReactNode } from "react";
 import { UserRole } from "../../models/user.model.ts";
 
 type AccessControlComponentProps = {
-  role: UserRole;
+  role?: UserRole;
   showFor: UserRole;
   children: ReactNode;
 };

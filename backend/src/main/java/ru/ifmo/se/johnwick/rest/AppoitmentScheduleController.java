@@ -30,8 +30,9 @@ public class AppoitmentScheduleController {
 
 
     @GET
-    public Collection<AppointmentScheduleDto> getAppointmentScheduleByDate(@QueryParam("date") String dateString) {
-        LocalDate date = LocalDate.parse(dateString);
-        return appoitmentScheduleService.getAppointmentScheduleByDate(date);
+    public Collection<AppointmentScheduleDto> getAppointmentScheduleByDateRange(@QueryParam("startDate") String startDateString,@QueryParam("endDate") String endDateString) {
+        LocalDate startDate = LocalDate.parse(startDateString);
+        LocalDate endDate = LocalDate.parse(endDateString);
+        return appoitmentScheduleService.getAppointmentScheduleByDateRange(startDate,endDate);
     }
 }

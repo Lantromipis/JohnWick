@@ -12,7 +12,7 @@ import java.util.Collection;
 @ApplicationScoped
 public class AppoitmentScheduleRepository implements PanacheRepository<AppointmentScheduleEntity> {
 
-    public Collection<AppointmentScheduleEntity> findByDate(LocalDate date) {
-        return find("date = ?1", date).list();
+    public Collection<AppointmentScheduleEntity> findByDate(LocalDate startDate,LocalDate endDate) {
+        return find("date >= ?1 and date <= ?2", startDate, endDate).list();
     }
 }

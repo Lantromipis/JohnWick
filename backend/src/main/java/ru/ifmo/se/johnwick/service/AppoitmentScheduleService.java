@@ -42,8 +42,8 @@ public class AppoitmentScheduleService {
         return appoitmentScheduleMapper.mapEntityToDto(appointmentScheduleEntity);
     }
 
-    public Collection<AppointmentScheduleDto> getAppointmentScheduleByDate(LocalDate date) {
-        Collection<AppointmentScheduleEntity> entityCollection = appoitmentScheduleRepository.findByDate(date);
+    public Collection<AppointmentScheduleDto> getAppointmentScheduleByDateRange(LocalDate startDate,LocalDate endDate) {
+        Collection<AppointmentScheduleEntity> entityCollection = appoitmentScheduleRepository.findByDate(startDate,endDate);
         return appoitmentScheduleMapper.mapEntitiesToDtos(entityCollection);
     }
 }

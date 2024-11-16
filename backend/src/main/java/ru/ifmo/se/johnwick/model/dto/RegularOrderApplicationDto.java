@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.ifmo.se.johnwick.model.entity.UserEntity;
+import ru.ifmo.se.johnwick.model.entity.RegularOrderEntity;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
@@ -13,11 +13,9 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class NotificationDto {
+public class RegularOrderApplicationDto {
     private UUID id;
-    private UserEntity recipient;
-    private String title;
-    private String message;
+    private UserDto killer;
+    private RegularOrderEntity regularOrder;
     private OffsetDateTime createdTimestamp;
-    private boolean read;
 }

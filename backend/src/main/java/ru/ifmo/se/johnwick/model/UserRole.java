@@ -1,6 +1,6 @@
 package ru.ifmo.se.johnwick.model;
 
-public enum Role {
+public enum UserRole {
     ADMIN,
     KILLER,
     TAILOR,

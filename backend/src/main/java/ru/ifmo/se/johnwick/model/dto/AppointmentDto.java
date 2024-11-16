@@ -4,18 +4,20 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.ifmo.se.johnwick.model.UserRole;
 
+import java.time.LocalDate;
+import java.time.OffsetTime;
 import java.util.UUID;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDto {
+public class AppointmentDto {
     private UUID id;
-    private String username;
-    private String displayName;
-    private String password;
-    private UserRole role;
+    private UserDto bookedBy;
+    private LocalDate date;
+    private OffsetTime startTime;
+    private OffsetTime endTime;
+    private String message;
 }

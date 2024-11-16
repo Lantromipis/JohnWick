@@ -1,7 +1,7 @@
 johnwick:
   regular-order:
     cleaning-interval: 1m
-    max-age: PT3M # 3 minutes
+    max-age: PT5M # 3 minutes
   head-hunt:
     price-increase-interval: 1m
     price-increase-factor: 2

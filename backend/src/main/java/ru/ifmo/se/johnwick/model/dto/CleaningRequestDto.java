@@ -4,7 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.ifmo.se.johnwick.model.entity.UserEntity;
+import ru.ifmo.se.johnwick.model.CleaningRequestStatus;
+import ru.ifmo.se.johnwick.model.entity.OrderEntity;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
@@ -13,11 +14,11 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class NotificationDto {
+public class CleaningRequestDto {
     private UUID id;
-    private UserEntity recipient;
-    private String title;
-    private String message;
+    private OrderEntity order;
+    private UserDto requestedBy;
     private OffsetDateTime createdTimestamp;
-    private boolean read;
+    private CleaningRequestStatus status;
+    private String details;
 }

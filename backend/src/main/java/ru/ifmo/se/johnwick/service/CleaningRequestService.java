@@ -4,6 +4,10 @@ import io.quarkus.security.identity.SecurityIdentity;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
+import jakarta.ws.rs.PUT;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import ru.ifmo.se.johnwick.entity.CleaningRequestEntity;
 import ru.ifmo.se.johnwick.entity.OrderEntity;
 import ru.ifmo.se.johnwick.entity.UserEntity;
@@ -20,6 +24,7 @@ import ru.ifmo.se.johnwick.repository.UserRepository;
 
 import java.time.Instant;
 import java.util.Collection;
+import java.util.UUID;
 
 @ApplicationScoped
 public class CleaningRequestService {
@@ -51,5 +56,20 @@ public class CleaningRequestService {
     public Collection<CleaningRequestDto> getAllCleaningRequest() {
         Collection<CleaningRequestEntity> entityCollection = cleaningRequestRepository.findAll().list();
         return cleaningRequestMapper.mapEntitiesToDtos(entityCollection);
+    }
+
+    public CleaningRequestDto acceptCleaningRequest(UUID requestId) {
+        CleaningRequestEntity cleaningRequestEntity = cleaningRequestRepository.findByUUID(requestId);
+        cleaningRequestEntity.setStatus(CleaningRequestStatus.ACCEPTED);
+        entityManager.merge(cleaningRequestEntity);
+        return cleaningRequestMapper.mapEntityToDto(cleaningRequestEntity);
+    }
+
+
+    public CleaningRequestDto finishCleaningRequest(UUID requestId) {
+        CleaningRequestEntity cleaningRequestEntity = cleaningRequestRepository.findByUUID(requestId);
+        cleaningRequestEntity.setStatus(CleaningRequestStatus.FINISHED);
+        entityManager.merge(cleaningRequestEntity);
+        return cleaningRequestMapper.mapEntityToDto(cleaningRequestEntity);
     }
 }

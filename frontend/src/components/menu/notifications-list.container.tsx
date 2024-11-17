@@ -1,6 +1,6 @@
 import { FC, memo, useState } from "react";
-import NotificationsListComponent from "./notifications-list.component.tsx";
 import {
+  Alert,
   Button,
   Dialog,
   DialogActions,
@@ -11,11 +11,13 @@ import {
 } from "@mui/material";
 import { Notifications } from "@mui/icons-material";
 import { notificationApi } from "../../store/notifications/notification.api.ts";
+import NotificationCardComponent from "./notification-card.component.tsx";
 
 type NotificationsListContainerProps = {};
 
 const NotificationsListContainer: FC<NotificationsListContainerProps> = () => {
-  const { data, refetch } = notificationApi.useGetNotificationsQuery();
+  const { data: notifications, refetch } =
+    notificationApi.useGetNotificationsQuery();
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
 
   const handleDialogOpen = () => {
@@ -35,8 +37,15 @@ const NotificationsListContainer: FC<NotificationsListContainerProps> = () => {
       <Dialog open={dialogOpen} onClose={handleDialogClose}>
         <DialogTitle>Notifications</DialogTitle>
         <DialogContent sx={{ width: "350px" }}>
-          <Stack spacing={2} sx={{ paddingTop: "10px" }}>
-            <NotificationsListComponent notifications={data ?? []} />
+          <Stack spacing={2}>
+            {notifications?.length == 0 && (
+              <Alert severity="info">
+                There are no notifications now. Come back later!
+              </Alert>
+            )}
+            {notifications?.map((notification) => (
+              <NotificationCardComponent notification={notification} />
+            ))}
           </Stack>
         </DialogContent>
         <DialogActions>

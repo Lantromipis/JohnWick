@@ -33,7 +33,7 @@ public class NotificationServiceImpl implements NotificationService {
     NotificationMapper notificationMapper;
 
     @Override
-    @Transactional
+    @Transactional()
     public void sendNotificationToAllUsersByRole(UserRole role, String title, String message) {
         List<UserEntity> users = userRepository.findAllByRole(role);
         OffsetDateTime timestamp = OffsetDateTime.now();
@@ -47,6 +47,19 @@ public class NotificationServiceImpl implements NotificationService {
 
             notificationRepository.persist(notificationEntity);
         }
+    }
+
+    @Override
+    @Transactional
+    public void sendNotificationToUser(UserEntity user, String title, String message) {
+        NotificationEntity notificationEntity = new NotificationEntity();
+
+        notificationEntity.setTitle(title);
+        notificationEntity.setMessage(message);
+        notificationEntity.setCreatedTimestamp(OffsetDateTime.now());
+        notificationEntity.setRecipient(user);
+
+        notificationRepository.persist(notificationEntity);
     }
 
     @Override

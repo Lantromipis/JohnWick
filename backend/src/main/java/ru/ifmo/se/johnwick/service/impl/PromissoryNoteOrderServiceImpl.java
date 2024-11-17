@@ -13,7 +13,6 @@ import jakarta.transaction.Transactional;
 import ru.ifmo.se.johnwick.exception.EntityNotFoundByIdException;
 import ru.ifmo.se.johnwick.mapper.OrderMapper;
 import ru.ifmo.se.johnwick.model.OrderStatus;
-import ru.ifmo.se.johnwick.model.UserRole;
 import ru.ifmo.se.johnwick.model.dto.PromissoryNoteOrderDto;
 import ru.ifmo.se.johnwick.model.entity.PromissoryNoteOrderEntity;
 import ru.ifmo.se.johnwick.model.entity.UserEntity;
@@ -70,8 +69,8 @@ public class PromissoryNoteOrderServiceImpl implements PromissoryNoteOrderServic
 
         promissoryNoteOrderRepository.persist(orderEntity);
 
-        notificationService.sendNotificationToAllUsersByRole(
-                UserRole.KILLER,
+        notificationService.sendNotificationToUser(
+                debtor,
                 "New promissory note order",
                 "You were assigned to new promissory note order with id" + orderEntity.getId().toString() + "!"
         );

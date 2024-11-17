@@ -10,13 +10,13 @@ import {
   Stack,
 } from "@mui/material";
 import {
-  OrderApplicationDto,
   OrderSelectExecutorFormModel,
+  RegularOrderApplicationDto,
 } from "../../../models/order.model.ts";
 
 type OrderSelectExecutorComponentProps = {
   onSubmit: SubmitHandler<OrderSelectExecutorFormModel>;
-  applications: OrderApplicationDto[];
+  applications: RegularOrderApplicationDto[];
 };
 
 const OrderSelectExecutorForm: FC<OrderSelectExecutorComponentProps> = ({
@@ -31,7 +31,7 @@ const OrderSelectExecutorForm: FC<OrderSelectExecutorComponentProps> = ({
     mode: "onBlur",
     reValidateMode: "onBlur",
     defaultValues: {
-      selectedApplicationId: "",
+      selectedKillerId: "",
     },
   });
 
@@ -43,11 +43,11 @@ const OrderSelectExecutorForm: FC<OrderSelectExecutorComponentProps> = ({
     >
       <Stack direction={"column"} spacing={2} sx={{ minWidth: "300px" }}>
         <Controller
-          name="selectedApplicationId"
+          name="selectedKillerId"
           rules={{ required: "Executor is required" }}
           control={control}
           render={({ field }) => (
-            <FormControl required error={!!errors.selectedApplicationId}>
+            <FormControl required error={!!errors.selectedKillerId}>
               <InputLabel id="type-label">Selected executor</InputLabel>
               <Select
                 labelId="type-label"
@@ -57,14 +57,14 @@ const OrderSelectExecutorForm: FC<OrderSelectExecutorComponentProps> = ({
                 value={field.value}
               >
                 {applications.map((application) => (
-                  <MenuItem key={application.id} value={application.id}>
-                    {application.appliedKiller.displayName}
+                  <MenuItem key={application.id} value={application.killer.id}>
+                    {application.killer.displayName}
                   </MenuItem>
                 ))}
               </Select>
               <FormHelperText>
-                {!!errors.selectedApplicationId
-                  ? errors.selectedApplicationId.message
+                {!!errors.selectedKillerId
+                  ? errors.selectedKillerId.message
                   : ""}
               </FormHelperText>
             </FormControl>

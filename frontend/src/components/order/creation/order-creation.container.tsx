@@ -13,12 +13,10 @@ import {
 import { PostAdd } from "@mui/icons-material";
 import { ORDER_CREATION_FORM_ID } from "../../../constants/form.constants.ts";
 import {
-  HeadHuntOrderDto,
   OrderCreationFormModel,
   OrderDtoModel,
+  OrderStatus,
   OrderType,
-  PromissoryNoteOrderDto,
-  RegularOrderDto,
 } from "../../../models/order.model.ts";
 import OrderCreationFrom from "./order-creation.from.tsx";
 import { UserDtoModel, UserRole } from "../../../models/user.model.ts";
@@ -52,40 +50,37 @@ const OrderCreationContainer: FC<OrderCreationContainerProps> = () => {
       switch (formData.type) {
         case OrderType.REGULAR:
           newOrder = {
-            type: formData.type,
+            type: OrderType.REGULAR,
+            status: OrderStatus.CREATED,
             description: formData.description,
-            target: formData.target,
+            targetName: formData.target,
             price: formData.price,
-            customer: formData.customer,
-          } as RegularOrderDto;
+            customerName: formData.customer,
+          };
           break;
         case OrderType.PROMISSORY_NOTE:
           newOrder = {
-            type: formData.type,
+            type: OrderType.PROMISSORY_NOTE,
+            status: OrderStatus.CREATED,
             description: formData.description,
-            target: formData.target,
-            price: formData.price,
-            customer: formData.customer,
-            assignee: {
-              displayName: "",
-              username: formData.debtorUsername,
-              role: UserRole.KILLER,
+            targetName: formData.target,
+            debtor: {
+              id: formData.debtorId,
             },
             beneficiary: {
-              displayName: "",
-              username: formData.beneficiaryUsername,
-              role: UserRole.KILLER,
+              id: formData.beneficiaryId,
             },
-          } as PromissoryNoteOrderDto;
+          };
           break;
         case OrderType.HEAD_HUNT:
           newOrder = {
             type: OrderType.HEAD_HUNT,
+            status: OrderStatus.CREATED,
             description: formData.description,
-            target: formData.target,
-            price: formData.price,
-            customer: formData.customer,
-          } as HeadHuntOrderDto;
+            targetName: formData.target,
+            currentPrice: formData.price,
+            customerName: formData.customer,
+          };
           break;
       }
 

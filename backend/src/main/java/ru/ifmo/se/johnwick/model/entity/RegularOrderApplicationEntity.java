@@ -19,10 +19,10 @@ public class RegularOrderApplicationEntity {
     @JoinColumn(name = "applied_killer_id")
     private UserEntity killer;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "regular_order_id")
     private RegularOrderEntity regularOrder;
 
-    @Column(name = "created_timestamp", nullable = false, insertable = false, updatable = false)
+    @Column(name = "created_timestamp", nullable = false, updatable = false)
     private OffsetDateTime createdTimestamp;
 }

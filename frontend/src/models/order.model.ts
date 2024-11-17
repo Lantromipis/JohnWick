@@ -6,6 +6,20 @@ export enum OrderType {
   HEAD_HUNT = "HEAD_HUNT",
 }
 
+export enum OrderStatus {
+  CREATED = "CREATED",
+  AWAITING_APPLICATIONS = "AWAITING_APPLICATIONS",
+  AWAITING_ASSIGMENT = "AWAITING_ASSIGMENT",
+  AWAITING_ASSIGNEE = "AWAITING_ASSIGNEE",
+  AWAITING_SUIT = "AWAITING_SUIT",
+  AWAITING_DEGUSTATION = "AWAITING_DEGUSTATION",
+  AWAITING_SUBMISSION = "AWAITING_SUBMISSION",
+  AWAITING_CLEANING = "AWAITING_CLEANING",
+  AWAITING_APPROVAL = "AWAITING_APPROVAL",
+  COMPLETED = "COMPLETED",
+  CANCELLED = "CANCELLED",
+}
+
 // form
 export interface OrderCreationFormModel {
   type: OrderType;
@@ -14,51 +28,53 @@ export interface OrderCreationFormModel {
   description: string;
   target: string;
   // promissory note order
-  debtorUsername: string;
-  beneficiaryUsername: string;
+  debtorId: string;
+  beneficiaryId: string;
 }
 
 export interface OrderSelectExecutorFormModel {
-  selectedApplicationId: string;
+  selectedKillerId: string;
 }
 
 // dto
-
 export type OrderDtoModel =
-  | RegularOrderDto
-  | HeadHuntOrderDto
-  | PromissoryNoteOrderDto;
-
-export interface AvailableOrderDtoModel {
-  id?: string;
-  type: OrderType;
-  customer: string;
-  price: number;
-  description: string;
-  target: string;
-  alreadyApplied: boolean;
-}
+  | ({ type: OrderType.REGULAR } & RegularOrderDto)
+  | ({ type: OrderType.PROMISSORY_NOTE } & PromissoryNoteOrderDto)
+  | ({ type: OrderType.HEAD_HUNT } & HeadHuntOrderDto);
 
 export interface BaseOrderDto {
   id?: string;
+  createdTimestamp?: string;
   type: OrderType;
-  customer: string;
-  price: number;
-  description: string;
-  target: string;
-  assignee?: UserDtoModel;
+  description?: string;
+  status?: OrderStatus;
+  targetName?: string;
+  applications?: RegularOrderApplicationDto[];
 }
 
-export interface RegularOrderDto extends BaseOrderDto {}
+export interface RegularOrderDto extends BaseOrderDto {
+  type: OrderType.REGULAR;
+  assignee?: UserDtoModel;
+  price?: number;
+  customerName?: string;
+}
 
-export interface HeadHuntOrderDto extends BaseOrderDto {}
+export interface HeadHuntOrderDto extends BaseOrderDto {
+  type: OrderType.HEAD_HUNT;
+  succeededKiller?: UserDtoModel;
+  currentPrice?: number;
+  customerName?: string;
+}
 
 export interface PromissoryNoteOrderDto extends BaseOrderDto {
+  type: OrderType.PROMISSORY_NOTE;
   beneficiary: UserDtoModel;
+  debtor: UserDtoModel;
 }
 
-export interface OrderApplicationDto {
+export interface RegularOrderApplicationDto {
   id: string;
-  appliedKiller: UserDtoModel;
-  order: OrderDtoModel;
+  killer: UserDtoModel;
+  regularOrder: OrderDtoModel;
+  createdTimestamp: string;
 }

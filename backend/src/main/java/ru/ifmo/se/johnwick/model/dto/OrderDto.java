@@ -19,6 +19,7 @@ import java.util.UUID;
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
         include = JsonTypeInfo.As.PROPERTY,
+        visible = true,
         property = "type")
 @JsonSubTypes({
         @JsonSubTypes.Type(value = RegularOrderDto.class, name = "REGULAR"),

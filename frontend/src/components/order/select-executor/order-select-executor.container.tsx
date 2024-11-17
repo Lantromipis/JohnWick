@@ -12,7 +12,10 @@ import {
 } from "@mui/material";
 import { ORDER_SELECT_EXECUTOR_FORM_ID } from "../../../constants/form.constants.ts";
 import OrderSelectExecutorForm from "./order-select-executor.form.tsx";
-import { OrderSelectExecutorFormModel } from "../../../models/order.model.ts";
+import {
+  OrderSelectExecutorFormModel,
+  OrderType,
+} from "../../../models/order.model.ts";
 
 type OrderSelectExecutorContainerProps = {
   orderId: string;
@@ -25,22 +28,27 @@ const OrderSelectExecutorContainer: FC<OrderSelectExecutorContainerProps> = ({
   open,
   onClose,
 }) => {
-  const [getApplications, getApplicationsResponse] =
-    orderApi.useLazyGetOrderApplicationsQuery();
+  const [getRegularOrder, getRegularOrderResponse] =
+    orderApi.useLazyGetRegularOrderQuery();
   const [selectError, setSelectError] = useState<boolean>(false);
-  const [selectApplicationForOrder, selectApplicationForOrderResponse] =
-    orderApi.useSelectOrderApplicationMutation();
+  const [pathOrder, pathOrderResponse] = orderApi.usePatchOrderMutation();
 
   useEffect(() => {
     if (orderId.length !== 0) {
-      getApplications(orderId);
+      getRegularOrder(orderId);
     }
-  }, [getApplications, orderId]);
+  }, [getRegularOrder, orderId]);
 
   const handleSubmit: SubmitHandler<OrderSelectExecutorFormModel> = useCallback(
     (formData) => {
       setSelectError(false);
-      selectApplicationForOrder(formData.selectedApplicationId)
+      pathOrder({
+        id: orderId,
+        type: OrderType.REGULAR,
+        assignee: {
+          id: formData.selectedKillerId,
+        },
+      })
         .unwrap()
         .then(() => {
           onClose();
@@ -49,7 +57,7 @@ const OrderSelectExecutorContainer: FC<OrderSelectExecutorContainerProps> = ({
           setSelectError(true);
         });
     },
-    [orderId],
+    [onClose, orderId, pathOrder],
   );
 
   return (
@@ -62,7 +70,8 @@ const OrderSelectExecutorContainer: FC<OrderSelectExecutorContainerProps> = ({
               Failed to select executor for order. Please try again.
             </Alert>
           )}
-          {getApplicationsResponse.data?.length === 0 && (
+          {(getRegularOrderResponse.data?.applications?.length === 0 ||
+            getRegularOrderResponse.error) && (
             <Alert severity="warning">
               There are no applications for this order yet. Please try again
               later.
@@ -70,22 +79,19 @@ const OrderSelectExecutorContainer: FC<OrderSelectExecutorContainerProps> = ({
           )}
           <OrderSelectExecutorForm
             onSubmit={handleSubmit}
-            applications={getApplicationsResponse.data ?? []}
+            applications={getRegularOrderResponse.data?.applications ?? []}
           />
         </Stack>
       </DialogContent>
       <DialogActions>
-        <Button
-          onClick={onClose}
-          disabled={selectApplicationForOrderResponse.isLoading}
-        >
+        <Button onClick={onClose} disabled={pathOrderResponse.isLoading}>
           Cancel
         </Button>
         <Button
           type="submit"
           variant="contained"
           form={ORDER_SELECT_EXECUTOR_FORM_ID}
-          disabled={selectApplicationForOrderResponse.isLoading}
+          disabled={pathOrderResponse.isLoading}
         >
           Select executor
         </Button>

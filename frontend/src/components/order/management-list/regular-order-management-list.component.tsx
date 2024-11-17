@@ -1,5 +1,5 @@
 import { FC, memo, useState } from "react";
-import { OrderDtoModel, OrderType } from "../../../models/order.model.ts";
+import { RegularOrderDto } from "../../../models/order.model.ts";
 import {
   Button,
   Table,
@@ -9,16 +9,15 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import { orderTypeToLabel } from "../../../utils/order-utils.ts";
 import OrderSelectExecutorContainer from "../select-executor/order-select-executor.container.tsx";
 
-type OrderListComponentProps = {
-  orders: OrderDtoModel[];
+type RegularOrderManagementListComponentProps = {
+  orders: RegularOrderDto[];
 };
 
-const OrderManagementListComponent: FC<OrderListComponentProps> = ({
-  orders,
-}) => {
+const RegularOrderManagementListComponent: FC<
+  RegularOrderManagementListComponentProps
+> = ({ orders }) => {
   const [currentOrderId, setCurrentOrderId] = useState<string>("");
   const [selectExecutorDialogOpen, setSelectExecutorDialogOpen] =
     useState<boolean>(false);
@@ -29,6 +28,7 @@ const OrderManagementListComponent: FC<OrderListComponentProps> = ({
 
   const handleSelectExecutorDialogClose = () => {
     setSelectExecutorDialogOpen(false);
+    setCurrentOrderId("");
   };
 
   return (
@@ -37,19 +37,17 @@ const OrderManagementListComponent: FC<OrderListComponentProps> = ({
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Order type</TableCell>
-              <TableCell>Customer</TableCell>
+              <TableCell>Id</TableCell>
               <TableCell>Target</TableCell>
-              <TableCell></TableCell>
+              <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {orders.map((order) => (
               <TableRow>
-                <TableCell>{orderTypeToLabel(order.type)}</TableCell>
-                <TableCell>{order.customer}</TableCell>
-                <TableCell>{order.target}</TableCell>
-                {order.type == OrderType.REGULAR && !order.assignee && (
+                <TableCell>{order.id}</TableCell>
+                <TableCell>{order.targetName}</TableCell>
+                {!order.assignee && (
                   <TableCell>
                     <Button
                       variant="outlined"
@@ -76,4 +74,4 @@ const OrderManagementListComponent: FC<OrderListComponentProps> = ({
   );
 };
 
-export default memo(OrderManagementListComponent);
+export default memo(RegularOrderManagementListComponent);

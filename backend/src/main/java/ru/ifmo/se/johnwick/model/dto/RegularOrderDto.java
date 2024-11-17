@@ -6,6 +6,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.util.Set;
+
 @Data
 @SuperBuilder
 @NoArgsConstructor
@@ -15,4 +17,5 @@ public class RegularOrderDto extends OrderDto {
     private UserDto assignee;
     private Double price;
     private String customerName;
+    private Set<RegularOrderApplicationDto> applications;
 }

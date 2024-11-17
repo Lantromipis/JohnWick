@@ -46,7 +46,8 @@ const OrderCreationForm: FC<OrderCreationFormProps> = ({
       target: "",
       description: "",
       price: 0,
-      debtorUsername: "",
+      debtorId: "",
+      beneficiaryId: "",
     },
   });
 
@@ -83,21 +84,24 @@ const OrderCreationForm: FC<OrderCreationFormProps> = ({
             </FormControl>
           )}
         />
-        <Controller
-          name="customer"
-          control={control}
-          rules={{ required: "Customer name is required" }}
-          render={({ field }) => (
-            <TextField
-              {...field}
-              required
-              variant="outlined"
-              label="Customer name"
-              error={!!errors.customer}
-              helperText={errors.customer?.message}
-            />
-          )}
-        />
+        {(watch("type") == OrderType.REGULAR ||
+          watch("type") == OrderType.HEAD_HUNT) && (
+          <Controller
+            name="customer"
+            control={control}
+            rules={{ required: "Customer name is required" }}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                required
+                variant="outlined"
+                label="Customer name"
+                error={!!errors.customer}
+                helperText={errors.customer?.message}
+              />
+            )}
+          />
+        )}
         <Controller
           name="target"
           control={control}
@@ -129,30 +133,33 @@ const OrderCreationForm: FC<OrderCreationFormProps> = ({
             />
           )}
         />
-        <Controller
-          name="price"
-          control={control}
-          rules={{ required: "Price is required" }}
-          render={({ field }) => (
-            <TextField
-              {...field}
-              required
-              type={"number"}
-              variant="outlined"
-              label="Price"
-              error={!!errors.price}
-              helperText={errors.price?.message}
-            />
-          )}
-        />
+        {(watch("type") == OrderType.REGULAR ||
+          watch("type") == OrderType.HEAD_HUNT) && (
+          <Controller
+            name="price"
+            control={control}
+            rules={{ required: "Price is required" }}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                required
+                type={"number"}
+                variant="outlined"
+                label="Price"
+                error={!!errors.price}
+                helperText={errors.price?.message}
+              />
+            )}
+          />
+        )}
         {watch("type") == OrderType.PROMISSORY_NOTE && (
           <>
             <Controller
-              name="beneficiaryUsername"
+              name="beneficiaryId"
               rules={{ required: "Beneficiary is required" }}
               control={control}
               render={({ field }) => (
-                <FormControl required error={!!errors.beneficiaryUsername}>
+                <FormControl required error={!!errors.beneficiaryId}>
                   <InputLabel id="type-label">Beneficiary</InputLabel>
                   <Select
                     labelId="type-label"
@@ -162,32 +169,30 @@ const OrderCreationForm: FC<OrderCreationFormProps> = ({
                     value={field.value}
                   >
                     {killers.map((killer) => (
-                      <MenuItem key={killer.username} value={killer.username}>
+                      <MenuItem key={killer.username} value={killer.id}>
                         {killer.displayName}
                       </MenuItem>
                     ))}
                   </Select>
                   <FormHelperText>
-                    {!!errors.beneficiaryUsername
-                      ? errors.beneficiaryUsername.message
-                      : ""}
+                    {!!errors.beneficiaryId ? errors.beneficiaryId.message : ""}
                   </FormHelperText>
                 </FormControl>
               )}
             />
             <Controller
-              name="debtorUsername"
+              name="debtorId"
               rules={{
                 required: "Debtor is required",
                 validate: (value: string) => {
-                  if (watch("beneficiaryUsername") === value) {
+                  if (watch("beneficiaryId") === value) {
                     return "Debtor can not be beneficiary!";
                   }
                 },
               }}
               control={control}
               render={({ field }) => (
-                <FormControl required error={!!errors.debtorUsername}>
+                <FormControl required error={!!errors.debtorId}>
                   <InputLabel id="type-label">Debtor</InputLabel>
                   <Select
                     labelId="type-label"
@@ -197,15 +202,13 @@ const OrderCreationForm: FC<OrderCreationFormProps> = ({
                     value={field.value}
                   >
                     {killers.map((killer) => (
-                      <MenuItem key={killer.username} value={killer.username}>
+                      <MenuItem key={killer.username} value={killer.id}>
                         {killer.displayName}
                       </MenuItem>
                     ))}
                   </Select>
                   <FormHelperText>
-                    {!!errors.debtorUsername
-                      ? errors.debtorUsername.message
-                      : ""}
+                    {!!errors.debtorId ? errors.debtorId.message : ""}
                   </FormHelperText>
                 </FormControl>
               )}

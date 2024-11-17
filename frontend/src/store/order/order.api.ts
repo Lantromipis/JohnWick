@@ -1,17 +1,23 @@
 import { commonApi } from "../common.api.ts";
 import {
-  getOrderApplicationsChooseUrl,
-  getOrderApplicationsUrl,
-  getOrderApplyForOrderUrl,
+  getCreateRegularOrderApplicationUrl,
+  getListEntitiesUrl,
+  getListRegularOrderApplicationUrl,
+  getPatchOrderUrl,
+  getRegularOrderUrl,
+  HEAD_HUNT_ORDER_BASE_URL,
   ORDER_BASE_URL,
-  ORDER_EXPLORE_URL,
-  ORDER_MY_URL,
+  PROMISSORY_NOTE_ORDER_BASE_URL,
+  REGULAR_ORDER_BASE_URL,
 } from "../../constants/api.constants.ts";
 import {
-  AvailableOrderDtoModel,
-  OrderApplicationDto,
+  HeadHuntOrderDto,
   OrderDtoModel,
+  PromissoryNoteOrderDto,
+  RegularOrderApplicationDto,
+  RegularOrderDto,
 } from "../../models/order.model.ts";
+import { ListEntitiesRequest } from "../../models/common.model.ts";
 
 export const orderApi = commonApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -21,45 +27,75 @@ export const orderApi = commonApi.injectEndpoints({
         method: "POST",
         body: { ...order },
       }),
-      invalidatesTags: ["Orders"],
+      invalidatesTags: [
+        "Regular orders",
+        "Head hunt orders",
+        "Promissory note orders",
+      ],
     }),
-    getOrders: builder.query<OrderDtoModel[], void>({
-      query: () => ({
-        url: ORDER_BASE_URL,
+    patchOrder: builder.mutation<OrderDtoModel, OrderDtoModel>({
+      query: (order) => ({
+        url: getPatchOrderUrl(order.id ?? ""),
+        method: "PATCH",
+        body: { ...order },
       }),
-      providesTags: ["Orders"],
+      invalidatesTags: [
+        "Regular orders",
+        "Head hunt orders",
+        "Promissory note orders",
+        "Regular order applications",
+      ],
     }),
-    getOrderApplications: builder.query<OrderApplicationDto[], string>({
+    getRegularOrder: builder.query<RegularOrderDto, string>({
       query: (orderId) => ({
-        url: getOrderApplicationsUrl(orderId),
+        url: getRegularOrderUrl(orderId),
       }),
-      providesTags: ["Order applications"],
     }),
-    selectOrderApplication: builder.mutation<OrderDtoModel, string>({
-      query: (applicationId) => ({
-        url: getOrderApplicationsChooseUrl(applicationId),
-        method: "PUT",
+    listRegularOrders: builder.query<
+      RegularOrderDto[],
+      ListEntitiesRequest | undefined
+    >({
+      query: (request) => ({
+        url: getListEntitiesUrl(REGULAR_ORDER_BASE_URL, request),
       }),
-      invalidatesTags: ["Orders"],
+      providesTags: ["Regular orders"],
     }),
-    getExploreOrders: builder.query<AvailableOrderDtoModel[], void>({
-      query: () => ({
-        url: ORDER_EXPLORE_URL,
+    listHeadHuntOrders: builder.query<
+      HeadHuntOrderDto[],
+      ListEntitiesRequest | undefined
+    >({
+      query: (request) => ({
+        url: getListEntitiesUrl(HEAD_HUNT_ORDER_BASE_URL, request),
       }),
-      providesTags: ["Explore orders"],
+      providesTags: ["Head hunt orders"],
     }),
-    applyForOrder: builder.mutation<OrderApplicationDto, string>({
+    listPromissoryNoteOrders: builder.query<
+      PromissoryNoteOrderDto[],
+      ListEntitiesRequest | undefined
+    >({
+      query: (request) => ({
+        url: getListEntitiesUrl(PROMISSORY_NOTE_ORDER_BASE_URL, request),
+      }),
+      providesTags: ["Promissory note orders"],
+    }),
+    createRegularOrderApplication: builder.mutation<
+      RegularOrderApplicationDto,
+      string
+    >({
       query: (orderId) => ({
-        url: getOrderApplyForOrderUrl(orderId),
-        method: "PUT",
+        url: getCreateRegularOrderApplicationUrl(orderId),
+        method: "POST",
       }),
-      invalidatesTags: ["Order applications", "Explore orders", "My orders"],
+      invalidatesTags: ["Regular orders", "Regular order applications"],
     }),
-    getMyOrders: builder.query<OrderDtoModel[], void>({
-      query: () => ({
-        url: ORDER_MY_URL,
+    listRegularOrderApplications: builder.query<
+      RegularOrderApplicationDto[],
+      string
+    >({
+      query: (rsqlPredicate) => ({
+        url: getListRegularOrderApplicationUrl(rsqlPredicate),
       }),
-      providesTags: ["My orders"],
+      providesTags: ["Regular order applications"],
     }),
   }),
 });

@@ -7,3 +7,6 @@ const selectCurrentUser: (state: RootState) => CurrentUserStateModel = (
 
 export const selectCurrentUserRole = (state: RootState) =>
   selectCurrentUser(state).role;
+
+export const selectCurrentUserId = (state: RootState) =>
+  selectCurrentUser(state).id;

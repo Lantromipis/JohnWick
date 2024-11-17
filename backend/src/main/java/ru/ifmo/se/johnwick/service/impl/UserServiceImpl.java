@@ -50,7 +50,12 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public UserDto createUser(UserDto user) {
-        UserEntity userEntity = userMapper.fromDto(user);
+        UserEntity userEntity = userMapper.fromDtoWithPassword(user);
+        UserEntity existingUser = userRepository.findByUsername(userEntity.getUsername());
+        if (existingUser != null) {
+            throw new IllegalArgumentException("User with provided username already exists");
+        }
+        userEntity.setId(null);
         userRepository.persistAndFlush(userEntity);
         return userMapper.toDto(userEntity);
     }

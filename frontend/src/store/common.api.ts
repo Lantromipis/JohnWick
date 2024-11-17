@@ -20,7 +20,7 @@ const baseQueryWithRedirectIfUnauthorized: BaseQueryFn<
   unknown,
   FetchBaseQueryError
 > = async (args, api, extraOptions) => {
-  let result = await baseQuery(args, api, extraOptions);
+  const result = await baseQuery(args, api, extraOptions);
   let url = "";
   if ((args as FetchArgs).url) {
     url = (args as FetchArgs).url;
@@ -43,10 +43,13 @@ export const commonApi = createApi({
   tagTypes: [
     "Users",
     "Orders",
-    "Order applications",
+    "Regular order applications",
     "Explore orders",
     "My orders",
     "Notification",
+    "Regular orders",
+    "Head hunt orders",
+    "Promissory note orders",
   ],
   endpoints: (_) => ({}),
 });

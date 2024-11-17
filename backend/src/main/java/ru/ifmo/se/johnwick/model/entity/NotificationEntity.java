@@ -25,7 +25,7 @@ public class NotificationEntity {
     @Column(name = "message")
     private String message;
 
-    @Column(name = "created_timestamp", nullable = false, insertable = false, updatable = false)
+    @Column(name = "created_timestamp", nullable = false, updatable = false)
     private OffsetDateTime createdTimestamp;
 
     @Column(name = "is_read", nullable = false)

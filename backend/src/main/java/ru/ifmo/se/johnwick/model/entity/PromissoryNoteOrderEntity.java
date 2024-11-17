@@ -17,5 +17,4 @@ public class PromissoryNoteOrderEntity extends OrderEntity {
     @ManyToOne
     @JoinColumn(name = "debtor_user_id")
     private UserEntity debtor;
-
 }

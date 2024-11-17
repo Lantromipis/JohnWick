@@ -39,7 +39,7 @@ const UserListComponent: FC<UserListComponentProps> = ({ users }) => {
               <TableCell>Username</TableCell>
               <TableCell>Display name</TableCell>
               <TableCell>Role</TableCell>
-              <TableCell></TableCell>
+              <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

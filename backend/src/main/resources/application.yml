@@ -28,9 +28,10 @@ quarkus:
       jdbc:
         url: jdbc:postgresql://localhost:5432/johnwick
     flyway:
-      clean-at-start: true
+      migrate-at-start: true
     hibernate-orm:
       log:
+        bind-parameters: true
         sql: true
     log:
       level: INFO

@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { HOME_PAGE_PATH } from "../../../constants/route.constants.ts";
 import { useDispatch } from "react-redux";
 import { setCurrentUser } from "../../../store/user/user.slice.ts";
+import { commonApi } from "../../../store/common.api.ts";
 
 type UserLoginContainerProps = {};
 
@@ -32,7 +33,7 @@ const UserLoginContainer: FC<UserLoginContainerProps> = () => {
         .unwrap()
         .then((response) => {
           const model = response as CurrentUserStateModel;
-          console.log(getCurrenUserResponse);
+          dispatch(commonApi.util.resetApiState());
           dispatch(setCurrentUser(model));
           navigate(HOME_PAGE_PATH);
         })

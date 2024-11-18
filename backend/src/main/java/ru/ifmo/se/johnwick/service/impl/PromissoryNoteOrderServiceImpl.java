@@ -103,7 +103,7 @@ public class PromissoryNoteOrderServiceImpl implements PromissoryNoteOrderServic
             select = select.where(predicate);
         }
 
-        select.orderBy(criteriaBuilder.asc(root.get("createdTimestamp")));
+        select.orderBy(criteriaBuilder.desc(root.get("createdTimestamp")));
 
         TypedQuery<PromissoryNoteOrderEntity> typedQuery = em.createQuery(select);
 

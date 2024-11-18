@@ -1,6 +1,7 @@
 package ru.ifmo.se.johnwick.service.impl;
 
 import cz.jirutka.rsql.parser.ast.Node;
+import io.quarkus.scheduler.Scheduled;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
@@ -15,6 +16,7 @@ import ru.ifmo.se.johnwick.model.OrderStatus;
 import ru.ifmo.se.johnwick.model.UserRole;
 import ru.ifmo.se.johnwick.model.dto.HeadHuntOrderDto;
 import ru.ifmo.se.johnwick.model.entity.HeadHuntOrderEntity;
+import ru.ifmo.se.johnwick.properties.BabaYagaProperties;
 import ru.ifmo.se.johnwick.repository.HeadHuntOrderRepository;
 import ru.ifmo.se.johnwick.rsql.JpaRsqlVisitorParams;
 import ru.ifmo.se.johnwick.rsql.visitor.HeadHauntOrderEntityJpaRsqlVisitor;
@@ -39,6 +41,15 @@ public class HeadHuntOrderServiceImpl implements HeadHuntOrderService {
 
     @Inject
     NotificationService notificationService;
+
+    @Inject
+    BabaYagaProperties babaYagaProperties;
+
+    @Transactional
+    @Scheduled(every = "{baba-yaga.head-hunt-order.price-increase-interval}")
+    public void increaseIncompleteOrdersPrices() {
+        headHuntOrderRepository.increaseIncompleteOrdersPrice(babaYagaProperties.headHuntOrder().priceIncreaseFactor());
+    }
 
     @Override
     @Transactional
@@ -85,7 +96,7 @@ public class HeadHuntOrderServiceImpl implements HeadHuntOrderService {
             select = select.where(predicate);
         }
 
-        select.orderBy(criteriaBuilder.asc(root.get("createdTimestamp")));
+        select.orderBy(criteriaBuilder.desc(root.get("createdTimestamp")));
 
         TypedQuery<HeadHuntOrderEntity> typedQuery = em.createQuery(select);
 

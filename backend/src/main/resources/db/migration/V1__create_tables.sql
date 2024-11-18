@@ -23,7 +23,7 @@ CREATE TABLE head_haunt_order
     order_id            UUID PRIMARY KEY NOT NULL REFERENCES "order" (id),
     succeeded_killer_id UUID REFERENCES "user" (id),
     customer_name       TEXT             NOT NULL,
-    current_price       DOUBLE PRECISION NOT NULL
+    current_price       BIGINT           NOT NULL
 );
 
 CREATE TABLE promissory_note_order
@@ -37,7 +37,7 @@ CREATE TABLE regular_order
 (
     order_id           UUID PRIMARY KEY NOT NULL REFERENCES "order" (id),
     assigned_killer_id UUID REFERENCES "user" (id),
-    price              DOUBLE PRECISION NOT NULL,
+    price              BIGINT           NOT NULL,
     customer_name      TEXT             NOT NULL
 );
 

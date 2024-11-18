@@ -15,7 +15,7 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 public class RegularOrderDto extends OrderDto {
     private UserDto assignee;
-    private Double price;
+    private long price;
     private String customerName;
     private Set<RegularOrderApplicationDto> applications;
 }

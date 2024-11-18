@@ -32,8 +32,8 @@ export function orderStatusToLabel(status: OrderStatus): string {
     case OrderStatus.AWAITING_APPROVAL:
       return "Awaiting approval";
     case OrderStatus.COMPLETED:
-      return "Awaiting completed";
+      return "Completed";
     case OrderStatus.CANCELLED:
-      return "Awaiting cancelled";
+      return "Cancelled";
   }
 }

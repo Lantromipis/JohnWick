@@ -15,7 +15,7 @@ public class HeadHuntOrderEntity extends OrderEntity {
     private UserEntity succeededKiller;
 
     @Column(name = "current_price", nullable = false)
-    private Double currentPrice;
+    private long currentPrice;
 
     @Column(name = "customer_name")
     private String customerName;

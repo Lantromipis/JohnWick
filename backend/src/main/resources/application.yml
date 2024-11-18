@@ -1,10 +1,10 @@
-johnwick:
+baba-yaga:
   regular-order:
-    cleaning-interval: 1m
-    max-age: PT5M # 3 minutes
-  head-hunt:
-    price-increase-interval: 1m
-    price-increase-factor: 2
+    cancellation-interval: PT1M
+    max-age-for-cancellation: PT5M # 5 minutes
+  head-hunt-order:
+    price-increase-interval: PT1M
+    price-increase-factor: 0.05
 
 quarkus:
   http:

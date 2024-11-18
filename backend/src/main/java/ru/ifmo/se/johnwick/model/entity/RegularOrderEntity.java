@@ -17,11 +17,11 @@ public class RegularOrderEntity extends OrderEntity {
     private UserEntity assignee;
 
     @Column(name = "price")
-    private Double price;
+    private long price;
 
     @Column(name = "customer_name")
     private String customerName;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "regularOrder")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "regularOrder", orphanRemoval = true)
     private Set<RegularOrderApplicationEntity> applications;
 }

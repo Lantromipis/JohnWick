@@ -44,7 +44,7 @@ const UserListComponent: FC<UserListComponentProps> = ({ users }) => {
           </TableHead>
           <TableBody>
             {users.map((user) => (
-              <TableRow>
+              <TableRow key={user.id}>
                 <TableCell>{user.username}</TableCell>
                 <TableCell>{user.displayName}</TableCell>
                 <TableCell>{userRoleToLabel(user?.role)}</TableCell>

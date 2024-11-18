@@ -9,6 +9,7 @@ import {
   TableRow,
 } from "@mui/material";
 import { orderStatusToLabel } from "../../../utils/order-utils.ts";
+import { isoStringToPrettyDateTime } from "../../../utils/time-utils.ts";
 
 type PromissoryNoteOrderManagementListComponentProps = {
   orders: PromissoryNoteOrderDto[];
@@ -24,25 +25,27 @@ const PromissoryNoteOrderManagementListComponent: FC<
           <TableHead>
             <TableRow>
               <TableCell>Id</TableCell>
+              <TableCell>Status</TableCell>
               <TableCell>Target</TableCell>
               <TableCell>Debtor</TableCell>
               <TableCell>Beneficiary</TableCell>
-              <TableCell>Status</TableCell>
-              <TableCell>Creation date</TableCell>
+              <TableCell>Creation time</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {orders.map((order) => (
-              <TableRow>
+              <TableRow key={order.id}>
                 <TableCell>{order.id}</TableCell>
+                <TableCell>
+                  <b>{order.status ? orderStatusToLabel(order.status) : ""}</b>
+                </TableCell>
                 <TableCell>{order.targetName}</TableCell>
                 <TableCell>{order.debtor.displayName}</TableCell>
                 <TableCell>{order.beneficiary.displayName}</TableCell>
                 <TableCell>
-                  {order.status ? orderStatusToLabel(order.status) : ""}
+                  {isoStringToPrettyDateTime(order.createdTimestamp)}
                 </TableCell>
-                <TableCell>{order.createdTimestamp}</TableCell>
                 <TableCell> </TableCell>
               </TableRow>
             ))}

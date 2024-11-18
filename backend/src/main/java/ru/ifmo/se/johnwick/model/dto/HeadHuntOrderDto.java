@@ -13,6 +13,6 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 public class HeadHuntOrderDto extends OrderDto {
     private UserDto succeededKiller;
-    private Double currentPrice;
+    private long currentPrice;
     private String customerName;
 }

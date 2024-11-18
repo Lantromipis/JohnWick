@@ -4,6 +4,7 @@ import cz.jirutka.rsql.parser.RSQLParser;
 import cz.jirutka.rsql.parser.RSQLParserException;
 import cz.jirutka.rsql.parser.UnknownOperatorException;
 import cz.jirutka.rsql.parser.ast.Node;
+import io.quarkus.scheduler.Scheduled;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
@@ -12,6 +13,7 @@ import jakarta.persistence.criteria.*;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.SecurityContext;
+import lombok.extern.slf4j.Slf4j;
 import ru.ifmo.se.johnwick.constant.ApiConstant;
 import ru.ifmo.se.johnwick.exception.EntityNotFoundByIdException;
 import ru.ifmo.se.johnwick.exception.UnsupportedRsqlOperatorException;
@@ -23,6 +25,7 @@ import ru.ifmo.se.johnwick.model.dto.RegularOrderDto;
 import ru.ifmo.se.johnwick.model.entity.RegularOrderApplicationEntity;
 import ru.ifmo.se.johnwick.model.entity.RegularOrderEntity;
 import ru.ifmo.se.johnwick.model.entity.UserEntity;
+import ru.ifmo.se.johnwick.properties.BabaYagaProperties;
 import ru.ifmo.se.johnwick.repository.RegularOrderApplicationRepository;
 import ru.ifmo.se.johnwick.repository.RegularOrderRepository;
 import ru.ifmo.se.johnwick.repository.UserRepository;
@@ -38,8 +41,12 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+@Slf4j
 @ApplicationScoped
 public class RegularOrderServiceImpl implements RegularOrderService {
+
+    @Context
+    SecurityContext securityContext;
 
     @Inject
     RegularOrderApplicationRepository regularOrderApplicationRepository;
@@ -56,11 +63,22 @@ public class RegularOrderServiceImpl implements RegularOrderService {
     @Inject
     OrderMapper orderMapper;
 
-    @Context
-    SecurityContext securityContext;
-
     @Inject
     NotificationService notificationService;
+
+    @Inject
+    BabaYagaProperties babaYagaProperties;
+
+    @Transactional
+    @Scheduled(every = "{baba-yaga.regular-order.cancellation-interval}")
+    public void cancelOrdersWithoutApplications() {
+        OffsetDateTime now = OffsetDateTime.now();
+        OffsetDateTime cancelBeforeTimestamp = now.minus(babaYagaProperties.regularOrder().maxAgeForCancellation());
+        int canceledCount = regularOrderRepository.cancelOrdersWithoutApplications(cancelBeforeTimestamp);
+        if (canceledCount > 0) {
+            log.info("Cancelled {} regular orders without applications", canceledCount);
+        }
+    }
 
     @Override
     @Transactional
@@ -143,7 +161,7 @@ public class RegularOrderServiceImpl implements RegularOrderService {
             select = select.where(predicate);
         }
 
-        select.orderBy(criteriaBuilder.asc(root.get("createdTimestamp")));
+        select.orderBy(criteriaBuilder.desc(root.get("createdTimestamp")));
 
         TypedQuery<RegularOrderEntity> typedQuery = em.createQuery(select);
 
@@ -190,7 +208,7 @@ public class RegularOrderServiceImpl implements RegularOrderService {
             select = select.where(predicate);
         }
 
-        select.orderBy(criteriaBuilder.asc(root.get("createdTimestamp")));
+        select.orderBy(criteriaBuilder.desc(root.get("createdTimestamp")));
 
         TypedQuery<RegularOrderApplicationEntity> typedQuery = em.createQuery(select);
 
@@ -206,6 +224,10 @@ public class RegularOrderServiceImpl implements RegularOrderService {
         RegularOrderEntity regularOrderEntity = regularOrderRepository.findById(orderId);
         if (regularOrderEntity == null) {
             throw new EntityNotFoundByIdException("regularOrder", orderId.toString());
+        }
+
+        if (!regularOrderEntity.getStatus().equals(OrderStatus.AWAITING_APPLICATIONS)) {
+            throw new IllegalArgumentException("Order is not in AWAITING_APPLICATIONS status");
         }
 
         UserEntity userEntity = userRepository.findByUsername(securityContext.getUserPrincipal().getName());

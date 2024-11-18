@@ -8,6 +8,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import { orderStatusToLabel } from "../../../utils/order-utils.ts";
 
 type PromissoryNoteOrderManagementListComponentProps = {
   orders: PromissoryNoteOrderDto[];
@@ -24,6 +25,10 @@ const PromissoryNoteOrderManagementListComponent: FC<
             <TableRow>
               <TableCell>Id</TableCell>
               <TableCell>Target</TableCell>
+              <TableCell>Debtor</TableCell>
+              <TableCell>Beneficiary</TableCell>
+              <TableCell>Status</TableCell>
+              <TableCell>Creation date</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
@@ -32,6 +37,12 @@ const PromissoryNoteOrderManagementListComponent: FC<
               <TableRow>
                 <TableCell>{order.id}</TableCell>
                 <TableCell>{order.targetName}</TableCell>
+                <TableCell>{order.debtor.displayName}</TableCell>
+                <TableCell>{order.beneficiary.displayName}</TableCell>
+                <TableCell>
+                  {order.status ? orderStatusToLabel(order.status) : ""}
+                </TableCell>
+                <TableCell>{order.createdTimestamp}</TableCell>
                 <TableCell> </TableCell>
               </TableRow>
             ))}

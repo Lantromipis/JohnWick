@@ -7,7 +7,7 @@ type PromissoryNoteOrderManagementListContainerProps = {};
 const PromissoryNoteOrderManagementListContainer: FC<
   PromissoryNoteOrderManagementListContainerProps
 > = () => {
-  const { data, refetch } = orderApi.useListPromissoryNoteOrdersQuery();
+  const { data, refetch } = orderApi.useListPromissoryNoteOrdersQuery({});
 
   useEffect(() => {
     refetch();

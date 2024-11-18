@@ -1,4 +1,4 @@
-import { memo, FC, useEffect } from "react";
+import { FC, memo, useEffect } from "react";
 import { orderApi } from "../../../store/order/order.api.ts";
 import HeadHuntOrderManagementListComponent from "./head-hunt-order-management-list.component.tsx";
 
@@ -7,7 +7,7 @@ type HeadHuntOrderManagementListContainerProps = {};
 const HeadHuntOrderManagementListContainer: FC<
   HeadHuntOrderManagementListContainerProps
 > = () => {
-  const { data, refetch } = orderApi.useListHeadHuntOrdersQuery();
+  const { data, refetch } = orderApi.useListHeadHuntOrdersQuery({});
 
   useEffect(() => {
     refetch();

@@ -9,7 +9,7 @@ const ExploreRegularOrdersContainer: FC<
   ExploreRegularOrdersContainerProps
 > = () => {
   const { data: headHauntOrderList, refetch: refetchHeadHauntOrderList } =
-    orderApi.useListHeadHuntOrdersQuery();
+    orderApi.useListHeadHuntOrdersQuery({});
 
   useEffect(() => {
     refetchHeadHauntOrderList();

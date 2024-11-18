@@ -5,7 +5,7 @@ import RegularOrderManagementListComponent from "./regular-order-management-list
 type OrderListContainerProps = {};
 
 const RegularOrderManagementListContainer: FC<OrderListContainerProps> = () => {
-  const { data, refetch } = orderApi.useListRegularOrdersQuery();
+  const { data, refetch } = orderApi.useListRegularOrdersQuery({});
 
   useEffect(() => {
     refetch();

@@ -10,6 +10,7 @@ import {
   TableRow,
 } from "@mui/material";
 import OrderSelectExecutorContainer from "../select-executor/order-select-executor.container.tsx";
+import { orderStatusToLabel } from "../../../utils/order-utils.ts";
 
 type RegularOrderManagementListComponentProps = {
   orders: RegularOrderDto[];
@@ -38,7 +39,12 @@ const RegularOrderManagementListComponent: FC<
           <TableHead>
             <TableRow>
               <TableCell>Id</TableCell>
+              <TableCell>Customer</TableCell>
               <TableCell>Target</TableCell>
+              <TableCell>Status</TableCell>
+              <TableCell>Creation date</TableCell>
+              <TableCell>Price</TableCell>
+              <TableCell>Assigned killer</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
@@ -47,7 +53,14 @@ const RegularOrderManagementListComponent: FC<
               <TableRow>
                 <TableCell>{order.id}</TableCell>
                 <TableCell>{order.targetName}</TableCell>
-                {!order.assignee && (
+                <TableCell>{order.customerName}</TableCell>
+                <TableCell>
+                  {order.status ? orderStatusToLabel(order.status) : ""}
+                </TableCell>
+                <TableCell>{order.createdTimestamp}</TableCell>
+                <TableCell>{order.price}</TableCell>
+                <TableCell>{order.assignee?.displayName}</TableCell>
+                {!order.assignee ? (
                   <TableCell>
                     <Button
                       variant="outlined"
@@ -59,6 +72,8 @@ const RegularOrderManagementListComponent: FC<
                       Select executor
                     </Button>
                   </TableCell>
+                ) : (
+                  <TableCell> </TableCell>
                 )}
               </TableRow>
             ))}

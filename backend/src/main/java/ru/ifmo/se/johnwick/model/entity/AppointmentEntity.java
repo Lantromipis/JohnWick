@@ -27,4 +27,8 @@ public class AppointmentEntity {
 
     @Column(name = "message")
     private String message;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "appointments_schedule_id")
+    private AppointmentScheduleEntity appointmentSchedule;
 }

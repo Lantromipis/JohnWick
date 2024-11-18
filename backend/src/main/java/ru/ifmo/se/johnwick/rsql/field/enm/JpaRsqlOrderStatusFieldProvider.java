@@ -1,9 +1,9 @@
 package ru.ifmo.se.johnwick.rsql.field.enm;
 
 import ru.ifmo.se.johnwick.model.OrderStatus;
-import ru.ifmo.se.johnwick.rsql.field.AbstractJpaRsqlFledProvider;
+import ru.ifmo.se.johnwick.rsql.field.AbstractJpaRsqlFieldProvider;
 
-public class JpaRsqlOrderStatusFieldProvider extends AbstractJpaRsqlFledProvider {
+public class JpaRsqlOrderStatusFieldProvider extends AbstractJpaRsqlFieldProvider {
     public JpaRsqlOrderStatusFieldProvider(String fieldName) {
         super(fieldName);
     }

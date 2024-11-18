@@ -1,7 +1,7 @@
 import { FC, memo } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { UserCreateFormModel, UserRole } from "../../../models/user.model.ts";
-import { USER_CREATION_FORM_ID } from "../../../constants/form.constants.ts";
+import { APPOINTMENT_SCHEDULE_CREATION_FORM_ID } from "../../../constants/form.constants.ts";
 import {
   FormControl,
   FormHelperText,
@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import { userRoleToLabel } from "../../../utils/user-utils.ts";
 
-type CreateUserFormProps = {
+type AppointmentScheduleCreationProps = {
   onSubmit: SubmitHandler<UserCreateFormModel>;
 };
 
@@ -25,7 +25,9 @@ const roles = [
   UserRole.CLEANER,
 ];
 
-const UserCreationForm: FC<CreateUserFormProps> = ({ onSubmit }) => {
+const AppointmentScheduleCreationForm: FC<AppointmentScheduleCreationProps> = ({
+  onSubmit,
+}) => {
   const {
     control,
     handleSubmit,
@@ -47,7 +49,7 @@ const UserCreationForm: FC<CreateUserFormProps> = ({ onSubmit }) => {
     <form
       onSubmit={handleSubmit(onSubmit)}
       noValidate
-      id={USER_CREATION_FORM_ID}
+      id={APPOINTMENT_SCHEDULE_CREATION_FORM_ID}
     >
       <Stack direction={"column"} spacing={3} sx={{ minWidth: "500px" }}>
         <Controller
@@ -140,7 +142,7 @@ const UserCreationForm: FC<CreateUserFormProps> = ({ onSubmit }) => {
               variant="outlined"
               error={!!errors.retypedPassword}
               helperText={errors.retypedPassword?.message}
-              label="Repeat rassword"
+              label="Rereat rassword"
               type="password"
             />
           )}
@@ -150,4 +152,4 @@ const UserCreationForm: FC<CreateUserFormProps> = ({ onSubmit }) => {
   );
 };
 
-export default memo(UserCreationForm);
+export default memo(AppointmentScheduleCreationForm);

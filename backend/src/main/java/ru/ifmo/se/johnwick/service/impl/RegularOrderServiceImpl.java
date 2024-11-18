@@ -17,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import ru.ifmo.se.johnwick.constant.ApiConstant;
 import ru.ifmo.se.johnwick.exception.EntityNotFoundByIdException;
 import ru.ifmo.se.johnwick.exception.UnsupportedRsqlOperatorException;
+import ru.ifmo.se.johnwick.exception.ValidationException;
 import ru.ifmo.se.johnwick.mapper.OrderMapper;
 import ru.ifmo.se.johnwick.model.OrderStatus;
 import ru.ifmo.se.johnwick.model.UserRole;
@@ -227,10 +228,14 @@ public class RegularOrderServiceImpl implements RegularOrderService {
         }
 
         if (!regularOrderEntity.getStatus().equals(OrderStatus.AWAITING_APPLICATIONS)) {
-            throw new IllegalArgumentException("Order is not in AWAITING_APPLICATIONS status");
+            throw new ValidationException("Order is not in AWAITING_APPLICATIONS status");
         }
 
         UserEntity userEntity = userRepository.findByUsername(securityContext.getUserPrincipal().getName());
+        if (!UserRole.KILLER.equals(userEntity.getRole())) {
+            throw new ValidationException("Assignee has no role KILLER");
+        }
+
         RegularOrderApplicationEntity existingOrderApplication = regularOrderApplicationRepository.findByOrderAndUser(regularOrderEntity, userEntity);
         if (existingOrderApplication != null) {
             return orderMapper.mapRegularOrderApplicationToDto(existingOrderApplication);
@@ -261,7 +266,7 @@ public class RegularOrderServiceImpl implements RegularOrderService {
                 throw new EntityNotFoundByIdException("user", regularOrderDto.getId().toString());
             }
             if (!UserRole.KILLER.equals(selectedKillerEntity.getRole())) {
-                throw new IllegalArgumentException("Assignee has no role KILLER");
+                throw new ValidationException("Assignee has no role KILLER");
             }
 
             Set<RegularOrderApplicationEntity> existingApplications = regularOrderEntity.getApplications();
@@ -269,12 +274,22 @@ public class RegularOrderServiceImpl implements RegularOrderService {
             for (RegularOrderApplicationEntity existingApplication : existingApplications) {
                 if (existingApplication.getKiller().getId().equals(selectedKillerEntity.getId())) {
                     selectedKillerApplication = existingApplication;
-                    break;
+                    notificationService.sendNotificationToUser(
+                            existingApplication.getKiller(),
+                            "You are selected as assignee",
+                            "You are selected as assignee for order with id " + regularOrderDto.getId().toString() + ". Congratulations!"
+                    );
+                } else {
+                    notificationService.sendNotificationToUser(
+                            existingApplication.getKiller(),
+                            "You were not selected as assignee.",
+                            "You applied for order with id " + regularOrderDto.getId().toString() + ". However, you were not selected as assignee."
+                    );
                 }
             }
 
             if (selectedKillerApplication == null) {
-                throw new IllegalArgumentException("Selected assignee did not applied for this order");
+                throw new ValidationException("Selected assignee did not applied for this order");
             }
 
             regularOrderEntity.setAssignee(selectedKillerEntity);

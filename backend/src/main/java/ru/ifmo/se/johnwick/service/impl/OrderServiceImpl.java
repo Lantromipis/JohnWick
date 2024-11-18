@@ -2,6 +2,7 @@ package ru.ifmo.se.johnwick.service.impl;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import ru.ifmo.se.johnwick.exception.ValidationException;
 import ru.ifmo.se.johnwick.model.dto.HeadHuntOrderDto;
 import ru.ifmo.se.johnwick.model.dto.OrderDto;
 import ru.ifmo.se.johnwick.model.dto.PromissoryNoteOrderDto;
@@ -32,7 +33,7 @@ public class OrderServiceImpl implements OrderService {
         } else if (orderDto instanceof PromissoryNoteOrderDto promissoryNoteOrderDto) {
             return promissoryNoteOrderService.createPromissoryNoteOrder(promissoryNoteOrderDto);
         } else {
-            throw new IllegalArgumentException("Unknown order type");
+            throw new ValidationException("Unknown order type");
         }
     }
 
@@ -41,11 +42,11 @@ public class OrderServiceImpl implements OrderService {
         if (orderDto instanceof RegularOrderDto regularOrderDto) {
             return regularOrderService.updateRegularOrder(regularOrderDto);
         } else if (orderDto instanceof HeadHuntOrderDto headHuntOrderDto) {
-            throw new IllegalArgumentException("Path for head hunt order not supported");
+            throw new ValidationException("Path for head hunt order not supported");
         } else if (orderDto instanceof PromissoryNoteOrderDto promissoryNoteOrderDto) {
-            throw new IllegalArgumentException("Path for promissory order not supported");
+            throw new ValidationException("Path for promissory order not supported");
         } else {
-            throw new IllegalArgumentException("Unknown order type");
+            throw new ValidationException("Unknown order type");
         }
     }
 }

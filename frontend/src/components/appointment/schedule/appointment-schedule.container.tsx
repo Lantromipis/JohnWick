@@ -1,12 +1,12 @@
 import { FC, memo } from "react";
+import WeeklyAppointmentsScheduleComponent from "./weekly-appointments-schedule.component.tsx";
 
 type AppointmentScheduleContainerProps = {};
 
 const AppointmentScheduleContainer: FC<
   AppointmentScheduleContainerProps
 > = () => {
-  return <>hello</>;
-  //return <AppointmentScheduleComponent />;
+  return <WeeklyAppointmentsScheduleComponent appointmentsSchedules={[]} />;
 };
 
 export default memo(AppointmentScheduleContainer);

@@ -1,6 +1,6 @@
 package ru.ifmo.se.johnwick.rsql.field;
 
-public class JpaRsqlStringFieldProvider extends AbstractJpaRsqlFledProvider {
+public class JpaRsqlStringFieldProvider extends AbstractJpaRsqlFieldProvider {
     public JpaRsqlStringFieldProvider(String fieldName) {
         super(fieldName);
     }

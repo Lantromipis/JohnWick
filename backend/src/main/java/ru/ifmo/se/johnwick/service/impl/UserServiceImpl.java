@@ -5,6 +5,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import ru.ifmo.se.johnwick.exception.EntityNotFoundByIdException;
+import ru.ifmo.se.johnwick.exception.ValidationException;
 import ru.ifmo.se.johnwick.mapper.UserMapper;
 import ru.ifmo.se.johnwick.model.dto.UserDto;
 import ru.ifmo.se.johnwick.model.entity.UserEntity;
@@ -53,7 +54,7 @@ public class UserServiceImpl implements UserService {
         UserEntity userEntity = userMapper.fromDtoWithPassword(user);
         UserEntity existingUser = userRepository.findByUsername(userEntity.getUsername());
         if (existingUser != null) {
-            throw new IllegalArgumentException("User with provided username already exists");
+            throw new ValidationException("User with provided username already exists");
         }
         userEntity.setId(null);
         userRepository.persistAndFlush(userEntity);

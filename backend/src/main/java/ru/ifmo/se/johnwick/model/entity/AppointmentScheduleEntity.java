@@ -2,6 +2,7 @@ package ru.ifmo.se.johnwick.model.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.time.LocalDate;
 import java.time.OffsetTime;
@@ -11,6 +12,7 @@ import java.util.UUID;
 @Data
 @Entity
 @Table(name = "\"appointment_schedule\"")
+@EqualsAndHashCode(exclude = "appointments")
 public class AppointmentScheduleEntity {
     @Id
     @GeneratedValue
@@ -30,7 +32,6 @@ public class AppointmentScheduleEntity {
     @Column(name = "to_time")
     private OffsetTime endTime;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "appointments_schedule_id")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "appointmentSchedule", orphanRemoval = true)
     private Set<AppointmentEntity> appointments;
 }

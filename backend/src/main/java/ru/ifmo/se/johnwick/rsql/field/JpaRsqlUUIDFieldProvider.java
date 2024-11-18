@@ -2,7 +2,7 @@ package ru.ifmo.se.johnwick.rsql.field;
 
 import java.util.UUID;
 
-public class JpaRsqlUUIDFieldProvider extends AbstractJpaRsqlFledProvider {
+public class JpaRsqlUUIDFieldProvider extends AbstractJpaRsqlFieldProvider {
     public JpaRsqlUUIDFieldProvider(String fieldName) {
         super(fieldName);
     }

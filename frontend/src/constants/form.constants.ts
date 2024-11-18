@@ -4,3 +4,6 @@ export const USER_CHANGE_PASSWORD_FORM_ID = "userChangePasswordForm";
 
 export const ORDER_CREATION_FORM_ID = "orderCreationFormId";
 export const ORDER_SELECT_EXECUTOR_FORM_ID = "orderSelectExecutorFormId";
+
+export const APPOINTMENT_SCHEDULE_CREATION_FORM_ID =
+  "appointmentScheduleCreateForm";

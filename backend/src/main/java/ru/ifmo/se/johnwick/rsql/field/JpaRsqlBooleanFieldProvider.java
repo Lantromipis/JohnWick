@@ -1,6 +1,6 @@
 package ru.ifmo.se.johnwick.rsql.field;
 
-public class JpaRsqlBooleanFieldProvider extends AbstractJpaRsqlFledProvider {
+public class JpaRsqlBooleanFieldProvider extends AbstractJpaRsqlFieldProvider {
     public JpaRsqlBooleanFieldProvider(String fieldName) {
         super(fieldName);
     }

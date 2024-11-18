@@ -3,10 +3,10 @@ package ru.ifmo.se.johnwick.rsql.field;
 import jakarta.persistence.criteria.Path;
 import ru.ifmo.se.johnwick.rsql.JpaRsqlVisitorParams;
 
-public abstract class AbstractJpaRsqlFledProvider implements JpaRsqlFieldProvider {
+public abstract class AbstractJpaRsqlFieldProvider implements JpaRsqlFieldProvider {
     private final String fieldName;
 
-    public AbstractJpaRsqlFledProvider(String fieldName) {
+    public AbstractJpaRsqlFieldProvider(String fieldName) {
         this.fieldName = fieldName;
     }
 

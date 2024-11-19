@@ -21,6 +21,26 @@ export function getRegularOrderUrl(orderId: string) {
   return `${REGULAR_ORDER_BASE_URL}/${orderId}`;
 }
 
+export const PROMISSORY_NOTE_ORDER_BASE_URL =
+  ORDER_BASE_URL + "/promissoryNote";
+export const HEAD_HUNT_ORDER_BASE_URL = ORDER_BASE_URL + "/headHunt";
+
+export function getCreateRegularOrderApplicationUrl(orderId: string) {
+  return `${REGULAR_ORDER_BASE_URL}/${orderId}/applications`;
+}
+
+export function getListRegularOrderApplicationUrl(rsqlPredicate: string) {
+  return `${REGULAR_ORDER_BASE_URL}/applications?rsqlPredicate${rsqlPredicate}`;
+}
+
+export const NOTIFICATION_BASE_URL = BASE_PATH + "/notification";
+
+export const APPOINTMENT_SCHEDULE_BASE_URL = BASE_PATH + "/appointmentSchedule";
+
+export function getCreateAppointmentUrl(scheduleId: string) {
+  return `${APPOINTMENT_SCHEDULE_BASE_URL}/${scheduleId}/appointments`;
+}
+
 export function getListEntitiesUrl(
   baseUrl: string,
   request: ListEntitiesRequest | undefined,
@@ -47,17 +67,3 @@ export function getListEntitiesUrl(
     return baseUrl;
   }
 }
-
-export const PROMISSORY_NOTE_ORDER_BASE_URL =
-  ORDER_BASE_URL + "/promissoryNote";
-export const HEAD_HUNT_ORDER_BASE_URL = ORDER_BASE_URL + "/headHunt";
-
-export function getCreateRegularOrderApplicationUrl(orderId: string) {
-  return `${REGULAR_ORDER_BASE_URL}/${orderId}/applications`;
-}
-
-export function getListRegularOrderApplicationUrl(rsqlPredicate: string) {
-  return `${REGULAR_ORDER_BASE_URL}/applications?rsqlPredicate${rsqlPredicate}`;
-}
-
-export const NOTIFICATION_BASE_URL = BASE_PATH + "/notification";

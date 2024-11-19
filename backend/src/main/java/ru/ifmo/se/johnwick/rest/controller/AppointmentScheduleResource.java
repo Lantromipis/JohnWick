@@ -21,13 +21,13 @@ public class AppointmentScheduleResource {
     AppointmentScheduleService appointmentScheduleService;
 
     @GET
-    @RolesAllowed({ApiConstant.ROLE_KILLER, ApiConstant.ROLE_SOMMELIER, ApiConstant.ROLE_ADMIN})
+    @RolesAllowed({ApiConstant.ROLE_KILLER, ApiConstant.ROLE_SOMMELIER, ApiConstant.ROLE_TAILOR})
     public List<AppointmentScheduleDto> listAppointmentSchedule(@QueryParam("rsqlPredicate") String rsqlPredicate) {
         return appointmentScheduleService.listAppointmentSchedule(rsqlPredicate);
     }
 
     @POST
-    @RolesAllowed({ApiConstant.ROLE_SOMMELIER, ApiConstant.ROLE_ADMIN})
+    @RolesAllowed({ApiConstant.ROLE_SOMMELIER, ApiConstant.ROLE_TAILOR})
     public AppointmentScheduleDto createAppointmentSchedule(AppointmentScheduleDto appointmentScheduleDto) {
         return appointmentScheduleService.createAppointmentSchedule(appointmentScheduleDto);
     }

@@ -9,11 +9,11 @@ import {
   Stack,
 } from "@mui/material";
 import { SubmitHandler } from "react-hook-form";
-import { UserCreateFormModel } from "../../../models/user.model.ts";
-import { userApi } from "../../../store/user/user.api.ts";
-import UserCreationForm from "./appointment-schedule-creation.form.tsx";
 import { APPOINTMENT_SCHEDULE_CREATION_FORM_ID } from "../../../constants/form.constants.ts";
 import EditCalendarIcon from "@mui/icons-material/EditCalendar";
+import AppointmentScheduleCreationForm from "./appointment-schedule-creation.form.tsx";
+import { AppointmentScheduleFormModel } from "../../../models/schedule.model.ts";
+import { scheduleApi } from "../../../store/schedule/schedule.api.ts";
 
 type AppointmentScheduleCreationContainerProps = {};
 
@@ -22,8 +22,8 @@ const AppointmentScheduleCreationContainer: FC<
 > = () => {
   const [creationError, setCreationError] = useState<boolean>(false);
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
-  const [createNewUser, createNewUserResponse] =
-    userApi.useCreateNewUserMutation();
+  const [createNewAppointmentSchedule, createNewAppointmentScheduleResponse] =
+    scheduleApi.useCreateAppointmentScheduleMutation();
 
   const handleDialogOpen = () => {
     setCreationError(false);
@@ -35,14 +35,12 @@ const AppointmentScheduleCreationContainer: FC<
     setDialogOpen(false);
   };
 
-  const handleSubmit: SubmitHandler<UserCreateFormModel> = useCallback(
+  const handleSubmit: SubmitHandler<AppointmentScheduleFormModel> = useCallback(
     (formData) => {
       setCreationError(false);
-      createNewUser({
-        displayName: formData.displayName,
-        username: formData.username,
-        password: formData.password,
-        role: formData.role,
+      createNewAppointmentSchedule({
+        startTime: formData.fromTime.toISOString(),
+        endTime: formData.toTime.toISOString(),
       })
         .unwrap()
         .then(() => {
@@ -66,21 +64,21 @@ const AppointmentScheduleCreationContainer: FC<
         Schedule appointments for day
       </Button>
       <Dialog open={dialogOpen} onClose={handleDialogClose}>
-        <DialogTitle>Create new user</DialogTitle>
+        <DialogTitle>Create appointment schedule</DialogTitle>
         <DialogContent>
-          <Stack spacing={2} sx={{ paddingTop: "10px" }}>
+          <Stack spacing={4} sx={{ paddingTop: "10px" }}>
             {creationError && (
-              <Alert severity="error">
-                Failed to create user. Please try again.
+              <Alert severity="error" sx={{ width: "300px" }}>
+                Failed to create appointment schedule. Please try again.
               </Alert>
             )}
-            <UserCreationForm onSubmit={handleSubmit} />
+            <AppointmentScheduleCreationForm onSubmit={handleSubmit} />
           </Stack>
         </DialogContent>
         <DialogActions>
           <Button
             onClick={handleDialogClose}
-            disabled={createNewUserResponse.isLoading}
+            disabled={createNewAppointmentScheduleResponse.isLoading}
           >
             Cancel
           </Button>
@@ -88,7 +86,7 @@ const AppointmentScheduleCreationContainer: FC<
             type="submit"
             variant="contained"
             form={APPOINTMENT_SCHEDULE_CREATION_FORM_ID}
-            disabled={createNewUserResponse.isLoading}
+            disabled={createNewAppointmentScheduleResponse.isLoading}
           >
             Create
           </Button>

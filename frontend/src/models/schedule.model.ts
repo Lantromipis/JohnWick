@@ -1,24 +1,25 @@
 import { UserDtoModel } from "./user.model.ts";
+import { Dayjs } from "dayjs";
 
 // form
 export interface AppointmentScheduleFormModel {
-  fromTime: string;
-  toTime: string;
+  fromTime: Dayjs;
+  toTime: Dayjs;
 }
 
 // dto
-export interface AppointmentsScheduleDtoModel {
+export interface AppointmentScheduleDtoModel {
   id: string;
   host: UserDtoModel;
-  fromTime: string;
-  toTime: string;
+  startTime: string;
+  endTime: string;
   appointments: AppointmentDtoModel[];
 }
 
 export interface AppointmentDtoModel {
   id: string;
   bookedBy: UserDtoModel;
-  fromTime: string;
-  toTime: string;
+  startTime: string;
+  endTime: string;
   comment: string;
 }

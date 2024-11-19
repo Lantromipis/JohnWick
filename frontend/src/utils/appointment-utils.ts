@@ -1,29 +1,51 @@
+import dayjs, { Dayjs } from "dayjs";
+import {
+  AppointmentDtoModel,
+  AppointmentScheduleDtoModel,
+} from "../models/schedule.model.ts";
+
 export function formatHour(hour: number): string {
   return (hour < 10 ? "0" + hour : hour) + ":00";
 }
 
-export function getCurrentWeekStartDay(): Date {
-  const now = new Date();
-  const currentDay = now.getDay();
-  const diff = now.getDate() - currentDay + (currentDay == 0 ? -6 : 1);
-  return new Date(now.setDate(diff));
+export function getDayJsNextHour(): Dayjs {
+  let ret = dayjs();
+  ret = ret.hour(ret.hour() + 1);
+  ret = ret.minute(0);
+  ret = ret.second(0);
+  ret = ret.millisecond(0);
+  return ret;
 }
 
-export function getCurrentWeekEndDay(): Date {
-  const startOfWeek = getCurrentWeekStartDay();
-  const diff = startOfWeek.getDate() + 6;
-  return new Date(startOfWeek.setDate(diff));
+export function getIntersectedAppointmentScheduleByTime(
+  schedule: AppointmentScheduleDtoModel[] | undefined,
+  time: Dayjs,
+): AppointmentScheduleDtoModel | undefined {
+  return schedule?.find((schedule) => {
+    const scheduleStartTime = dayjs(schedule.startTime);
+    const scheduleEndTime = dayjs(schedule.endTime);
+    return isTimeInInterval(scheduleStartTime, scheduleEndTime, time);
+  });
 }
 
-export function isSameDay(d1: Date, d2: Date) {
+export function getIntersectedAppointmentByTime(
+  appointments: AppointmentDtoModel[] | undefined,
+  time: Dayjs,
+): AppointmentDtoModel | undefined {
+  return appointments?.find((appointment) => {
+    const appointmentStartTime = dayjs(appointment.startTime);
+    const appointmentEndTime = dayjs(appointment.endTime);
+    return isTimeInInterval(appointmentStartTime, appointmentEndTime, time);
+  });
+}
+
+export function isTimeInInterval(
+  start: Dayjs,
+  end: Dayjs,
+  time: Dayjs,
+): boolean {
   return (
-    d1.getFullYear() === d2.getFullYear() &&
-    d1.getMonth() === d2.getMonth() &&
-    d1.getDate() === d2.getDate()
+    (start.isBefore(time) || start.isSame(time)) &&
+    (time.isSame(end) || time.isBefore(end))
   );
-}
-
-export function addDays(d: Date, daysToAdd: number): Date {
-  const dateCopy = new Date(d.getTime());
-  return new Date(dateCopy.setDate(d.getDate() + daysToAdd));
 }

@@ -64,6 +64,10 @@ public class AppointmentScheduleServiceImpl implements AppointmentScheduleServic
             throw new ValidationException("Appointment schedule start time must be before end time.");
         }
 
+        if (appointmentScheduleDto.getStartTime().isBefore(OffsetDateTime.now())) {
+            throw new ValidationException("Appointment schedule start time must be after now.");
+        }
+
         appointmentScheduleDto.setId(null);
         appointmentScheduleDto.setHost(null);
         appointmentScheduleDto.setAppointments(null);
@@ -110,7 +114,7 @@ public class AppointmentScheduleServiceImpl implements AppointmentScheduleServic
             select = select.where(predicate);
         }
 
-        select.orderBy(criteriaBuilder.desc(root.get("date")));
+        select.orderBy(criteriaBuilder.desc(root.get("startTime")));
 
         TypedQuery<AppointmentScheduleEntity> typedQuery = em.createQuery(select);
 

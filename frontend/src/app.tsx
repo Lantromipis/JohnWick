@@ -18,39 +18,48 @@ import { PersistGate } from "redux-persist/integration/react";
 import ExploreOrdersPage from "./pages/explore-orders.page.tsx";
 import MyOrdersPage from "./pages/my-orders-page.tsx";
 import MySchedulePage from "./pages/my-schedule-page.tsx";
+import { SnackbarProvider } from "notistack";
+import dayjs from "dayjs";
+import "dayjs/locale/en-gb";
 
 function App() {
+  dayjs.locale("en-gb");
   return (
     <>
       <CssBaseline />
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path={LOGIN_PAGE_PATH} element={<LoginPage />} />
-              <Route
-                path={MANAGE_USERS_PAGE_PATH}
-                element={<MangeUsersPage />}
-              />
-              <Route
-                path={MANAGE_ORDERS_PAGE_PATH}
-                element={<ManageOrdersPage />}
-              />
-              <Route
-                path={EXPLORE_ORDERS_PAGE_PATH}
-                element={<ExploreOrdersPage />}
-              />
-              <Route path={MY_ORDERS_PAGE_PATH} element={<MyOrdersPage />} />
-              <Route
-                path={MY_SCHEDULE_PAGE_PATH}
-                element={<MySchedulePage />}
-              />
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-          </BrowserRouter>
-        </PersistGate>
-      </Provider>
+      <SnackbarProvider
+        autoHideDuration={5000}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <Provider store={store}>
+          <PersistGate loading={null} persistor={persistor}>
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path={LOGIN_PAGE_PATH} element={<LoginPage />} />
+                <Route
+                  path={MANAGE_USERS_PAGE_PATH}
+                  element={<MangeUsersPage />}
+                />
+                <Route
+                  path={MANAGE_ORDERS_PAGE_PATH}
+                  element={<ManageOrdersPage />}
+                />
+                <Route
+                  path={EXPLORE_ORDERS_PAGE_PATH}
+                  element={<ExploreOrdersPage />}
+                />
+                <Route path={MY_ORDERS_PAGE_PATH} element={<MyOrdersPage />} />
+                <Route
+                  path={MY_SCHEDULE_PAGE_PATH}
+                  element={<MySchedulePage />}
+                />
+                <Route path="*" element={<Navigate to="/" replace />} />
+              </Routes>
+            </BrowserRouter>
+          </PersistGate>
+        </Provider>
+      </SnackbarProvider>
     </>
   );
 }

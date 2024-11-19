@@ -12,7 +12,7 @@ import java.util.UUID;
 public class AppointmentsScheduleRepository implements PanacheRepositoryBase<AppointmentScheduleEntity, UUID> {
     public boolean existsForRange(UserEntity user, OffsetDateTime start, OffsetDateTime end) {
         return find(
-                "SELECT entity FROM AppointmentScheduleEntity entity WHERE host = ?1 AND ((?3 > startTime AND ?3 < endTime) OR (?2 > startTime AND ?2 < endTime))",
+                "SELECT entity FROM AppointmentScheduleEntity entity WHERE host = ?1 AND ((?3 >= startTime AND ?3 <= endTime) OR (?2 >= startTime AND ?2 <= endTime))",
                 user,
                 start,
                 end

@@ -32,12 +32,14 @@ public class OrderResource {
     PromissoryNoteOrderService promissoryNoteOrderService;
 
     @POST
+    @RolesAllowed({ApiConstant.ROLE_ADMIN})
     public OrderDto createOrder(OrderDto order) {
         return orderService.createOrder(order);
     }
 
     @PATCH
     @Path("/{id}")
+    @RolesAllowed({ApiConstant.ROLE_KILLER, ApiConstant.ROLE_ADMIN})
     public OrderDto updateOrder(@PathParam("id") UUID orderId, OrderDto order) {
         order.setId(orderId);
         return orderService.updateOrder(order);

@@ -14,14 +14,8 @@ import { AppointmentsScheduleDtoModel } from "../../../models/schedule.model.ts"
 import {
   addDays,
   formatHour,
-  getCurrentWeekEndDay,
-  getCurrentWeekStartDay,
   isSameDay,
 } from "../../../utils/appointment-utils.ts";
-
-type WeeklyAppointmentsScheduleComponentProps = {
-  appointmentsSchedules: AppointmentsScheduleDtoModel[];
-};
 
 const daysMap = [
   "Monday",
@@ -33,14 +27,17 @@ const daysMap = [
   "Sunday",
 ];
 
+type WeeklyAppointmentsScheduleComponentProps = {
+  appointmentsSchedules: AppointmentsScheduleDtoModel[];
+  currentWeekStart: Date;
+  currentWeekEnd: Date;
+};
+
 const WeeklyAppointmentsScheduleComponent: FC<
   WeeklyAppointmentsScheduleComponentProps
-> = () => {
+> = ({ currentWeekStart }) => {
   const theme = useTheme();
-
   const today = new Date();
-  const currentWeekStart = getCurrentWeekStartDay();
-  const currentWeekEnd = getCurrentWeekEndDay();
 
   return (
     <>
@@ -51,18 +48,21 @@ const WeeklyAppointmentsScheduleComponent: FC<
               <TableCell align={"center"}>
                 <ScheduleIcon />
               </TableCell>
-              {daysMap.map((value, idx) => (
-                <TableCell
-                  align={"center"}
-                  sx={{
-                    ...(isSameDay(addDays(currentWeekStart, idx), today) && {
-                      backgroundColor: alpha(theme.palette.info.dark, 0.2),
-                    }),
-                  }}
-                >
-                  <b> {value}</b>
-                </TableCell>
-              ))}
+              {daysMap.map((value, idx) => {
+                const currentDate = addDays(currentWeekStart, idx);
+                return (
+                  <TableCell
+                    align={"center"}
+                    sx={{
+                      ...(isSameDay(currentDate, today) && {
+                        backgroundColor: alpha(theme.palette.info.dark, 0.2),
+                      }),
+                    }}
+                  >
+                    <b> {currentDate.getDate() + ", " + value}</b>
+                  </TableCell>
+                );
+              })}
             </TableRow>
           </TableHead>
           <TableBody>

@@ -71,17 +71,16 @@ CREATE TABLE appointment_schedule
 (
     id           UUID PRIMARY KEY,
     host_user_id UUID REFERENCES "user" (id),
-    date         DATE                NOT NULL,
-    from_time    TIME WITH TIME ZONE NOT NULL,
-    to_time      TIME WITH TIME ZONE NOT NULL
+    from_time    TIMESTAMP WITH TIME ZONE NOT NULL,
+    to_time      TIMESTAMP WITH TIME ZONE NOT NULL
 );
 
 CREATE TABLE appointment
 (
     id                       UUID PRIMARY KEY,
-    booked_by_user_id        UUID                NOT NULL REFERENCES "user" (id),
-    appointments_schedule_id UUID                NOT NULL REFERENCES "appointment_schedule" (id) ON DELETE CASCADE,
-    from_time                TIME WITH TIME ZONE NOT NULL,
-    to_time                  TIME WITH TIME ZONE NOT NULL,
+    booked_by_user_id        UUID                     NOT NULL REFERENCES "user" (id),
+    appointments_schedule_id UUID                     NOT NULL REFERENCES "appointment_schedule" (id) ON DELETE CASCADE,
+    from_time                TIMESTAMP WITH TIME ZONE NOT NULL,
+    to_time                  TIMESTAMP WITH TIME ZONE NOT NULL,
     message                  TEXT
 );

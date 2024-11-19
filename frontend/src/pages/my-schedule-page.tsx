@@ -9,7 +9,7 @@ type MySchedulePageProps = {};
 const MySchedulePage: FC<MySchedulePageProps> = () => {
   return (
     <MainLayout>
-      <Stack spacing={2}>
+      <Stack spacing={4}>
         <AppointmentScheduleCreationContainer />
         <AppointmentScheduleContainer />
       </Stack>

@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.OffsetTime;
+import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Data
@@ -15,7 +15,7 @@ import java.util.UUID;
 public class AppointmentDto {
     private UUID id;
     private UserDto bookedBy;
-    private OffsetTime startTime;
-    private OffsetTime endTime;
+    private OffsetDateTime startTime;
+    private OffsetDateTime endTime;
     private String message;
 }

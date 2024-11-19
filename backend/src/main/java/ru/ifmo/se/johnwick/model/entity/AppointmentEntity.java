@@ -3,7 +3,7 @@ package ru.ifmo.se.johnwick.model.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.time.OffsetTime;
+import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Data
@@ -20,10 +20,10 @@ public class AppointmentEntity {
     private UserEntity bookedBy;
 
     @Column(name = "from_time", nullable = false)
-    private OffsetTime startTime;
+    private OffsetDateTime startTime;
 
     @Column(name = "to_time", nullable = false)
-    private OffsetTime endTime;
+    private OffsetDateTime endTime;
 
     @Column(name = "message")
     private String message;

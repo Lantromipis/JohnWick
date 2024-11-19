@@ -31,7 +31,7 @@ import ru.ifmo.se.johnwick.rsql.visitor.AppointmentScheduleEntityJpaRsqlVisitor;
 import ru.ifmo.se.johnwick.service.api.AppointmentScheduleService;
 import ru.ifmo.se.johnwick.utils.RsqlParserUtils;
 
-import java.time.OffsetTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -60,6 +60,10 @@ public class AppointmentScheduleServiceImpl implements AppointmentScheduleServic
     @Override
     @Transactional
     public AppointmentScheduleDto createAppointmentSchedule(AppointmentScheduleDto appointmentScheduleDto) {
+        if (appointmentScheduleDto.getStartTime().isAfter(appointmentScheduleDto.getEndTime())) {
+            throw new ValidationException("Appointment schedule start time must be before end time.");
+        }
+
         appointmentScheduleDto.setId(null);
         appointmentScheduleDto.setHost(null);
         appointmentScheduleDto.setAppointments(null);
@@ -67,7 +71,11 @@ public class AppointmentScheduleServiceImpl implements AppointmentScheduleServic
         AppointmentScheduleEntity appointmentScheduleEntity = appointmentScheduleMapper.appointmentScheduleDtoToEntity(appointmentScheduleDto);
         UserEntity host = userRepository.findByUsername(securityContext.getUserPrincipal().getName());
         if (!UserRole.TAILOR.equals(host.getRole()) && !UserRole.SOMMELIER.equals(host.getRole())) {
-            throw new ValidationException("User has no role TAILOR or SOMMELIER");
+            throw new ValidationException("User has no role TAILOR or SOMMELIER.");
+        }
+
+        if (appointmentsScheduleRepository.existsForRange(host, appointmentScheduleEntity.getStartTime(), appointmentScheduleEntity.getEndTime())) {
+            throw new ValidationException("Existing appointment schedule for this user overlaps new schedule.");
         }
 
         appointmentScheduleEntity.setHost(host);
@@ -150,7 +158,7 @@ public class AppointmentScheduleServiceImpl implements AppointmentScheduleServic
         return appointmentScheduleMapper.appointmentEntityToDto(appointmentEntity);
     }
 
-    private boolean isWithinRange(OffsetTime testDate, OffsetTime startDate, OffsetTime endDate) {
+    private boolean isWithinRange(OffsetDateTime testDate, OffsetDateTime startDate, OffsetDateTime endDate) {
         return !(testDate.isBefore(startDate) || testDate.isAfter(endDate));
     }
 }

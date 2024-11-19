@@ -5,8 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-import java.time.OffsetTime;
+import java.time.OffsetDateTime;
 import java.util.Set;
 import java.util.UUID;
 
@@ -17,8 +16,7 @@ import java.util.UUID;
 public class AppointmentScheduleDto {
     private UUID id;
     private UserDto host;
-    private LocalDate date;
-    private OffsetTime startTime;
-    private OffsetTime endTime;
+    private OffsetDateTime startTime;
+    private OffsetDateTime endTime;
     private Set<AppointmentDto> appointments;
 }

@@ -4,8 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.time.LocalDate;
-import java.time.OffsetTime;
+import java.time.OffsetDateTime;
 import java.util.Set;
 import java.util.UUID;
 
@@ -23,14 +22,11 @@ public class AppointmentScheduleEntity {
     @JoinColumn(name = "host_user_id", nullable = false)
     private UserEntity host;
 
-    @Column(name = "date")
-    private LocalDate date;
-
     @Column(name = "from_time")
-    private OffsetTime startTime;
+    private OffsetDateTime startTime;
 
     @Column(name = "to_time")
-    private OffsetTime endTime;
+    private OffsetDateTime endTime;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "appointmentSchedule", orphanRemoval = true)
     private Set<AppointmentEntity> appointments;

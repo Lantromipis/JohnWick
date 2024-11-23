@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "360b6c64-6a57-4927-a652-8529478901d1",
+		"_postman_id": "2a71b25f-74e0-4ab4-b6b3-fe0571e6c085",
 		"name": "JohnWick",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "20607318"
@@ -866,7 +866,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"username\":\"keks\",\r\n    \"displayName\":\"keks\",\r\n    \"password\":\"keks\"\r\n}",
+									"raw": "{\r\n    \"username\":\"cleaner\",\r\n    \"password\":\"keks\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -874,7 +874,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/api/v1/user/780bd8c6-3a08-4456-bae3-8f53ef9dae0c",
+									"raw": "http://localhost:8080/api/v1/user/48e50223-c949-4d8f-b2ec-cbeb340e690b",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -884,7 +884,7 @@
 										"api",
 										"v1",
 										"user",
-										"780bd8c6-3a08-4456-bae3-8f53ef9dae0c"
+										"48e50223-c949-4d8f-b2ec-cbeb340e690b"
 									]
 								}
 							},
@@ -1438,6 +1438,606 @@
 					]
 				},
 				{
+					"name": "create Regular Order Copy",
+					"item": [
+						{
+							"name": "Create Regular  Order by Admin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "admin",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "admin",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"type\": \"REGULAR\",\r\n    \"description\": \"213\",\r\n    \"targetName\": \"artem\",\r\n    \"price\": 231,\r\n    \"customerName\": \"test\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/order",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"order"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create  Regular  Order by Sommelier",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "sommelier",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "sommelier",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"type\": \"REGULAR\",\r\n    \"description\": \"213\",\r\n    \"targetName\": \"artem\",\r\n    \"price\": 231,\r\n    \"customerName\": \"test\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/order",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"order"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Regular Order by Cleaner",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "cleaner",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "cleaner",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"type\": \"REGULAR\",\r\n    \"description\": \"213\",\r\n    \"targetName\": \"artem\",\r\n    \"price\": 231,\r\n    \"customerName\": \"test\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/order",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"order"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Regular Order by Killer",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "killer",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "killer",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"type\": \"REGULAR\",\r\n    \"description\": \"213\",\r\n    \"targetName\": \"artem\",\r\n    \"price\": 231,\r\n    \"customerName\": \"test\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/order",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"order"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Regular User by Tailor",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "tailor",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "tailor",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"type\": \"REGULAR\",\r\n    \"description\": \"213\",\r\n    \"targetName\": \"artem\",\r\n    \"price\": 231,\r\n    \"customerName\": \"test\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/order",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"order"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "create Promissory Note Order",
+					"item": [
+						{
+							"name": "Create Promissory Note Order by Admin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "admin",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "admin",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"type\": \"PROMISSORY_NOTE\",\r\n    \"description\": \"213\",\r\n    \"targetName\": \"artem\",\r\n    \"beneficiary\":\"17ab1abc-51b5-4b47-b222-316bb20d134e\",\r\n    \"debtor\": \"49c6ed5a-d6dd-4656-b74e-b7609780ddea\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/order",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"order"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create  Head Hunt   Order by Sommelier",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "sommelier",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "sommelier",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"type\": \"HEAD_HUNT\",\r\n    \"description\": \"213\",\r\n    \"targetName\": \"artem\",\r\n    \"price\": 231,\r\n    \"customerName\": \"test\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/order",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"order"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Head Hunt  Order by Cleaner",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "cleaner",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "cleaner",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"type\": \"HEAD_HUNT\",\r\n    \"description\": \"213\",\r\n    \"targetName\": \"artem\",\r\n    \"price\": 231,\r\n    \"customerName\": \"test\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/order",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"order"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Head Hunt Order by Killer",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "killer",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "killer",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"type\": \"HEAD_HUNT\",\r\n    \"description\": \"213\",\r\n    \"targetName\": \"artem\",\r\n    \"price\": 231,\r\n    \"customerName\": \"test\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/order",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"order"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Head Hunt  User by Tailor",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "tailor",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "tailor",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"type\": \"HEAD_HUNT\",\r\n    \"description\": \"213\",\r\n    \"targetName\": \"artem\",\r\n    \"price\": 231,\r\n    \"customerName\": \"test\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/order",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"order"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "get Regualr Order by Admin",
 					"item": [
 						{
@@ -1715,7 +2315,7 @@
 					]
 				},
 				{
-					"name": "get  headHunt Order",
+					"name": "get  headHunt Orders",
 					"item": [
 						{
 							"name": "get Head haunt Order by Admin",
@@ -1975,10 +2575,270 @@
 					]
 				},
 				{
-					"name": "get  headHunt Order Copy",
+					"name": "get  Regular Orders",
 					"item": [
 						{
-							"name": "get Head haunt Order by Admin",
+							"name": "get Regular Order by Admin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "admin",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "admin",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/order/regular",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"order",
+										"regular"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get Regular Order by Killer",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "killer",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "killer",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/order/regular",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"order",
+										"regular"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get Regular  Order by Tailor",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "tailor",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "tailor",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/order/regular",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"order",
+										"regular"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get Regular Order by Sommelier",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "sommelier",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "sommelier",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/order/regular",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"order",
+										"regular"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get Regular  Order by Cleaner",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "cleaner",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "cleaner",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/order/regular",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"order",
+										"regular"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "get  Promissory Note Orders",
+					"item": [
+						{
+							"name": "get Promissory Note Order by Admin",
 							"event": [
 								{
 									"listen": "test",
@@ -2029,7 +2889,485 @@
 							"response": []
 						},
 						{
-							"name": "get Head haunt Order by Killer",
+							"name": "get Promissory Note  Order by Killer",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "killer",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "killer",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/order/promissoryNote",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"order",
+										"promissoryNote"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get Promissory Note  Order by Tailor",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "tailor",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "tailor",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/order/promissoryNote",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"order",
+										"promissoryNote"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get Promissory Note Order by Sommelier",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "sommelier",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "sommelier",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/order/promissoryNote",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"order",
+										"promissoryNote"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get Promissory Note  Order by Cleaner",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "cleaner",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "cleaner",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/order/promissoryNote",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"order",
+										"promissoryNote"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Notification Service",
+			"item": [
+				{
+					"name": "get notification",
+					"item": [
+						{
+							"name": "get Notificaiton by killer",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "username",
+											"value": "test_kiler",
+											"type": "string"
+										},
+										{
+											"key": "password",
+											"value": "123",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/notification",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"notification"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get Notificaiton by tailor",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "username",
+											"value": "tailor",
+											"type": "string"
+										},
+										{
+											"key": "password",
+											"value": "tailor",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/order/promissoryNote",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"order",
+										"promissoryNote"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get Notificaiton by admin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "admin",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "admin",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/order/promissoryNote",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"order",
+										"promissoryNote"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get Notificaiton by cleaner",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "cleaner",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "cleaner",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/order/promissoryNote",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"order",
+										"promissoryNote"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get Notificaiton by sommelier",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "sommelier",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "sommelier",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/order/promissoryNote",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"order",
+										"promissoryNote"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "AppointmentSchedule Service",
+			"item": [
+				{
+					"name": "get AppointmentSchedule",
+					"item": [
+						{
+							"name": "get AppointmentSchedule by killer",
 							"event": [
 								{
 									"listen": "test",
@@ -2063,7 +3401,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/api/v1/order/promissoryNote",
+									"raw": "http://localhost:8080/api/v1/appointmentSchedule",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2072,22 +3410,121 @@
 									"path": [
 										"api",
 										"v1",
-										"order",
-										"promissoryNote"
+										"appointmentSchedule"
 									]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "get Head haunt Order by Tailor",
+							"name": "get AppointmentSchedule by admin",
 							"event": [
 								{
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pm.test(\"Status code is 403\", function () {\r",
-											"    pm.response.to.have.status(403);\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "admin",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "admin",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/appointmentSchedule",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"appointmentSchedule"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get AppointmentSchedule by cleaner",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "cleaner",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "cleaner",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/appointmentSchedule",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"appointmentSchedule"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get AppointmentSchedule by tailor",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -2114,7 +3551,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/api/v1/order/promissoryNote",
+									"raw": "http://localhost:8080/api/v1/appointmentSchedule",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2123,22 +3560,21 @@
 									"path": [
 										"api",
 										"v1",
-										"order",
-										"promissoryNote"
+										"appointmentSchedule"
 									]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "get Head haunt Order by Sommelier",
+							"name": "get AppointmentSchedule by sommelier",
 							"event": [
 								{
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pm.test(\"Status code is 403\", function () {\r",
-											"    pm.response.to.have.status(403);\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -2165,7 +3601,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/api/v1/order/promissoryNote",
+									"raw": "http://localhost:8080/api/v1/appointmentSchedule",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2174,15 +3610,137 @@
 									"path": [
 										"api",
 										"v1",
-										"order",
-										"promissoryNote"
+										"appointmentSchedule"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "create AppointmentSchedule",
+					"item": [
+						{
+							"name": "create AppointmentSchedule by tailor",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "tailor",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "tailor",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"startTime\": \"2024-11-23T14:00:00Z\",\r\n    \"endTime\": \"2024-11-23T16:00:00Z\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/appointmentSchedule",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"appointmentSchedule"
 									]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "get Head haunt Order by Cleaner",
+							"name": "create AppointmentSchedule by admin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "admin",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "admin",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"startTime\": \"2024-11-23T14:00:00Z\",\r\n    \"endTime\": \"2024-11-23T16:00:00Z\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/appointmentSchedule",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"appointmentSchedule"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create AppointmentSchedule by cleaner",
 							"event": [
 								{
 									"listen": "test",
@@ -2213,10 +3771,19 @@
 										}
 									]
 								},
-								"method": "GET",
+								"method": "POST",
 								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"startTime\": \"2024-11-23T14:00:00Z\",\r\n    \"endTime\": \"2024-11-23T16:00:00Z\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
 								"url": {
-									"raw": "http://localhost:8080/api/v1/order/promissoryNote",
+									"raw": "http://localhost:8080/api/v1/appointmentSchedule",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2225,8 +3792,125 @@
 									"path": [
 										"api",
 										"v1",
-										"order",
-										"promissoryNote"
+										"appointmentSchedule"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create AppointmentSchedule by killer",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "killer",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "killer",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"startTime\": \"2024-11-23T14:00:00Z\",\r\n    \"endTime\": \"2024-11-23T16:00:00Z\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/appointmentSchedule",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"appointmentSchedule"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create AppointmentSchedule by sommelier",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "sommelier",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "sommelier",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"startTime\": \"2024-11-23T14:00:00Z\",\r\n    \"endTime\": \"2024-11-23T16:00:00Z\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/appointmentSchedule",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"appointmentSchedule"
 									]
 								}
 							},

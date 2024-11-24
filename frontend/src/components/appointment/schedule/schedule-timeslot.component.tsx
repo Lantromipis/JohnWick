@@ -1,5 +1,5 @@
 import { FC, memo, useCallback } from "react";
-import dayjs, { Dayjs } from "dayjs";
+import { Dayjs } from "dayjs";
 import {
   alpha,
   Button,
@@ -91,14 +91,6 @@ const ScheduleTimeslotComponent: FC<ScheduleTimeslotComponentProps> = ({
   const isScheduledAndFree = isScheduled && !intersectedAppointment;
   const slotEndTime = slotStartTime.add(TIMESLOT_DURATION_HOURS, "hours");
 
-  if (intersectedAppointment) {
-    console.log(
-      slotStartTime,
-      intersectedAppointmentSchedule?.appointments,
-      dayjs(intersectedAppointmentSchedule?.appointments[0].startTime),
-    );
-  }
-
   return (
     <TableCell
       key={slotStartTime.toISOString()}
@@ -121,7 +113,10 @@ const ScheduleTimeslotComponent: FC<ScheduleTimeslotComponentProps> = ({
             <Typography variant="h6">
               Timeslot {formatTimeslotHours(slotStartTime, slotEndTime)}
             </Typography>
-            <AccessControlComponent role={userRole} showFor={UserRole.TAILOR}>
+            <AccessControlComponent
+              role={userRole}
+              showFor={[UserRole.TAILOR, UserRole.SOMMELIER]}
+            >
               <Typography>
                 {isScheduled ? (
                   intersectedAppointment ? (

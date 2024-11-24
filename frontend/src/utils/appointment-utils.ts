@@ -47,10 +47,13 @@ export function isTimeInInterval(
   end: Dayjs,
   time: Dayjs,
 ): boolean {
-  return (
-    (start.isBefore(time) || start.isSame(time)) &&
-    (time.isSame(end) || time.isBefore(end))
-  );
+  if (start.isSame(time)) {
+    return end.isAfter(time);
+  }
+  if (end.isSame(time)) {
+    return false;
+  }
+  return start.isBefore(time) && time.isBefore(end);
 }
 
 export function formatTimeslotHours(start: Dayjs, end: Dayjs): string {

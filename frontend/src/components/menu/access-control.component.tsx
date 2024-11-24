@@ -3,7 +3,7 @@ import { UserRole } from "../../models/user.model.ts";
 
 type AccessControlComponentProps = {
   role?: UserRole;
-  showFor: UserRole;
+  showFor: UserRole | UserRole[];
   children: ReactNode;
 };
 
@@ -12,7 +12,12 @@ const AccessControlComponent: FC<AccessControlComponentProps> = ({
   showFor,
   children,
 }) => {
-  const allowedToShow = role === showFor;
+  let allowedToShow = false;
+  if (Array.isArray(showFor)) {
+    allowedToShow = !!showFor.find((showForRole) => showForRole === role);
+  } else {
+    allowedToShow = role === showFor;
+  }
   return allowedToShow ? children : null;
 };
 

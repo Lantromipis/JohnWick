@@ -122,7 +122,7 @@ public class UserServiceImpl implements UserService {
             throw new EntityNotFoundByIdException("User", user.getId().toString());
         }
 
-        UserEntity newUserEntity = userMapper.fromDto(user);
+        UserEntity newUserEntity = userMapper.fromDtoWithPassword(user);
         if (newUserEntity.getPassword() != null) {
             existingUser.setPassword(newUserEntity.getPassword());
         }

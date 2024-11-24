@@ -31,7 +31,7 @@ function App() {
       <CssBaseline />
       <SnackbarProvider
         autoHideDuration={10000}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        anchorOrigin={{ vertical: "top", horizontal: "left" }}
       >
         <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}>

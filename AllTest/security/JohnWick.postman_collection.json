@@ -376,9 +376,16 @@
 									"listen": "test",
 									"script": {
 										"exec": [
+											"// Предположим, что ответ - это массив объектов\r",
+											"var jsonData = pm.response.json();\r",
+											"\r",
+											"// Сохраняем id первого объекта в переменную окружения\r",
+											"pm.environment.set(\"idUpdateUser\", jsonData.id);\r",
+											"\r",
 											"pm.test(\"Status code is 200\", function () {\r",
 											"    pm.response.to.have.status(200);\r",
-											"});"
+											"});\r",
+											""
 										],
 										"type": "text/javascript",
 										"packages": {}
@@ -427,6 +434,15 @@
 									"listen": "test",
 									"script": {
 										"exec": [
+											"// Предположим, что ответ - это массив объектов\r",
+											"var jsonData = pm.response.json();\r",
+											"\r",
+											"// Сохраняем id первого объекта в переменную окружения\r",
+											"pm.environment.set(\"beneficiaryId\", jsonData.id);\r",
+											"pm.environment.set(\"beneficiaryName\", jsonData.username);\r",
+											"pm.environment.set(\"beneficiaryDisplayName\", jsonData.displayName);\r",
+											"pm.environment.set(\"beneficiaryRole\", jsonData.role);\r",
+											"\r",
 											"pm.test(\"Status code is 200\", function () {\r",
 											"    pm.response.to.have.status(200);\r",
 											"});"
@@ -534,6 +550,15 @@
 									"listen": "test",
 									"script": {
 										"exec": [
+											"// Предположим, что ответ - это массив объектов\r",
+											"var jsonData = pm.response.json();\r",
+											"\r",
+											"// Сохраняем id первого объекта в переменную окружения\r",
+											"pm.environment.set(\"debtorId\", jsonData.id);\r",
+											"pm.environment.set(\"debtorName\", jsonData.username);\r",
+											"pm.environment.set(\"debtorDisplayName\", jsonData.displayName);\r",
+											"pm.environment.set(\"debtorRole\", jsonData.role);\r",
+											"\r",
 											"pm.test(\"Status code is 200\", function () {\r",
 											"    pm.response.to.have.status(200);\r",
 											"});"
@@ -563,7 +588,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"username\":\"kek\",\r\n    \"displayName\":\"kek\",\r\n    \"password\":\"kek\",\r\n    \"role\":\"ADMIN\"\r\n}",
+									"raw": "{\r\n    \"username\":\"kek\",\r\n    \"displayName\":\"kek\",\r\n    \"password\":\"kek\",\r\n    \"role\":\"KILLER\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -844,6 +869,13 @@
 										"type": "text/javascript",
 										"packages": {}
 									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"packages": {},
+										"type": "text/javascript"
+									}
 								}
 							],
 							"request": {
@@ -874,7 +906,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/api/v1/user/48e50223-c949-4d8f-b2ec-cbeb340e690b",
+									"raw": "http://localhost:8080/api/v1/user/{{idUpdateUser}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -884,7 +916,7 @@
 										"api",
 										"v1",
 										"user",
-										"48e50223-c949-4d8f-b2ec-cbeb340e690b"
+										"{{idUpdateUser}}"
 									]
 								}
 							},
@@ -934,7 +966,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/api/v1/user/780bd8c6-3a08-4456-bae3-8f53ef9dae0c",
+									"raw": "http://localhost:8080/api/v1/user/{{idUpdateUser}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -944,7 +976,7 @@
 										"api",
 										"v1",
 										"user",
-										"780bd8c6-3a08-4456-bae3-8f53ef9dae0c"
+										"{{idUpdateUser}}"
 									]
 								}
 							},
@@ -994,7 +1026,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/api/v1/user/780bd8c6-3a08-4456-bae3-8f53ef9dae0c",
+									"raw": "http://localhost:8080/api/v1/user/{{idUpdateUser}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -1004,7 +1036,7 @@
 										"api",
 										"v1",
 										"user",
-										"780bd8c6-3a08-4456-bae3-8f53ef9dae0c"
+										"{{idUpdateUser}}"
 									]
 								}
 							},
@@ -1054,7 +1086,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/api/v1/user/780bd8c6-3a08-4456-bae3-8f53ef9dae0c",
+									"raw": "http://localhost:8080/api/v1/user/{{idUpdateUser}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -1064,7 +1096,7 @@
 										"api",
 										"v1",
 										"user",
-										"780bd8c6-3a08-4456-bae3-8f53ef9dae0c"
+										"{{idUpdateUser}}"
 									]
 								}
 							},
@@ -1114,7 +1146,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/api/v1/user/780bd8c6-3a08-4456-bae3-8f53ef9dae0c",
+									"raw": "http://localhost:8080/api/v1/user/{{idUpdateUser}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -1124,7 +1156,7 @@
 										"api",
 										"v1",
 										"user",
-										"780bd8c6-3a08-4456-bae3-8f53ef9dae0c"
+										"{{idUpdateUser}}"
 									]
 								}
 							},
@@ -1147,6 +1179,12 @@
 									"listen": "test",
 									"script": {
 										"exec": [
+											"// Предположим, что ответ - это массив объектов\r",
+											"var jsonData = pm.response.json();\r",
+											"\r",
+											"// Сохраняем id первого объекта в переменную окружения\r",
+											"pm.environment.set(\"idRegularOrder\", jsonData.id);\r",
+											"\r",
 											"pm.test(\"Status code is 200\", function () {\r",
 											"    pm.response.to.have.status(200);\r",
 											"});"
@@ -1206,8 +1244,8 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pm.test(\"Status code is 200\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -1265,8 +1303,8 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pm.test(\"Status code is 200\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -1324,8 +1362,8 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pm.test(\"Status code is 200\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -1377,14 +1415,14 @@
 							"response": []
 						},
 						{
-							"name": "Create Regular User by Tailor",
+							"name": "Create Regular Order by Tailor",
 							"event": [
 								{
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pm.test(\"Status code is 200\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -1438,10 +1476,10 @@
 					]
 				},
 				{
-					"name": "create Regular Order Copy",
+					"name": "create Head Hunt Order",
 					"item": [
 						{
-							"name": "Create Regular  Order by Admin",
+							"name": "Create Head Hunt  Order by Admin",
 							"event": [
 								{
 									"listen": "test",
@@ -1476,307 +1514,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"type\": \"REGULAR\",\r\n    \"description\": \"213\",\r\n    \"targetName\": \"artem\",\r\n    \"price\": 231,\r\n    \"customerName\": \"test\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:8080/api/v1/order",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"v1",
-										"order"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Create  Regular  Order by Sommelier",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
-											"});"
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								}
-							],
-							"request": {
-								"auth": {
-									"type": "basic",
-									"basic": [
-										{
-											"key": "password",
-											"value": "sommelier",
-											"type": "string"
-										},
-										{
-											"key": "username",
-											"value": "sommelier",
-											"type": "string"
-										}
-									]
-								},
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"type\": \"REGULAR\",\r\n    \"description\": \"213\",\r\n    \"targetName\": \"artem\",\r\n    \"price\": 231,\r\n    \"customerName\": \"test\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:8080/api/v1/order",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"v1",
-										"order"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Create Regular Order by Cleaner",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
-											"});"
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								}
-							],
-							"request": {
-								"auth": {
-									"type": "basic",
-									"basic": [
-										{
-											"key": "password",
-											"value": "cleaner",
-											"type": "string"
-										},
-										{
-											"key": "username",
-											"value": "cleaner",
-											"type": "string"
-										}
-									]
-								},
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"type\": \"REGULAR\",\r\n    \"description\": \"213\",\r\n    \"targetName\": \"artem\",\r\n    \"price\": 231,\r\n    \"customerName\": \"test\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:8080/api/v1/order",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"v1",
-										"order"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Create Regular Order by Killer",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
-											"});"
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								}
-							],
-							"request": {
-								"auth": {
-									"type": "basic",
-									"basic": [
-										{
-											"key": "password",
-											"value": "killer",
-											"type": "string"
-										},
-										{
-											"key": "username",
-											"value": "killer",
-											"type": "string"
-										}
-									]
-								},
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"type\": \"REGULAR\",\r\n    \"description\": \"213\",\r\n    \"targetName\": \"artem\",\r\n    \"price\": 231,\r\n    \"customerName\": \"test\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:8080/api/v1/order",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"v1",
-										"order"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Create Regular User by Tailor",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
-											"});"
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								}
-							],
-							"request": {
-								"auth": {
-									"type": "basic",
-									"basic": [
-										{
-											"key": "password",
-											"value": "tailor",
-											"type": "string"
-										},
-										{
-											"key": "username",
-											"value": "tailor",
-											"type": "string"
-										}
-									]
-								},
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"type\": \"REGULAR\",\r\n    \"description\": \"213\",\r\n    \"targetName\": \"artem\",\r\n    \"price\": 231,\r\n    \"customerName\": \"test\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:8080/api/v1/order",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"v1",
-										"order"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "create Promissory Note Order",
-					"item": [
-						{
-							"name": "Create Promissory Note Order by Admin",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
-											"});"
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								}
-							],
-							"request": {
-								"auth": {
-									"type": "basic",
-									"basic": [
-										{
-											"key": "password",
-											"value": "admin",
-											"type": "string"
-										},
-										{
-											"key": "username",
-											"value": "admin",
-											"type": "string"
-										}
-									]
-								},
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"type\": \"PROMISSORY_NOTE\",\r\n    \"description\": \"213\",\r\n    \"targetName\": \"artem\",\r\n    \"beneficiary\":\"17ab1abc-51b5-4b47-b222-316bb20d134e\",\r\n    \"debtor\": \"49c6ed5a-d6dd-4656-b74e-b7609780ddea\"\r\n}",
+									"raw": "{\r\n    \"type\": \"HEAD_HUNT\",\r\n    \"description\": \"213\",\r\n    \"targetName\": \"artem\",\r\n    \"price\": 231,\r\n    \"customerName\": \"test\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1924,8 +1662,8 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pm.test(\"Status code is 200\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -1977,14 +1715,14 @@
 							"response": []
 						},
 						{
-							"name": "Create Head Hunt  User by Tailor",
+							"name": "Create Head Hunt Order by Tailor",
 							"event": [
 								{
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pm.test(\"Status code is 200\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -2038,10 +1776,580 @@
 					]
 				},
 				{
-					"name": "get Regualr Order by Admin",
+					"name": "create Prommisory Note Order Copy",
 					"item": [
 						{
-							"name": "Create Order by Admin",
+							"name": "Create Prommisory Note  Order by Admin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "admin",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "admin",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"type\": \"PROMISSORY_NOTE\",\r\n    \"description\": \"213\",\r\n    \"targetName\": \"artem\",\r\n    \"beneficiary\": {\r\n            \"id\": \"{{beneficiaryId}}\",\r\n            \"username\": \"{{beneficiaryName}}\",\r\n            \"displayName\": \"{{beneficiaryDisplayName}}\",\r\n            \"role\": \"{{beneficiaryRole}}\"\r\n    },\r\n        \"debtor\": {\r\n            \"id\": \"{{debtorId}}\",\r\n            \"username\": \"{{debtorName}}\",\r\n            \"displayName\": \"{{debtorDisplayName}}\",\r\n            \"role\": \"{{debtorRole}}\"\r\n        }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/order",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"order"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Prommisory Note  Order by Tailor",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "tailor",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "tailor",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"type\": \"PROMISSORY_NOTE\",\r\n    \"description\": \"213\",\r\n    \"targetName\": \"artem\",\r\n    \"beneficiary\": {\r\n            \"id\": \"{{beneficiaryId}}\",\r\n            \"username\": \"{{beneficiaryName}}\",\r\n            \"displayName\": \"{{beneficiaryDisplayName}}\",\r\n            \"role\": \"{{beneficiaryRole}}\"\r\n    },\r\n        \"debtor\": {\r\n            \"id\": \"{{debtorId}}\",\r\n            \"username\": \"{{debtorName}}\",\r\n            \"displayName\": \"{{debtorDisplayName}}\",\r\n            \"role\": \"{{debtorRole}}\"\r\n        }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/order",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"order"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Prommisory Note  Order by Cleaner",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "cleaner",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "cleaner",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"type\": \"PROMISSORY_NOTE\",\r\n    \"description\": \"213\",\r\n    \"targetName\": \"artem\",\r\n    \"beneficiary\": {\r\n            \"id\": \"{{beneficiaryId}}\",\r\n            \"username\": \"{{beneficiaryName}}\",\r\n            \"displayName\": \"{{beneficiaryDisplayName}}\",\r\n            \"role\": \"{{beneficiaryRole}}\"\r\n    },\r\n        \"debtor\": {\r\n            \"id\": \"{{debtorId}}\",\r\n            \"username\": \"{{debtorName}}\",\r\n            \"displayName\": \"{{debtorDisplayName}}\",\r\n            \"role\": \"{{debtorRole}}\"\r\n        }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/order",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"order"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Prommisory Note  Order by Sommelier",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "sommelier",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "sommelier",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"type\": \"PROMISSORY_NOTE\",\r\n    \"description\": \"213\",\r\n    \"targetName\": \"artem\",\r\n    \"beneficiary\": {\r\n            \"id\": \"{{beneficiaryId}}\",\r\n            \"username\": \"{{beneficiaryName}}\",\r\n            \"displayName\": \"{{beneficiaryDisplayName}}\",\r\n            \"role\": \"{{beneficiaryRole}}\"\r\n    },\r\n        \"debtor\": {\r\n            \"id\": \"{{debtorId}}\",\r\n            \"username\": \"{{debtorName}}\",\r\n            \"displayName\": \"{{debtorDisplayName}}\",\r\n            \"role\": \"{{debtorRole}}\"\r\n        }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/order",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"order"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Prommisory Note  Order by Killer",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "killer",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "killer",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"type\": \"PROMISSORY_NOTE\",\r\n    \"description\": \"213\",\r\n    \"targetName\": \"artem\",\r\n    \"beneficiary\": {\r\n            \"id\": \"{{beneficiaryId}}\",\r\n            \"username\": \"{{beneficiaryName}}\",\r\n            \"displayName\": \"{{beneficiaryDisplayName}}\",\r\n            \"role\": \"{{beneficiaryRole}}\"\r\n    },\r\n        \"debtor\": {\r\n            \"id\": \"{{debtorId}}\",\r\n            \"username\": \"{{debtorName}}\",\r\n            \"displayName\": \"{{debtorDisplayName}}\",\r\n            \"role\": \"{{debtorRole}}\"\r\n        }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/order",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"order"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "create Regular Order Application",
+					"item": [
+						{
+							"name": "Create Regular Order Application by Admin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "admin",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "admin",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/order/regular/{{idRegularOrder}}/applications",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"order",
+										"regular",
+										"{{idRegularOrder}}",
+										"applications"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Regular Order Application by Tailor",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "tailor",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "tailor",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/order/regular/{{idRegularOrder}}/applications",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"order",
+										"regular",
+										"{{idRegularOrder}}",
+										"applications"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Regular Order Application by Cleaner",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "cleaner",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "cleaner",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/order/regular/{{idRegularOrder}}/applications",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"order",
+										"regular",
+										"{{idRegularOrder}}",
+										"applications"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Regular Order Application by Sommelier",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "sommelier",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "sommelier",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/order/regular/{{idRegularOrder}}/applications",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"order",
+										"regular",
+										"{{idRegularOrder}}",
+										"applications"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Regular Order Application by Killer",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "killer",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "killer",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/order/regular/{{idRegularOrder}}/applications",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"order",
+										"regular",
+										"{{idRegularOrder}}",
+										"applications"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "get Regualr Order by Id",
+					"item": [
+						{
+							"name": "get Regualr Order by Id by Admin",
 							"event": [
 								{
 									"listen": "test",
@@ -2075,7 +2383,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/api/v1/order/regular/25d7319e-3c68-4d1c-8ed1-6e6f6b261766",
+									"raw": "http://localhost:8080/api/v1/order/regular/{{idRegularOrder}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2086,14 +2394,14 @@
 										"v1",
 										"order",
 										"regular",
-										"25d7319e-3c68-4d1c-8ed1-6e6f6b261766"
+										"{{idRegularOrder}}"
 									]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "Create Order by Sommelier",
+							"name": "get Regualr Order by Id by Sommelier",
 							"event": [
 								{
 									"listen": "test",
@@ -2127,7 +2435,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/api/v1/order/regular/25d7319e-3c68-4d1c-8ed1-6e6f6b261766",
+									"raw": "http://localhost:8080/api/v1/order/regular/{{idRegularOrder}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2138,14 +2446,14 @@
 										"v1",
 										"order",
 										"regular",
-										"25d7319e-3c68-4d1c-8ed1-6e6f6b261766"
+										"{{idRegularOrder}}"
 									]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "Create Order by Cleaner",
+							"name": "get Regualr Order by Id by Cleaner",
 							"event": [
 								{
 									"listen": "test",
@@ -2179,7 +2487,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/api/v1/order/regular/25d7319e-3c68-4d1c-8ed1-6e6f6b261766",
+									"raw": "http://localhost:8080/api/v1/order/regular/{{idRegularOrder}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2190,14 +2498,14 @@
 										"v1",
 										"order",
 										"regular",
-										"25d7319e-3c68-4d1c-8ed1-6e6f6b261766"
+										"{{idRegularOrder}}"
 									]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "Create Order by Killer",
+							"name": "get Regualr Order by Id by Killer",
 							"event": [
 								{
 									"listen": "test",
@@ -2243,7 +2551,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/api/v1/order/regular/25d7319e-3c68-4d1c-8ed1-6e6f6b261766",
+									"raw": "http://localhost:8080/api/v1/order/regular/{{idRegularOrder}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2254,14 +2562,14 @@
 										"v1",
 										"order",
 										"regular",
-										"25d7319e-3c68-4d1c-8ed1-6e6f6b261766"
+										"{{idRegularOrder}}"
 									]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "Create User by Tailor",
+							"name": "get Regualr Order by Id by Tailor",
 							"event": [
 								{
 									"listen": "test",
@@ -2295,7 +2603,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/api/v1/order/regular/25d7319e-3c68-4d1c-8ed1-6e6f6b261766",
+									"raw": "http://localhost:8080/api/v1/order/regular/{{idRegularOrder}}",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -2306,7 +2614,7 @@
 										"v1",
 										"order",
 										"regular",
-										"25d7319e-3c68-4d1c-8ed1-6e6f6b261766"
+										"{{idRegularOrder}}"
 									]
 								}
 							},
@@ -2635,8 +2943,8 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pm.test(\"Status code is 403\", function () {\r",
-											"    pm.response.to.have.status(403);\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -2835,6 +3143,270 @@
 					]
 				},
 				{
+					"name": "get  Regular Order Applications",
+					"item": [
+						{
+							"name": "get Regular Order Applications by Admin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "admin",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "admin",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/order/regular/applications",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"order",
+										"regular",
+										"applications"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get Regular Order Applications by Killer",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "killer",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "killer",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/order/regular/applications",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"order",
+										"regular",
+										"applications"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get Regular  Order Applications by Tailor",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "tailor",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "tailor",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/order/regular",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"order",
+										"regular"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get Regular Order Applications by Sommelier",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "sommelier",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "sommelier",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/order/regular/applications",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"order",
+										"regular",
+										"applications"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get Regular  Order Applications by Cleaner",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "cleaner",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "cleaner",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/order/regular/applications",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"order",
+										"regular",
+										"applications"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "get  Promissory Note Orders",
 					"item": [
 						{
@@ -2895,8 +3467,8 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pm.test(\"Status code is 403\", function () {\r",
-											"    pm.response.to.have.status(403);\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -3123,13 +3695,13 @@
 									"type": "basic",
 									"basic": [
 										{
-											"key": "username",
-											"value": "test_kiler",
+											"key": "password",
+											"value": "killer",
 											"type": "string"
 										},
 										{
-											"key": "password",
-											"value": "123",
+											"key": "username",
+											"value": "killer",
 											"type": "string"
 										}
 									]
@@ -3423,8 +3995,8 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pm.test(\"Status code is 200\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -3473,8 +4045,8 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pm.test(\"Status code is 200\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -3657,7 +4229,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"startTime\": \"2024-11-23T14:00:00Z\",\r\n    \"endTime\": \"2024-11-23T16:00:00Z\"\r\n}",
+									"raw": "{\r\n    \"startTime\": \"2024-11-24T14:00:00Z\",\r\n    \"endTime\": \"2024-11-24T16:00:00Z\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -3893,7 +4465,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"startTime\": \"2024-11-23T14:00:00Z\",\r\n    \"endTime\": \"2024-11-23T16:00:00Z\"\r\n}",
+									"raw": "{\r\n    \"startTime\": \"2024-11-24T14:00:00Z\",\r\n    \"endTime\": \"2024-11-24T16:00:00Z\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -3922,19 +4494,7 @@
 		}
 	],
 	"auth": {
-		"type": "basic",
-		"basic": [
-			{
-				"key": "password",
-				"value": "admin",
-				"type": "string"
-			},
-			{
-				"key": "username",
-				"value": "admin",
-				"type": "string"
-			}
-		]
+		"type": "inherit"
 	},
 	"event": [
 		{
@@ -3956,6 +4516,62 @@
 					""
 				]
 			}
+		}
+	],
+	"variable": [
+		{
+			"key": "idRegularOrder",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "idUpdateUser",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "beneficiaryId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "beneficiaryName",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "beneficiaryDisplayName",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "beneficiaryRole",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "debtorId",
+			"value": "",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "debtorName",
+			"value": "",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "debtorDisplayName",
+			"value": "",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "debtorRole",
+			"value": "",
+			"type": "string",
+			"disabled": true
 		}
 	]
 }

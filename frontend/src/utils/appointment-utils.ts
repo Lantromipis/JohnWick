@@ -35,7 +35,10 @@ export function getIntersectedAppointmentByTime(
   return appointments?.find((appointment) => {
     const appointmentStartTime = dayjs(appointment.startTime);
     const appointmentEndTime = dayjs(appointment.endTime);
-    return isTimeInInterval(appointmentStartTime, appointmentEndTime, time);
+    return (
+      appointmentStartTime.isSame(time) &&
+      appointmentEndTime.isSame(appointmentEndTime)
+    );
   });
 }
 
@@ -48,4 +51,12 @@ export function isTimeInInterval(
     (start.isBefore(time) || start.isSame(time)) &&
     (time.isSame(end) || time.isBefore(end))
   );
+}
+
+export function formatTimeslotHours(start: Dayjs, end: Dayjs): string {
+  return `${start.format("HH:00")} - ${end.format("HH:00")}`;
+}
+
+export function formatTimeslotDayAndHours(start: Dayjs, end: Dayjs): string {
+  return `${start.format("D.MM.YYYY HH:00")} - ${end.format("HH:00")}`;
 }

@@ -38,7 +38,7 @@ const NotificationsListContainer: FC<NotificationsListContainerProps> = () => {
         <DialogTitle>Notifications</DialogTitle>
         <DialogContent sx={{ width: "350px" }}>
           <Stack spacing={2}>
-            {notifications?.length == 0 && (
+            {notifications?.length === 0 && (
               <Alert severity="info" key={"alert"}>
                 There are no notifications now. Come back later!
               </Alert>

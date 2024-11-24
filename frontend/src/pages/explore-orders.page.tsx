@@ -16,7 +16,7 @@ const ExploreOrdersPage: FC<ExploreOrdersPageProps> = () => {
   return (
     <MainLayout>
       <Stack spacing={2}>
-        <Tabs value={tabNum} onChange={handleTabChange}>
+        <Tabs value={tabNum} onChange={handleTabChange} variant={"fullWidth"}>
           <Tab label="Regular orders" />
           <Tab label="Head hunt orders" />
         </Tabs>

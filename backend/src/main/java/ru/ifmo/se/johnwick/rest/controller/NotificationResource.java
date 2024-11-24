@@ -1,5 +1,6 @@
 package ru.ifmo.se.johnwick.rest.controller;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
@@ -21,6 +22,7 @@ public class NotificationResource {
     NotificationService notificationService;
 
     @GET
+    @RolesAllowed(ApiConstant.ROLE_ALL)
     public List<NotificationDto> listNotifications() {
         return notificationService.listCurrentUserNotifications();
     }

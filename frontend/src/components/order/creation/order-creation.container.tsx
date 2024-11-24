@@ -30,7 +30,7 @@ const OrderCreationContainer: FC<OrderCreationContainerProps> = () => {
   const [createNewOrder, createNewOrderResponse] =
     orderApi.useCreateNewOrderMutation();
 
-  const { data: users } = userApi.useGetUsersQuery();
+  const { data: users } = userApi.useListUsersQuery({});
 
   const handleDialogOpen = () => {
     setCreationError(false);
@@ -107,7 +107,7 @@ const OrderCreationContainer: FC<OrderCreationContainerProps> = () => {
         Create new order
       </Button>
       <Dialog open={dialogOpen} onClose={handleDialogClose}>
-        <DialogTitle>Create new user</DialogTitle>
+        <DialogTitle>Create new order</DialogTitle>
         <DialogContent>
           <Stack spacing={2} sx={{ paddingTop: "10px" }}>
             {creationError && (

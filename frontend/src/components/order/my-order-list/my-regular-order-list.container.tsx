@@ -25,7 +25,7 @@ const MyRegularOrderListContainer: FC<
 
   return (
     <Stack spacing={2}>
-      {regularOrders?.length == 0 && (
+      {regularOrders?.length === 0 && (
         <Alert severity="info">
           You have no active orders. Apply for a new one using "Explore orders"
           page!

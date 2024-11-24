@@ -2,6 +2,7 @@ import { commonApi } from "../common.api.ts";
 import {
   APPOINTMENT_SCHEDULE_BASE_URL,
   getCreateAppointmentUrl,
+  getListEntitiesUrl,
 } from "../../constants/api.constants.ts";
 import {
   AppointmentDtoModel,
@@ -26,14 +27,17 @@ export const scheduleApi = commonApi.injectEndpoints({
       AppointmentScheduleDtoModel[],
       ListEntitiesRequest
     >({
-      query: () => ({
-        url: APPOINTMENT_SCHEDULE_BASE_URL,
+      query: (request) => ({
+        url: getListEntitiesUrl(APPOINTMENT_SCHEDULE_BASE_URL, request),
       }),
       providesTags: ["Appointment schedules"],
     }),
     createAppointment: builder.mutation<
       AppointmentDtoModel,
-      { scheduleId: string; appointment: AppointmentDtoModel }
+      {
+        scheduleId: string;
+        appointment: Omit<AppointmentDtoModel, "id" | "bookedBy">;
+      }
     >({
       query: (request) => ({
         url: getCreateAppointmentUrl(request.scheduleId),

@@ -138,14 +138,23 @@ const OrderCreationForm: FC<OrderCreationFormProps> = ({
           <Controller
             name="price"
             control={control}
-            rules={{ required: "Price is required" }}
+            rules={{
+              required: "Price is required",
+              validate: (value: number) => {
+                if (value <= 0) {
+                  return "Price must be greater than 0!";
+                }
+              },
+            }}
             render={({ field }) => (
               <TextField
                 {...field}
                 required
                 type={"number"}
                 variant="outlined"
-                label="Price"
+                label={
+                  watch("type") == OrderType.REGULAR ? "Price" : "Initial price"
+                }
                 error={!!errors.price}
                 helperText={errors.price?.message}
               />

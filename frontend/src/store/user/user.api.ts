@@ -1,10 +1,12 @@
 import { commonApi } from "../common.api.ts";
 import { UserDtoModel } from "../../models/user.model.ts";
 import {
+  getListEntitiesUrl,
   getPatchUserUrl,
   USER_BASE_URL,
   USER_SELF_BASE_URL,
 } from "../../constants/api.constants.ts";
+import { ListEntitiesRequest } from "../../models/common.model.ts";
 
 export const userApi = commonApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -16,9 +18,9 @@ export const userApi = commonApi.injectEndpoints({
       }),
       invalidatesTags: ["Users"],
     }),
-    getUsers: builder.query<UserDtoModel[], void>({
-      query: () => ({
-        url: USER_BASE_URL,
+    listUsers: builder.query<UserDtoModel[], ListEntitiesRequest>({
+      query: (request) => ({
+        url: getListEntitiesUrl(USER_BASE_URL, request),
       }),
       providesTags: ["Users"],
     }),
@@ -37,4 +39,4 @@ export const userApi = commonApi.injectEndpoints({
   }),
 });
 
-export const { useCreateNewUserMutation, useLazyGetUsersQuery } = userApi;
+export const { useCreateNewUserMutation } = userApi;

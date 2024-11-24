@@ -22,9 +22,9 @@ public class UserResource {
     UserService userService;
 
     @GET
-    @RolesAllowed(ApiConstant.ROLE_ADMIN)
-    public List<UserDto> listUsers() {
-        return userService.listUsers();
+    @RolesAllowed(ApiConstant.ROLE_ALL)
+    public List<UserDto> listUsers(@QueryParam("rsqlPredicate") String rsqlPredicate) {
+        return userService.listUsers(rsqlPredicate);
     }
 
     @GET

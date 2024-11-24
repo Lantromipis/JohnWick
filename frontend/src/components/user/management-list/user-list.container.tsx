@@ -5,7 +5,7 @@ import { userApi } from "../../../store/user/user.api.ts";
 type UserListContainerProps = {};
 
 const UserListContainer: FC<UserListContainerProps> = () => {
-  const { data, refetch } = userApi.useGetUsersQuery();
+  const { data, refetch } = userApi.useListUsersQuery({});
 
   useEffect(() => {
     refetch();

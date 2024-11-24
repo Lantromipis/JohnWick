@@ -17,7 +17,11 @@ const NotificationCardComponent: FC<NotificationCardComponentProps> = ({
       />
       <CardContent>
         {notification.message && (
-          <Typography variant="body2" color="text.secondary">
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            key={notification.id}
+          >
             {notification.message}
           </Typography>
         )}

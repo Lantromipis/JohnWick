@@ -19,7 +19,7 @@ const ManageOrdersPage: FC<ManageOrdersPageProps> = () => {
     <MainLayout>
       <Stack spacing={2}>
         <OrderCreationContainer />
-        <Tabs value={tabNum} onChange={handleTabChange}>
+        <Tabs value={tabNum} onChange={handleTabChange} variant={"fullWidth"}>
           <Tab label="Regular orders" />
           <Tab label="Head hunt orders" />
           <Tab label="Promissory note orders" />

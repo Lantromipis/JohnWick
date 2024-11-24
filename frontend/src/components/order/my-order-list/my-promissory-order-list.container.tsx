@@ -26,7 +26,7 @@ const MyPromissoryNoteOrderListContainer: FC<
 
   return (
     <Stack spacing={2}>
-      {promissoryNoteOrders?.length == 0 && (
+      {promissoryNoteOrders?.length === 0 && (
         <Alert severity="info">
           You have no promissory note orders. Lucky you!
         </Alert>

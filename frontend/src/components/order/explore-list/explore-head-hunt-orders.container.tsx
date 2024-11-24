@@ -17,7 +17,7 @@ const ExploreRegularOrdersContainer: FC<
 
   return (
     <Stack spacing={2}>
-      {headHauntOrderList?.length == 0 && (
+      {headHauntOrderList?.length === 0 && (
         <Alert severity="info">
           Sorry, currently there are no orders available. Please check later.
         </Alert>

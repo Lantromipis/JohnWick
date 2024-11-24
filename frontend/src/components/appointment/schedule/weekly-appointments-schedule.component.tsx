@@ -7,57 +7,41 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Theme,
   useTheme,
 } from "@mui/material";
 import ScheduleIcon from "@mui/icons-material/Schedule";
-import { AppointmentScheduleDtoModel } from "../../../models/schedule.model.ts";
 import {
-  formatHour,
-  getIntersectedAppointmentByTime,
-  getIntersectedAppointmentScheduleByTime,
-} from "../../../utils/appointment-utils.ts";
+  AppointmentDtoModel,
+  AppointmentScheduleDtoModel,
+} from "../../../models/schedule.model.ts";
+import { formatHour } from "../../../utils/appointment-utils.ts";
 import dayjs, { Dayjs } from "dayjs";
-import { SxProps } from "@mui/system";
+import ScheduleTimeslotComponent from "./schedule-timeslot.component.tsx";
+import { UserRole } from "../../../models/user.model.ts";
+
+const FIRST_COLUMN_WIDTH = 70;
 
 type WeeklyAppointmentsScheduleComponentProps = {
+  userRole?: UserRole;
+  onTimeSlotClicked?: (
+    schedule: AppointmentScheduleDtoModel | undefined,
+    appointment: AppointmentDtoModel | undefined,
+    start: Dayjs,
+    end: Dayjs,
+  ) => void;
   appointmentsSchedules: AppointmentScheduleDtoModel[];
   currentWeekStart: Dayjs;
   currentWeekEnd: Dayjs;
 };
 
-const CELL_ALPHA_FACTOR = 0.3;
-
-export function getTableCellSxProps(
-  isToday: boolean,
-  isScheduled: boolean,
-  isScheduledAndFree: boolean,
-  theme: Theme,
-): SxProps<Theme> {
-  if (isToday && !isScheduled) {
-    return {
-      backgroundColor: alpha(theme.palette.info.light, CELL_ALPHA_FACTOR),
-    };
-  }
-
-  if (isScheduled) {
-    if (isScheduledAndFree) {
-      return {
-        backgroundColor: alpha(theme.palette.success.light, CELL_ALPHA_FACTOR),
-      };
-    } else {
-      return {
-        backgroundColor: alpha(theme.palette.error.light, CELL_ALPHA_FACTOR),
-      };
-    }
-  }
-
-  return {};
-}
-
 const WeeklyAppointmentsScheduleComponent: FC<
   WeeklyAppointmentsScheduleComponentProps
-> = ({ appointmentsSchedules, currentWeekStart }) => {
+> = ({
+  userRole,
+  appointmentsSchedules,
+  currentWeekStart,
+  onTimeSlotClicked,
+}) => {
   const theme = useTheme();
   const today = dayjs();
 
@@ -67,7 +51,11 @@ const WeeklyAppointmentsScheduleComponent: FC<
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell align={"center"} key={`${-1}${-1}`}>
+              <TableCell
+                align={"center"}
+                key={`${-1}${-1}`}
+                width={FIRST_COLUMN_WIDTH}
+              >
                 <ScheduleIcon />
               </TableCell>
               {[...Array(7)].map((_, idx) => {
@@ -92,47 +80,26 @@ const WeeklyAppointmentsScheduleComponent: FC<
             {[...Array(24)].map((_, i) => {
               return (
                 <TableRow key={i}>
-                  <TableCell width={30} key={i}>
+                  <TableCell
+                    key={i}
+                    align={"center"}
+                    width={FIRST_COLUMN_WIDTH}
+                  >
                     <b>{formatHour(i)}</b>
                   </TableCell>
-                  {[...Array(7)].map((_, j) => {
-                    const currentTime = currentWeekStart
-                      .add(j, "days")
-                      .add(i, "hours");
-                    const intersectedAppointmentSchedule =
-                      getIntersectedAppointmentScheduleByTime(
-                        appointmentsSchedules,
-                        currentTime,
-                      );
-                    const intersectedAppointment =
-                      getIntersectedAppointmentByTime(
-                        intersectedAppointmentSchedule?.appointments,
-                        currentTime,
-                      );
-                    const isToday = currentWeekStart
-                      .add(j, "days")
-                      .isSame(today, "day");
-                    const isScheduled = !!intersectedAppointmentSchedule;
-                    const isScheduledAndFree =
-                      isScheduled && !intersectedAppointment;
-                    return (
-                      <TableCell
-                        key={`${i}${j}`}
-                        sx={{
-                          ...getTableCellSxProps(
-                            isToday,
-                            isScheduled,
-                            isScheduledAndFree,
-                            theme,
-                          ),
-                        }}
-                      >
-                        {intersectedAppointment
-                          ? intersectedAppointment.bookedBy.displayName
-                          : ""}
-                      </TableCell>
-                    );
-                  })}
+                  {[...Array(7)].map((_, j) => (
+                    <ScheduleTimeslotComponent
+                      slotStartTime={currentWeekStart
+                        .add(j, "days")
+                        .add(i, "hours")
+                        .set("minutes", 0)
+                        .set("seconds", 0)}
+                      todayTime={today}
+                      appointmentsSchedules={appointmentsSchedules}
+                      onTimeSlotClicked={onTimeSlotClicked}
+                      userRole={userRole}
+                    />
+                  ))}
                 </TableRow>
               );
             })}

@@ -3,19 +3,38 @@ import WeeklyAppointmentsScheduleComponent from "./weekly-appointments-schedule.
 import { Button, Stack, Typography } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import { scheduleApi } from "../../../store/schedule/schedule.api.ts";
 import { emit } from "@rsql/emitter";
 import builder from "@rsql/builder";
+import {
+  AppointmentDtoModel,
+  AppointmentScheduleDtoModel,
+} from "../../../models/schedule.model.ts";
+import { UserRole } from "../../../models/user.model.ts";
+import { useSelector } from "react-redux";
+import { selectCurrentUserRole } from "../../../store/user/user.selectors.ts";
 
-type AppointmentScheduleContainerProps = {};
+type AppointmentScheduleContainerProps = {
+  hostId: string;
+  onTimeSlotClicked?: (
+    schedule: AppointmentScheduleDtoModel | undefined,
+    appointment: AppointmentDtoModel | undefined,
+    start: Dayjs,
+    end: Dayjs,
+  ) => void;
+};
 
-const AppointmentScheduleContainer: FC<
-  AppointmentScheduleContainerProps
-> = () => {
+const AppointmentScheduleContainer: FC<AppointmentScheduleContainerProps> = ({
+  onTimeSlotClicked,
+  hostId,
+}) => {
   const today = dayjs();
   const [currentWeekStart, setCurrentWeekStart] = useState(
     today.startOf("week"),
+  );
+  const currentUserRole: UserRole | undefined = useSelector(
+    selectCurrentUserRole,
   );
   const [currentWeekEnd, setCurrentWeekEnd] = useState(today.endOf("week"));
 
@@ -37,6 +56,7 @@ const AppointmentScheduleContainer: FC<
       builder.and(
         builder.ge("endTime", currentWeekStart.toISOString()),
         builder.le("startTime", currentWeekEnd.toISOString()),
+        builder.eq("host.id", hostId),
       ),
     ),
   });
@@ -68,6 +88,8 @@ const AppointmentScheduleContainer: FC<
         appointmentsSchedules={appointmentScheduleList ?? []}
         currentWeekStart={currentWeekStart}
         currentWeekEnd={currentWeekEnd}
+        onTimeSlotClicked={onTimeSlotClicked}
+        userRole={currentUserRole}
       />
     </Stack>
   );

@@ -32,6 +32,7 @@ import ru.ifmo.se.johnwick.service.api.AppointmentScheduleService;
 import ru.ifmo.se.johnwick.utils.RsqlParserUtils;
 
 import java.time.OffsetDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.UUID;
 
@@ -147,6 +148,13 @@ public class AppointmentScheduleServiceImpl implements AppointmentScheduleServic
         }
         if (appointmentDto.getStartTime().isAfter(appointmentScheduleEntity.getEndTime())) {
             throw new ValidationException("Appointment start time must be before end time.");
+        }
+        if (appointmentDto.getStartTime().getMinute() != 0 || appointmentDto.getStartTime().getSecond() != 0
+                || appointmentDto.getEndTime().getMinute() != 0 || appointmentDto.getEndTime().getSecond() != 0) {
+            throw new ValidationException("Appointment start and end time minutes and seconds must be zero.");
+        }
+        if (ChronoUnit.HOURS.between(appointmentDto.getStartTime(), appointmentDto.getEndTime()) != 1) {
+            throw new ValidationException("Appointment must continue for exactly 1 hour.");
         }
 
         appointmentDto.setId(null);

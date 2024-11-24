@@ -5,3 +5,4 @@ export const MANAGE_ORDERS_PAGE_PATH = "/manage-orders";
 export const EXPLORE_ORDERS_PAGE_PATH = "/explore-orders";
 export const MY_ORDERS_PAGE_PATH = "/my-orders";
 export const MY_SCHEDULE_PAGE_PATH = "/my-schedule";
+export const PLAN_APPOINTMENT_PAGE_PATH = "/plan-appointment";

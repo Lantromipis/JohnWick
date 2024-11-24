@@ -7,6 +7,16 @@ export interface AppointmentScheduleFormModel {
   toTime: Dayjs;
 }
 
+export interface AppointmentFormModel {
+  fromTime: Dayjs;
+  toTime: Dayjs;
+  comment: string;
+}
+
+export interface HostSelectionFormModel {
+  hostId: string;
+}
+
 // dto
 export interface AppointmentScheduleDtoModel {
   id: string;
@@ -21,5 +31,5 @@ export interface AppointmentDtoModel {
   bookedBy: UserDtoModel;
   startTime: string;
   endTime: string;
-  comment: string;
+  message: string;
 }

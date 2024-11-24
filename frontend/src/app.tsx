@@ -10,6 +10,7 @@ import {
   MANAGE_USERS_PAGE_PATH,
   MY_ORDERS_PAGE_PATH,
   MY_SCHEDULE_PAGE_PATH,
+  PLAN_APPOINTMENT_PAGE_PATH,
 } from "./constants/route.constants.ts";
 import { Provider } from "react-redux";
 import { persistor, store } from "./store/store.tsx";
@@ -21,6 +22,7 @@ import MySchedulePage from "./pages/my-schedule-page.tsx";
 import { SnackbarProvider } from "notistack";
 import dayjs from "dayjs";
 import "dayjs/locale/en-gb";
+import PlanAppointmentPage from "./pages/plan-appointmen.page.tsx";
 
 function App() {
   dayjs.locale("en-gb");
@@ -28,7 +30,7 @@ function App() {
     <>
       <CssBaseline />
       <SnackbarProvider
-        autoHideDuration={5000}
+        autoHideDuration={10000}
         anchorOrigin={{ vertical: "top", horizontal: "right" }}
       >
         <Provider store={store}>
@@ -53,6 +55,10 @@ function App() {
                 <Route
                   path={MY_SCHEDULE_PAGE_PATH}
                   element={<MySchedulePage />}
+                />
+                <Route
+                  path={PLAN_APPOINTMENT_PAGE_PATH}
+                  element={<PlanAppointmentPage />}
                 />
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>

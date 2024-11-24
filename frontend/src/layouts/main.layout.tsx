@@ -23,6 +23,7 @@ import {
   MANAGE_USERS_PAGE_PATH,
   MY_ORDERS_PAGE_PATH,
   MY_SCHEDULE_PAGE_PATH,
+  PLAN_APPOINTMENT_PAGE_PATH,
 } from "../constants/route.constants.ts";
 import { AccountCircle, Explore } from "@mui/icons-material";
 import AccessControlComponent from "../components/menu/access-control.component.tsx";
@@ -33,6 +34,7 @@ import { AUTHORIZATION_HEADER_STORAGE_KEY } from "../constants/local-storage.con
 import { clearCurrentUser } from "../store/user/user.slice.ts";
 import { UserRole } from "../models/user.model.ts";
 import NotificationsListContainer from "../components/menu/notifications-list.container.tsx";
+import EventAvailableIcon from "@mui/icons-material/EventAvailable";
 
 type MainLayoutProps = {
   children: ReactNode;
@@ -156,10 +158,27 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
               pageLink={MY_ORDERS_PAGE_PATH}
               icon={<AssignmentIcon />}
             />
+            <DrawerPageLinkListItem
+              label="Plan appointment"
+              pageLink={PLAN_APPOINTMENT_PAGE_PATH}
+              icon={<EventAvailableIcon />}
+            />
           </List>
         </AccessControlComponent>
         <AccessControlComponent
           showFor={UserRole.TAILOR}
+          role={currentUserRole}
+        >
+          <List>
+            <DrawerPageLinkListItem
+              label="My schedule"
+              pageLink={MY_SCHEDULE_PAGE_PATH}
+              icon={<CalendarMonthIcon />}
+            />
+          </List>
+        </AccessControlComponent>
+        <AccessControlComponent
+          showFor={UserRole.SOMMELIER}
           role={currentUserRole}
         >
           <List>

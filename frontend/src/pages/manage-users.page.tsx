@@ -2,7 +2,7 @@ import { FC, memo } from "react";
 import MainLayout from "../layouts/main.layout.tsx";
 import { Stack } from "@mui/material";
 import UserCreationContainer from "../components/user/creation/user-creation.container.tsx";
-import UserListContainer from "../components/user/list/user-list.container.tsx";
+import UserListContainer from "../components/user/management-list/user-list.container.tsx";
 
 type ManageUsersPageProps = {};
 

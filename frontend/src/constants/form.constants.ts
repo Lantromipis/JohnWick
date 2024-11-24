@@ -7,3 +7,5 @@ export const ORDER_SELECT_EXECUTOR_FORM_ID = "orderSelectExecutorFormId";
 
 export const APPOINTMENT_SCHEDULE_CREATION_FORM_ID =
   "appointmentScheduleCreateForm";
+export const HOST_SELECTION_FORM_ID = "hostSelectionForm";
+export const APPOINTMENT_CREATION_FORM_ID = "appointmentCreateForm";

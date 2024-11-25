@@ -150,6 +150,18 @@ public class CleaningRequestServiceImpl implements CleaningRequestService {
             CleaningRequestStatus oldStatus = cleaningRequestEntity.getStatus();
 
             switch (newStatus) {
+                case IN_PROGRESS -> {
+                    if (!CleaningRequestStatus.CREATED.equals(cleaningRequestEntity.getStatus())) {
+                        throw new ValidationException("Cleaning request can not be transitioned to status IN_PROGRESS");
+                    }
+                    if (cleaningRequestEntity.getAppliedCleaner() != null) {
+                        throw new ValidationException("Cleaning already assigned to another cleaner.");
+                    }
+
+                    UserEntity currentUser = userRepository.findByUsername(securityContext.getUserPrincipal().getName());
+                    cleaningRequestEntity.setAppliedCleaner(currentUser);
+                    cleaningRequestEntity.setStatus(CleaningRequestStatus.IN_PROGRESS);
+                }
                 case COMPLETED -> {
                     if (!CleaningRequestStatus.IN_PROGRESS.equals(oldStatus)) {
                         throw new ValidationException("Cleaning request can not be transitioned to status COMPLETED");
@@ -172,19 +184,6 @@ public class CleaningRequestServiceImpl implements CleaningRequestService {
                     throw new ValidationException("Invalid target cleaning request status");
                 }
             }
-        }
-
-        if (cleaningRequestDto.getAppliedCleaner() != null) {
-            if (!CleaningRequestStatus.CREATED.equals(cleaningRequestEntity.getStatus())) {
-                throw new ValidationException("To change applied cleaner cleaning must be in status CREATED.");
-            }
-            if (cleaningRequestEntity.getAppliedCleaner() != null) {
-                throw new ValidationException("Cleaning already assigned to another cleaner.");
-            }
-
-            UserEntity currentUser = userRepository.findByUsername(securityContext.getUserPrincipal().getName());
-            cleaningRequestEntity.setAppliedCleaner(currentUser);
-            cleaningRequestEntity.setStatus(CleaningRequestStatus.IN_PROGRESS);
         }
 
         cleaningRequestRepository.persistAndFlush(cleaningRequestEntity);

@@ -43,6 +43,8 @@ export function getCreateAppointmentUrl(scheduleId: string) {
   return `${APPOINTMENT_SCHEDULE_BASE_URL}/${scheduleId}/appointments`;
 }
 
+export const CLEANING_REQUEST_BASE_URL = BASE_PATH + "/cleaningRequest";
+
 export function getListEntitiesUrl(
   baseUrl: string,
   request: ListEntitiesRequest | undefined,

@@ -17,6 +17,7 @@ import AssignmentIcon from "@mui/icons-material/Assignment";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { Link, useNavigate } from "react-router-dom";
 import {
+  EXPLORE_CLEANINGS_PAGE_PATH,
   EXPLORE_ORDERS_PAGE_PATH,
   LOGIN_PAGE_PATH,
   MANAGE_ORDERS_PAGE_PATH,
@@ -193,6 +194,18 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
               label="My schedule"
               pageLink={MY_SCHEDULE_PAGE_PATH}
               icon={<CalendarMonthIcon />}
+            />
+          </List>
+        </AccessControlComponent>
+        <AccessControlComponent
+          showFor={UserRole.CLEANER}
+          role={currentUserRole}
+        >
+          <List>
+            <DrawerPageLinkListItem
+              label="Explore cleanings"
+              pageLink={EXPLORE_CLEANINGS_PAGE_PATH}
+              icon={<Explore />}
             />
           </List>
         </AccessControlComponent>

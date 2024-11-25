@@ -4,6 +4,7 @@ import LoginPage from "./pages/login.page.tsx";
 import HomePage from "./pages/home.page.tsx";
 import MangeUsersPage from "./pages/manage-users.page.tsx";
 import {
+  EXPLORE_CLEANINGS_PAGE_PATH,
   EXPLORE_ORDERS_PAGE_PATH,
   LOGIN_PAGE_PATH,
   MANAGE_ORDERS_PAGE_PATH,
@@ -25,6 +26,7 @@ import dayjs from "dayjs";
 import "dayjs/locale/en-gb";
 import PlanAppointmentPage from "./pages/plan-appointmen.page.tsx";
 import MyAppointmentsPage from "./pages/my-appointments.page.tsx";
+import ExploreCleaningRequestsPage from "./pages/explore-cleaning-requests.page.tsx";
 
 function App() {
   dayjs.locale("en-gb");
@@ -65,6 +67,10 @@ function App() {
                 <Route
                   path={MY_APPOINTMENTS_PAGE_PATH}
                   element={<MyAppointmentsPage />}
+                />
+                <Route
+                  path={EXPLORE_CLEANINGS_PAGE_PATH}
+                  element={<ExploreCleaningRequestsPage />}
                 />
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>

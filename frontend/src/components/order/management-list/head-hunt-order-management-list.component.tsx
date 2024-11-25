@@ -1,6 +1,7 @@
 import { FC, memo } from "react";
-import { HeadHuntOrderDto } from "../../../models/order.model.ts";
+import { HeadHuntOrderDto, OrderStatus } from "../../../models/order.model.ts";
 import {
+  Button,
   Table,
   TableBody,
   TableCell,
@@ -12,12 +13,13 @@ import { isoStringToPrettyDateTime } from "../../../utils/time-utils.ts";
 import { orderStatusToLabel } from "../../../utils/order-utils.ts";
 
 type HeadHuntOrderManagementListComponentProps = {
+  onOrderCompleted: (orderId: string) => void;
   orders: HeadHuntOrderDto[];
 };
 
 const HeadHuntOrderManagementListComponent: FC<
   HeadHuntOrderManagementListComponentProps
-> = ({ orders }) => {
+> = ({ onOrderCompleted, orders }) => {
   return (
     <>
       <TableContainer>
@@ -48,7 +50,19 @@ const HeadHuntOrderManagementListComponent: FC<
                 <TableCell>
                   {isoStringToPrettyDateTime(order.createdTimestamp)}
                 </TableCell>
-                <TableCell></TableCell>
+                <TableCell>
+                  {" "}
+                  {order.status === OrderStatus.AWAITING_APPROVAL && (
+                    <Button
+                      variant="outlined"
+                      onClick={() => {
+                        onOrderCompleted(order.id ?? "");
+                      }}
+                    >
+                      Complete order
+                    </Button>
+                  )}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

@@ -125,6 +125,7 @@ public class PromissoryNoteOrderServiceImpl implements PromissoryNoteOrderServic
     }
 
     @Override
+    @Transactional
     public PromissoryNoteOrderDto updatePromissoryNoteOrder(PromissoryNoteOrderDto promissoryNoteOrderDto) {
         PromissoryNoteOrderEntity promissoryNoteOrderEntity = promissoryNoteOrderRepository.findById(promissoryNoteOrderDto.getId());
         if (promissoryNoteOrderEntity == null) {
@@ -181,14 +182,14 @@ public class PromissoryNoteOrderServiceImpl implements PromissoryNoteOrderServic
                     notificationService.sendNotificationToUser(
                             promissoryNoteOrderEntity.getBeneficiary(),
                             "Your debtor completed promissory note order",
-                            "Debtor '" + promissoryNoteOrderEntity.getDebtor().getUsername() + "' complete promissory note and eliminated target '" + promissoryNoteOrderEntity.getTargetName() + "' as you asked. " +
+                            "Debtor '" + promissoryNoteOrderEntity.getDebtor().getDisplayName() + "' complete promissory note and eliminated target '" + promissoryNoteOrderEntity.getTargetName() + "' as you asked. " +
                                     "His debt is paid."
                     );
                     notificationService.sendNotificationToUser(
                             promissoryNoteOrderEntity.getDebtor(),
                             "Your promissory note order is marked as completed",
                             "Administrator reviewed your promissory note order with id " + promissoryNoteOrderEntity.getId() + " and concluded that it is completed. " +
-                                    "Your debt to '" + promissoryNoteOrderEntity.getBeneficiary().getUsername() + "' is paid. " +
+                                    "Your debt to '" + promissoryNoteOrderEntity.getBeneficiary().getDisplayName() + "' is paid. " +
                                     "Congratulations!"
                     );
                     promissoryNoteOrderEntity.setStatus(OrderStatus.COMPLETED);

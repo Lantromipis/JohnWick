@@ -94,7 +94,7 @@ const MyPromissoryNoteOrderListComponent: FC<
                 review is completed.
               </Alert>
             )}
-            {order.status === OrderStatus.AWAITING_APPROVAL && (
+            {order.status === OrderStatus.COMPLETED && (
               <Alert severity="success">
                 Congratulations! Your order is marked as completed. Your debt is
                 paid.

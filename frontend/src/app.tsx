@@ -10,6 +10,7 @@ import {
   MANAGE_ORDERS_PAGE_PATH,
   MANAGE_USERS_PAGE_PATH,
   MY_APPOINTMENTS_PAGE_PATH,
+  MY_CLEANINGS_PAGE_PATH,
   MY_ORDERS_PAGE_PATH,
   MY_SCHEDULE_PAGE_PATH,
   PLAN_APPOINTMENT_PAGE_PATH,
@@ -27,6 +28,7 @@ import "dayjs/locale/en-gb";
 import PlanAppointmentPage from "./pages/plan-appointmen.page.tsx";
 import MyAppointmentsPage from "./pages/my-appointments.page.tsx";
 import ExploreCleaningRequestsPage from "./pages/explore-cleaning-requests.page.tsx";
+import MyCleaningRequestsPage from "./pages/my-cleaning-requests.page.tsx";
 
 function App() {
   dayjs.locale("en-gb");
@@ -35,7 +37,7 @@ function App() {
       <CssBaseline />
       <SnackbarProvider
         autoHideDuration={10000}
-        anchorOrigin={{ vertical: "top", horizontal: "left" }}
+        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
       >
         <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}>
@@ -71,6 +73,10 @@ function App() {
                 <Route
                   path={EXPLORE_CLEANINGS_PAGE_PATH}
                   element={<ExploreCleaningRequestsPage />}
+                />
+                <Route
+                  path={MY_CLEANINGS_PAGE_PATH}
+                  element={<MyCleaningRequestsPage />}
                 />
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>

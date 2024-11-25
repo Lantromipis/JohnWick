@@ -1,6 +1,10 @@
 import { FC, memo } from "react";
-import { PromissoryNoteOrderDto } from "../../../models/order.model.ts";
 import {
+  OrderStatus,
+  PromissoryNoteOrderDto,
+} from "../../../models/order.model.ts";
+import {
+  Button,
   Table,
   TableBody,
   TableCell,
@@ -12,12 +16,13 @@ import { orderStatusToLabel } from "../../../utils/order-utils.ts";
 import { isoStringToPrettyDateTime } from "../../../utils/time-utils.ts";
 
 type PromissoryNoteOrderManagementListComponentProps = {
+  onOrderCompleted: (orderId: string) => void;
   orders: PromissoryNoteOrderDto[];
 };
 
 const PromissoryNoteOrderManagementListComponent: FC<
   PromissoryNoteOrderManagementListComponentProps
-> = ({ orders }) => {
+> = ({ onOrderCompleted, orders }) => {
   return (
     <>
       <TableContainer>
@@ -46,7 +51,18 @@ const PromissoryNoteOrderManagementListComponent: FC<
                 <TableCell>
                   {isoStringToPrettyDateTime(order.createdTimestamp)}
                 </TableCell>
-                <TableCell> </TableCell>
+                <TableCell>
+                  {order.status === OrderStatus.AWAITING_APPROVAL && (
+                    <Button
+                      variant="outlined"
+                      onClick={() => {
+                        onOrderCompleted(order.id ?? "");
+                      }}
+                    >
+                      Complete order
+                    </Button>
+                  )}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

@@ -92,7 +92,7 @@ const MyRegularOrderListComponent: FC<MyRegularOrderListProps> = ({
                 review is completed.
               </Alert>
             )}
-            {order.status === OrderStatus.AWAITING_APPROVAL && (
+            {order.status === OrderStatus.COMPLETED && (
               <Alert severity="success">
                 Congratulations! Your order is marked as completed. Please
                 contact nearest Continental to gain your reward.

@@ -8,3 +8,4 @@ export const MY_SCHEDULE_PAGE_PATH = "/my-schedule";
 export const PLAN_APPOINTMENT_PAGE_PATH = "/plan-appointment";
 export const MY_APPOINTMENTS_PAGE_PATH = "/my-appointments";
 export const EXPLORE_CLEANINGS_PAGE_PATH = "/explore-cleanings";
+export const MY_CLEANINGS_PAGE_PATH = "/my-cleanings";

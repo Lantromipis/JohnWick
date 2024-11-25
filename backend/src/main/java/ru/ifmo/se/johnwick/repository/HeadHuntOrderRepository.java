@@ -10,7 +10,7 @@ import java.util.UUID;
 @ApplicationScoped
 public class HeadHuntOrderRepository implements PanacheRepositoryBase<HeadHuntOrderEntity, UUID> {
     public int increaseIncompleteOrdersPrice(double factor) {
-        return update("UPDATE HeadHuntOrderEntity e SET currentPrice = cast((cast(currentPrice as double) * ?1 + currentPrice) as long) WHERE status = ?2",
+        return update("UPDATE HeadHuntOrderEntity e SET currentPrice = cast((cast(currentPrice as double) * ?1 + currentPrice + 1) as long) WHERE status = ?2",
                 factor,
                 OrderStatus.AWAITING_SUBMISSION
         );

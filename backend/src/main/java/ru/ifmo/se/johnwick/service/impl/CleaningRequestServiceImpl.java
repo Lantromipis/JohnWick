@@ -168,7 +168,7 @@ public class CleaningRequestServiceImpl implements CleaningRequestService {
                     }
 
                     UserEntity currentUser = userRepository.findByUsername(securityContext.getUserPrincipal().getName());
-                    if (!currentUser.getId().equals(cleaningRequestDto.getAppliedCleaner().getId())) {
+                    if (!currentUser.getId().equals(cleaningRequestEntity.getAppliedCleaner().getId())) {
                         throw new ValidationException("Only applied cleaner can complete cleaning request");
                     }
 
@@ -177,7 +177,7 @@ public class CleaningRequestServiceImpl implements CleaningRequestService {
                     notificationService.sendNotificationToUser(
                             cleaningRequestEntity.getRequestedBy(),
                             "Cleaning completed",
-                            "Cleaning for order with id " + cleaningRequestDto.getOrder().getId() + " is completed! You order now will be reviewed by administrator."
+                            "Cleaning for order with id " + cleaningRequestEntity.getOrder().getId() + " is completed! You order now will be reviewed by administrator."
                     );
                 }
                 default -> {

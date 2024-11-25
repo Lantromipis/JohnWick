@@ -1,5 +1,8 @@
 import { FC, memo } from "react";
-import { CleaningRequestDtoModel } from "../../../models/cleaning.model.ts";
+import {
+  CleaningRequestDtoModel,
+  CleaningRequestStatus,
+} from "../../../models/cleaning.model.ts";
 import {
   Alert,
   Button,
@@ -13,14 +16,14 @@ import {
 import dayjs from "dayjs";
 import { orderTypeToLabel } from "../../../utils/order-utils.ts";
 
-type CleaningRequestExploreListComponentProps = {
-  onCleaningApplied: (cleaningId: string) => void;
+type MyCleaningRequestListComponentProps = {
+  onCleaningCompleted: (cleaningId: string) => void;
   cleanings: CleaningRequestDtoModel[];
 };
 
-const CleaningRequestExploreListComponent: FC<
-  CleaningRequestExploreListComponentProps
-> = ({ onCleaningApplied, cleanings }) => {
+const MyCleaningRequestListComponent: FC<
+  MyCleaningRequestListComponentProps
+> = ({ onCleaningCompleted, cleanings }) => {
   return (
     <Stack
       direction={"row"}
@@ -51,19 +54,27 @@ const CleaningRequestExploreListComponent: FC<
             >
               Requested by: {cleaning.requestedBy.displayName}
             </Typography>
-
-            <Alert severity="info">
-              Only the first cleaner will be able to have this job. Be first to
-              apply!
-            </Alert>
+            {cleaning.status === CleaningRequestStatus.IN_PROGRESS && (
+              <Alert severity="info">
+                You are making this cleaning. When you are done, please confirm.
+              </Alert>
+            )}
+            {cleaning.status === CleaningRequestStatus.COMPLETED && (
+              <Alert severity="success">
+                Cleaning is completed! Visit nearest Continental to get your
+                reward.
+              </Alert>
+            )}
           </CardContent>
           <CardActions>
-            <Button
-              variant="outlined"
-              onClick={() => onCleaningApplied(cleaning.id)}
-            >
-              Make this cleaning
-            </Button>
+            {cleaning.status === CleaningRequestStatus.IN_PROGRESS && (
+              <Button
+                variant="outlined"
+                onClick={() => onCleaningCompleted(cleaning.id)}
+              >
+                Complete cleaning
+              </Button>
+            )}
           </CardActions>
         </Card>
       ))}
@@ -71,4 +82,4 @@ const CleaningRequestExploreListComponent: FC<
   );
 };
 
-export default memo(CleaningRequestExploreListComponent);
+export default memo(MyCleaningRequestListComponent);

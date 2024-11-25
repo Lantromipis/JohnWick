@@ -123,6 +123,7 @@ public class HeadHuntOrderServiceImpl implements HeadHuntOrderService {
     }
 
     @Override
+    @Transactional
     public HeadHuntOrderDto updateHeadHuntOrder(HeadHuntOrderDto headHuntOrderDto) {
         HeadHuntOrderEntity headHuntOrderEntity = headHuntOrderRepository.findById(headHuntOrderDto.getId());
         if (headHuntOrderEntity == null) {

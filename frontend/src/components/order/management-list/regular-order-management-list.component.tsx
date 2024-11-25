@@ -14,12 +14,13 @@ import { orderStatusToLabel } from "../../../utils/order-utils.ts";
 import { isoStringToPrettyDateTime } from "../../../utils/time-utils.ts";
 
 type RegularOrderManagementListComponentProps = {
+  onOrderCompleted: (orderId: string) => void;
   orders: RegularOrderDto[];
 };
 
 const RegularOrderManagementListComponent: FC<
   RegularOrderManagementListComponentProps
-> = ({ orders }) => {
+> = ({ onOrderCompleted, orders }) => {
   const [currentOrderId, setCurrentOrderId] = useState<string>("");
   const [selectExecutorDialogOpen, setSelectExecutorDialogOpen] =
     useState<boolean>(false);
@@ -39,14 +40,14 @@ const RegularOrderManagementListComponent: FC<
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Id</TableCell>
-              <TableCell>Status</TableCell>
-              <TableCell>Customer</TableCell>
-              <TableCell>Target</TableCell>
-              <TableCell>Creation time</TableCell>
-              <TableCell>Price</TableCell>
-              <TableCell>Assigned killer</TableCell>
-              <TableCell>Actions</TableCell>
+              <TableCell align={"center"}>Id</TableCell>
+              <TableCell align={"center"}>Status</TableCell>
+              <TableCell align={"center"}>Customer</TableCell>
+              <TableCell align={"center"}>Target</TableCell>
+              <TableCell align={"center"}>Creation time</TableCell>
+              <TableCell align={"center"}>Price</TableCell>
+              <TableCell align={"center"}>Assigned killer</TableCell>
+              <TableCell align={"center"}>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -63,23 +64,31 @@ const RegularOrderManagementListComponent: FC<
                 </TableCell>
                 <TableCell>{order.price}</TableCell>
                 <TableCell>{order.assignee?.displayName}</TableCell>
-                {!order.assignee &&
-                (order.status === OrderStatus.AWAITING_APPLICATIONS ||
-                  order.status === OrderStatus.AWAITING_ASSIGMENT) ? (
-                  <TableCell>
+                <TableCell>
+                  {!order.assignee &&
+                    (order.status === OrderStatus.AWAITING_APPLICATIONS ||
+                      order.status === OrderStatus.AWAITING_ASSIGMENT) && (
+                      <Button
+                        variant="outlined"
+                        onClick={() => {
+                          setCurrentOrderId(order.id ?? "");
+                          handleSelectExecutorDialogOpen();
+                        }}
+                      >
+                        Select executor
+                      </Button>
+                    )}
+                  {order.status === OrderStatus.AWAITING_APPROVAL && (
                     <Button
                       variant="outlined"
                       onClick={() => {
-                        setCurrentOrderId(order.id ?? "");
-                        handleSelectExecutorDialogOpen();
+                        onOrderCompleted(order.id ?? "");
                       }}
                     >
-                      Select executor
+                      Complete order
                     </Button>
-                  </TableCell>
-                ) : (
-                  <TableCell> </TableCell>
-                )}
+                  )}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

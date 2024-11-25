@@ -23,6 +23,7 @@ import {
   MANAGE_ORDERS_PAGE_PATH,
   MANAGE_USERS_PAGE_PATH,
   MY_APPOINTMENTS_PAGE_PATH,
+  MY_CLEANINGS_PAGE_PATH,
   MY_ORDERS_PAGE_PATH,
   MY_SCHEDULE_PAGE_PATH,
   PLAN_APPOINTMENT_PAGE_PATH,
@@ -38,6 +39,7 @@ import { UserRole } from "../models/user.model.ts";
 import NotificationsListContainer from "../components/menu/notifications-list.container.tsx";
 import EventAvailableIcon from "@mui/icons-material/EventAvailable";
 import EditCalendarIcon from "@mui/icons-material/EditCalendar";
+import CleaningServicesIcon from "@mui/icons-material/CleaningServices";
 
 type MainLayoutProps = {
   children: ReactNode;
@@ -206,6 +208,11 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
               label="Explore cleanings"
               pageLink={EXPLORE_CLEANINGS_PAGE_PATH}
               icon={<Explore />}
+            />
+            <DrawerPageLinkListItem
+              label="My cleanings"
+              pageLink={MY_CLEANINGS_PAGE_PATH}
+              icon={<CleaningServicesIcon />}
             />
           </List>
         </AccessControlComponent>

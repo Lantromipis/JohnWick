@@ -1,7 +1,7 @@
 import { FC, memo, useEffect } from "react";
 import { orderApi } from "../../../store/order/order.api.ts";
 import { Alert, Stack } from "@mui/material";
-import HeadHauntOrderExploreCardComponent from "./head-haunt-order-explore-card.component.tsx";
+import HeadHauntOrderExploreCardComponent from "./head-haunt-order-explore-list.component.tsx";
 
 type ExploreRegularOrdersContainerProps = {};
 
@@ -22,9 +22,11 @@ const ExploreRegularOrdersContainer: FC<
           Sorry, currently there are no orders available. Please check later.
         </Alert>
       )}
-      {headHauntOrderList?.map((headHauntOrder) => (
-        <HeadHauntOrderExploreCardComponent headHauntOrder={headHauntOrder} />
-      ))}
+      {headHauntOrderList && (
+        <HeadHauntOrderExploreCardComponent
+          headHauntOrders={headHauntOrderList}
+        />
+      )}
     </Stack>
   );
 };

@@ -6,6 +6,8 @@ import { selectCurrentUserId } from "../../../store/user/user.selectors.ts";
 import { emit } from "@rsql/emitter";
 import builder from "@rsql/builder";
 import MyRegularOrderListComponent from "./my-regular-order-list.component.tsx";
+import { OrderStatus, OrderType } from "../../../models/order.model.ts";
+import { enqueueSnackbar } from "notistack";
 
 type MyRegularOrderListContainerProps = {};
 
@@ -19,9 +21,29 @@ const MyRegularOrderListContainer: FC<
       : undefined,
   });
 
+  const [updateOrder] = orderApi.usePatchOrderMutation();
+
   useEffect(() => {
     refetch();
   }, [refetch]);
+
+  const onOrderAction = (
+    orderId: string | undefined,
+    newStatus: OrderStatus,
+  ) => {
+    updateOrder({
+      id: orderId,
+      type: OrderType.REGULAR,
+      status: newStatus,
+    })
+      .unwrap()
+      .then(() => {
+        enqueueSnackbar({
+          variant: "success",
+          message: `You changed order status`,
+        });
+      });
+  };
 
   return (
     <Stack spacing={2}>
@@ -31,7 +53,12 @@ const MyRegularOrderListContainer: FC<
           page!
         </Alert>
       )}
-      {regularOrders && <MyRegularOrderListComponent orders={regularOrders} />}
+      {regularOrders && (
+        <MyRegularOrderListComponent
+          onOrderAction={onOrderAction}
+          orders={regularOrders}
+        />
+      )}
     </Stack>
   );
 };

@@ -6,6 +6,8 @@ import { useSelector } from "react-redux";
 import { selectCurrentUserId } from "../../../store/user/user.selectors.ts";
 import { emit } from "@rsql/emitter";
 import builder from "@rsql/builder";
+import { enqueueSnackbar } from "notistack";
+import { OrderStatus, OrderType } from "../../../models/order.model.ts";
 
 type MyPromissoryNoteOrderListContainerProps = {};
 
@@ -20,9 +22,31 @@ const MyPromissoryNoteOrderListContainer: FC<
         : undefined,
     });
 
+  const [updateOrder] = orderApi.usePatchOrderMutation();
+
   useEffect(() => {
     refetch();
   }, [refetch]);
+
+  const onOrderAction = (
+    orderId: string | undefined,
+    newStatus: OrderStatus,
+  ) => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    updateOrder({
+      id: orderId,
+      type: OrderType.PROMISSORY_NOTE,
+      status: newStatus,
+    })
+      .unwrap()
+      .then(() => {
+        enqueueSnackbar({
+          variant: "success",
+          message: `You changed order status`,
+        });
+      });
+  };
 
   return (
     <Stack spacing={4}>
@@ -32,7 +56,10 @@ const MyPromissoryNoteOrderListContainer: FC<
         </Alert>
       )}
       {promissoryNoteOrders && (
-        <MyPromissoryNoteOrderListComponent orders={promissoryNoteOrders} />
+        <MyPromissoryNoteOrderListComponent
+          onOrderAction={onOrderAction}
+          orders={promissoryNoteOrders}
+        />
       )}
     </Stack>
   );

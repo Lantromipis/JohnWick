@@ -45,10 +45,14 @@ const HeadHauntOrderExploreListComponent: FC<
               Current price: {headHauntOrder.currentPrice}
             </Typography>
             <Divider sx={{ marginTop: 1, marginBottom: 1 }} />
-            <Typography variant="body2" color="text.secondary">
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{ marginBottom: "10px" }}
+            >
               {headHauntOrder.description}
             </Typography>
-            <Divider sx={{ marginTop: 1, marginBottom: 1 }} />
+
             <Alert severity="info">
               This is free contract order and you can try to complete it. The
               reward is given only for the first one to eliminate target. The

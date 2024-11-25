@@ -63,10 +63,13 @@ const RegularOrderExploreListComponent: FC<
                 Price: {regularOrder.price}
               </Typography>
               <Divider sx={{ marginTop: 1, marginBottom: 1 }} />
-              <Typography variant="body2" color="text.secondary">
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                sx={{ marginBottom: "10px" }}
+              >
                 {regularOrder.description}
               </Typography>
-              <Divider sx={{ marginTop: 1, marginBottom: 1 }} />
               {appliedForOrder ? (
                 <Alert severity="success">
                   You have already applied for this order. You will be notified

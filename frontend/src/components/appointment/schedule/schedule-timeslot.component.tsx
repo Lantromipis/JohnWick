@@ -91,7 +91,7 @@ const ScheduleTimeslotComponent: FC<ScheduleTimeslotComponentProps> = ({
     intersectedAppointmentSchedule?.appointments,
     slotStartTime,
   );
-  console.log(slotStartTime, todayTime);
+
   const isCurrentTime = slotStartTime.get("hours") === todayTime.get("hours");
   const isToday = slotStartTime.isSame(todayTime, "day");
   const isScheduled = !!intersectedAppointmentSchedule;

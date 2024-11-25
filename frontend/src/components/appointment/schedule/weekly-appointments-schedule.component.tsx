@@ -78,12 +78,19 @@ const WeeklyAppointmentsScheduleComponent: FC<
           </TableHead>
           <TableBody>
             {[...Array(24)].map((_, i) => {
+              const currentRowTime = currentWeekStart.add(i, "hours");
               return (
                 <TableRow key={i}>
                   <TableCell
                     key={i}
                     align={"center"}
                     width={FIRST_COLUMN_WIDTH}
+                    sx={{
+                      ...(currentRowTime.get("hours") ===
+                        today.get("hours") && {
+                        backgroundColor: alpha(theme.palette.info.dark, 0.2),
+                      }),
+                    }}
                   >
                     <b>{formatHour(i)}</b>
                   </TableCell>

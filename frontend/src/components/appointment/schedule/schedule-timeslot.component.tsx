@@ -47,13 +47,12 @@ const ScheduleTimeslotComponent: FC<ScheduleTimeslotComponentProps> = ({
   const theme = useTheme();
 
   const getTimeslotSx = useCallback(
-    (isToday: boolean, isScheduled: boolean, isScheduledAndFree: boolean) => {
-      if (isToday && !isScheduled) {
-        return {
-          backgroundColor: alpha(theme.palette.info.light, CELL_ALPHA_FACTOR),
-        };
-      }
-
+    (
+      isToday: boolean,
+      isCurrentTime: boolean,
+      isScheduled: boolean,
+      isScheduledAndFree: boolean,
+    ) => {
       if (isScheduled) {
         if (isScheduledAndFree) {
           return {
@@ -68,6 +67,12 @@ const ScheduleTimeslotComponent: FC<ScheduleTimeslotComponentProps> = ({
               theme.palette.error.light,
               CELL_ALPHA_FACTOR,
             ),
+          };
+        }
+      } else {
+        if (isToday || isCurrentTime) {
+          return {
+            backgroundColor: alpha(theme.palette.info.light, CELL_ALPHA_FACTOR),
           };
         }
       }
@@ -86,6 +91,8 @@ const ScheduleTimeslotComponent: FC<ScheduleTimeslotComponentProps> = ({
     intersectedAppointmentSchedule?.appointments,
     slotStartTime,
   );
+  console.log(slotStartTime, todayTime);
+  const isCurrentTime = slotStartTime.get("hours") === todayTime.get("hours");
   const isToday = slotStartTime.isSame(todayTime, "day");
   const isScheduled = !!intersectedAppointmentSchedule;
   const isScheduledAndFree = isScheduled && !intersectedAppointment;
@@ -97,7 +104,12 @@ const ScheduleTimeslotComponent: FC<ScheduleTimeslotComponentProps> = ({
       key={slotStartTime.toISOString()}
       sx={{
         minWidth: 100,
-        ...getTimeslotSx(isToday, isScheduled, isScheduledAndFree),
+        ...getTimeslotSx(
+          isToday,
+          isCurrentTime,
+          isScheduled,
+          isScheduledAndFree,
+        ),
       }}
     >
       <Tooltip

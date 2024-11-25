@@ -1,9 +1,6 @@
 package ru.ifmo.se.johnwick.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingConstants;
-import org.mapstruct.Named;
+import org.mapstruct.*;
 import ru.ifmo.se.johnwick.model.dto.HeadHuntOrderDto;
 import ru.ifmo.se.johnwick.model.dto.PromissoryNoteOrderDto;
 import ru.ifmo.se.johnwick.model.dto.RegularOrderApplicationDto;
@@ -26,6 +23,7 @@ public abstract class OrderMapper {
     @Mapping(target = "applications", ignore = true)
     public abstract RegularOrderDto mapRegularToDtoWithoutApplications(RegularOrderEntity regularOrderEntity);
 
+    @IterableMapping(qualifiedByName = "noApplications")
     public abstract List<RegularOrderDto> mapRegularToDtoWithoutApplications(List<RegularOrderEntity> regularOrderEntity);
 
     @Mapping(target = "regularOrder", qualifiedByName = "noApplications")

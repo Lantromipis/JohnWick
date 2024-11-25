@@ -45,7 +45,6 @@ const MyRegularOrderListComponent: FC<MyRegularOrderListProps> = ({
             <Typography variant="body2" color="text.secondary">
               {order.description}
             </Typography>
-            <Divider sx={{ marginTop: 1, marginBottom: 1 }} />
           </CardContent>
         </Card>
       ))}

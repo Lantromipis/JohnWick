@@ -12,7 +12,7 @@ import java.util.Set;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, exclude = "applications")
 public class RegularOrderDto extends OrderDto {
     private UserDto assignee;
     private long price;

@@ -10,32 +10,41 @@ import java.util.List;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.JAKARTA_CDI, uses = {UserMapper.class})
 public abstract class AppointmentScheduleMapper {
-    public abstract AppointmentScheduleDto appointmentScheduleEntityToDto(AppointmentScheduleEntity entity);
 
-    public abstract List<AppointmentScheduleDto> appointmentScheduleEntityToDto(List<AppointmentScheduleEntity> entities);
+    @Named("appointmentsWithoutSchedule")
+    @Mapping(target = "appointments", qualifiedByName = "noSchedule")
+    public abstract AppointmentScheduleDto mapAppointmentScheduleEntityToDto(AppointmentScheduleEntity entity);
 
-    @Named("noBookerSchedule")
-    @Mapping(target = "appointments", qualifiedByName = "noBooker")
-    public abstract AppointmentScheduleDto appointmentScheduleEntityToDtoWithoutBooker(AppointmentScheduleEntity entity);
+    @IterableMapping(qualifiedByName = "appointmentsWithoutSchedule")
+    public abstract List<AppointmentScheduleDto> mapAppointmentScheduleEntityToDto(List<AppointmentScheduleEntity> entities);
 
-    @IterableMapping(qualifiedByName = "noBookerSchedule")
-    public abstract List<AppointmentScheduleDto> appointmentScheduleEntityToDtoWithoutBooker(List<AppointmentScheduleEntity> entity);
+    @Named("appointmentsWithoutBookerAndSchedule")
+    @Mapping(target = "appointments", qualifiedByName = "noBookerNoSchedule")
+    public abstract AppointmentScheduleDto mapAppointmentScheduleEntityToDtoWithoutBookerAndSchedule(AppointmentScheduleEntity entity);
 
-    public abstract AppointmentScheduleEntity appointmentScheduleDtoToEntity(AppointmentScheduleDto dto);
+    @IterableMapping(qualifiedByName = "appointmentsWithoutBookerAndSchedule")
+    public abstract List<AppointmentScheduleDto> mapAppointmentScheduleEntityToDtoWithoutBookerAndSchedule(List<AppointmentScheduleEntity> entity);
 
-    public abstract List<AppointmentScheduleEntity> appointmentScheduleDtoToEntity(List<AppointmentScheduleDto> dtos);
+    public abstract AppointmentScheduleEntity mapAppointmentScheduleDtoToEntity(AppointmentScheduleDto dto);
 
-    public abstract AppointmentDto appointmentEntityToDto(AppointmentEntity entity);
-
-    @Named("noBooker")
+    @Named("noBookerNoSchedule")
     @Mapping(target = "bookedBy", ignore = true)
-    public abstract AppointmentDto appointmentEntityToDtoWithoutBooker(AppointmentEntity entity);
+    @Mapping(target = "appointmentSchedule", ignore = true)
+    public abstract AppointmentDto mapAppointmentEntityToDtoWithoutBookerAndSchedule(AppointmentEntity entity);
 
-    public abstract List<AppointmentDto> appointmentEntityToDtoWithoutBooker(List<AppointmentEntity> entities);
+    @IterableMapping(qualifiedByName = "noBookerNoSchedule")
+    public abstract List<AppointmentDto> mapAppointmentEntityToDtoWithoutBookerAndSchedule(List<AppointmentEntity> entities);
 
-    public abstract List<AppointmentDto> appointmentEntityToDto(List<AppointmentEntity> entities);
+    @Named("noSchedule")
+    @Mapping(target = "appointmentSchedule", ignore = true)
+    public abstract AppointmentDto mapAppointmentEntityToDtoWithoutSchedule(AppointmentEntity entity);
 
-    public abstract AppointmentEntity appointmentEntityToDto(AppointmentDto dto);
+    @Named("noAppointmentsOnSchedule")
+    @Mapping(target = "appointmentSchedule", qualifiedByName = "appointmentsWithoutSchedule")
+    public abstract AppointmentDto mapAppointmentEntityToDto(AppointmentEntity entity);
 
-    public abstract List<AppointmentEntity> appointmentDtoToEntity(List<AppointmentDto> dtos);
+    @IterableMapping(qualifiedByName = "noAppointmentsOnSchedule")
+    public abstract List<AppointmentDto> mapAppointmentEntityToDto(List<AppointmentEntity> entity);
+
+    public abstract AppointmentEntity mapAppointmentDtoToEntity(AppointmentDto dto);
 }

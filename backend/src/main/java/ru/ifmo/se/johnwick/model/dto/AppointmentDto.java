@@ -18,4 +18,5 @@ public class AppointmentDto {
     private OffsetDateTime startTime;
     private OffsetDateTime endTime;
     private String message;
+    private AppointmentScheduleDto appointmentSchedule;
 }

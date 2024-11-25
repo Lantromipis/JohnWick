@@ -21,6 +21,7 @@ import {
   LOGIN_PAGE_PATH,
   MANAGE_ORDERS_PAGE_PATH,
   MANAGE_USERS_PAGE_PATH,
+  MY_APPOINTMENTS_PAGE_PATH,
   MY_ORDERS_PAGE_PATH,
   MY_SCHEDULE_PAGE_PATH,
   PLAN_APPOINTMENT_PAGE_PATH,
@@ -35,6 +36,7 @@ import { clearCurrentUser } from "../store/user/user.slice.ts";
 import { UserRole } from "../models/user.model.ts";
 import NotificationsListContainer from "../components/menu/notifications-list.container.tsx";
 import EventAvailableIcon from "@mui/icons-material/EventAvailable";
+import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 
 type MainLayoutProps = {
   children: ReactNode;
@@ -161,6 +163,11 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
             <DrawerPageLinkListItem
               label="Plan appointment"
               pageLink={PLAN_APPOINTMENT_PAGE_PATH}
+              icon={<EditCalendarIcon />}
+            />
+            <DrawerPageLinkListItem
+              label="My appointments"
+              pageLink={MY_APPOINTMENTS_PAGE_PATH}
               icon={<EventAvailableIcon />}
             />
           </List>

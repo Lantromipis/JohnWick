@@ -1,9 +1,6 @@
 package ru.ifmo.se.johnwick.model.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.OffsetDateTime;
 import java.util.Set;
@@ -13,6 +10,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(exclude = "appointments")
 public class AppointmentScheduleDto {
     private UUID id;
     private UserDto host;

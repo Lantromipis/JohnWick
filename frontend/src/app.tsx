@@ -8,6 +8,7 @@ import {
   LOGIN_PAGE_PATH,
   MANAGE_ORDERS_PAGE_PATH,
   MANAGE_USERS_PAGE_PATH,
+  MY_APPOINTMENTS_PAGE_PATH,
   MY_ORDERS_PAGE_PATH,
   MY_SCHEDULE_PAGE_PATH,
   PLAN_APPOINTMENT_PAGE_PATH,
@@ -23,6 +24,7 @@ import { SnackbarProvider } from "notistack";
 import dayjs from "dayjs";
 import "dayjs/locale/en-gb";
 import PlanAppointmentPage from "./pages/plan-appointmen.page.tsx";
+import MyAppointmentsPage from "./pages/my-appointments.page.tsx";
 
 function App() {
   dayjs.locale("en-gb");
@@ -59,6 +61,10 @@ function App() {
                 <Route
                   path={PLAN_APPOINTMENT_PAGE_PATH}
                   element={<PlanAppointmentPage />}
+                />
+                <Route
+                  path={MY_APPOINTMENTS_PAGE_PATH}
+                  element={<MyAppointmentsPage />}
                 />
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>

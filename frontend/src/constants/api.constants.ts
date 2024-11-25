@@ -36,6 +36,8 @@ export function getListRegularOrderApplicationUrl(rsqlPredicate: string) {
 export const NOTIFICATION_BASE_URL = BASE_PATH + "/notification";
 
 export const APPOINTMENT_SCHEDULE_BASE_URL = BASE_PATH + "/appointmentSchedule";
+export const APPOINTMENTS_BASE_URL =
+  APPOINTMENT_SCHEDULE_BASE_URL + "/appointments";
 
 export function getCreateAppointmentUrl(scheduleId: string) {
   return `${APPOINTMENT_SCHEDULE_BASE_URL}/${scheduleId}/appointments`;

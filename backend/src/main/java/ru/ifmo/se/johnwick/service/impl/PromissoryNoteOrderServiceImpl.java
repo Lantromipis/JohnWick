@@ -72,7 +72,7 @@ public class PromissoryNoteOrderServiceImpl implements PromissoryNoteOrderServic
         notificationService.sendNotificationToUser(
                 debtor,
                 "New promissory note order",
-                "You were assigned to new promissory note order with id" + orderEntity.getId().toString() + "!"
+                "You were assigned to new promissory note order with id " + orderEntity.getId().toString() + "!"
         );
         return orderMapper.mapPromissoryNoteToDto(orderEntity);
     }

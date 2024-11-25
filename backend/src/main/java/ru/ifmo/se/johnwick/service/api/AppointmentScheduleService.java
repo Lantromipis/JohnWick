@@ -11,5 +11,9 @@ public interface AppointmentScheduleService {
 
     List<AppointmentScheduleDto> listAppointmentSchedule(String rsqlPredicate);
 
+    List<AppointmentDto> listAppointments(String rsqlPredicate);
+
     AppointmentDto createAppointment(UUID appointmentScheduleId, AppointmentDto appointmentDto);
+
+    void deleteAppointment(UUID appointmentScheduleId, UUID appointmentId);
 }

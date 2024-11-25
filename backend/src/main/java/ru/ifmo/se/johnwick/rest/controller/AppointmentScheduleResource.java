@@ -26,6 +26,13 @@ public class AppointmentScheduleResource {
         return appointmentScheduleService.listAppointmentSchedule(rsqlPredicate);
     }
 
+    @GET
+    @Path("/appointments")
+    @RolesAllowed({ApiConstant.ROLE_KILLER})
+    public List<AppointmentDto> listAppointments(@QueryParam("rsqlPredicate") String rsqlPredicate) {
+        return appointmentScheduleService.listAppointments(rsqlPredicate);
+    }
+
     @POST
     @RolesAllowed({ApiConstant.ROLE_SOMMELIER, ApiConstant.ROLE_TAILOR})
     public AppointmentScheduleDto createAppointmentSchedule(AppointmentScheduleDto appointmentScheduleDto) {
@@ -38,5 +45,12 @@ public class AppointmentScheduleResource {
     public AppointmentDto createAppointment(@PathParam("id") UUID appointmentScheduleId,
                                             AppointmentDto appointmentDto) {
         return appointmentScheduleService.createAppointment(appointmentScheduleId, appointmentDto);
+    }
+
+    @DELETE
+    @Path("/{id}/appointments/{id}")
+    @RolesAllowed({ApiConstant.ROLE_KILLER})
+    public void deleteAppointment(@PathParam("id") UUID appointmentScheduleId, @PathParam("id") UUID appointmentId) {
+        appointmentScheduleService.deleteAppointment(appointmentScheduleId, appointmentId);
     }
 }

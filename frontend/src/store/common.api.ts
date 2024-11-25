@@ -40,7 +40,7 @@ const baseQueryWithRedirectIfUnauthorized: BaseQueryFn<
       if (errorDto?.message) {
         enqueueSnackbar({
           variant: "error",
-          message: `Server returned error: ${errorDto.message}`,
+          message: `${errorDto.message}`,
         });
       } else {
         enqueueSnackbar({

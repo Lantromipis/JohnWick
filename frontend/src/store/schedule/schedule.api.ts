@@ -1,6 +1,7 @@
 import { commonApi } from "../common.api.ts";
 import {
   APPOINTMENT_SCHEDULE_BASE_URL,
+  APPOINTMENTS_BASE_URL,
   getCreateAppointmentUrl,
   getListEntitiesUrl,
 } from "../../constants/api.constants.ts";
@@ -32,6 +33,14 @@ export const scheduleApi = commonApi.injectEndpoints({
       }),
       providesTags: ["Appointment schedules"],
     }),
+    listAppointments: builder.query<AppointmentDtoModel[], ListEntitiesRequest>(
+      {
+        query: (request) => ({
+          url: getListEntitiesUrl(APPOINTMENTS_BASE_URL, request),
+        }),
+        providesTags: ["Appointments"],
+      },
+    ),
     createAppointment: builder.mutation<
       AppointmentDtoModel,
       {
@@ -44,7 +53,20 @@ export const scheduleApi = commonApi.injectEndpoints({
         method: "POST",
         body: { ...request.appointment },
       }),
-      invalidatesTags: ["Appointment schedules"],
+      invalidatesTags: ["Appointment schedules", "Appointments"],
+    }),
+    deleteAppointment: builder.mutation<
+      void,
+      {
+        scheduleId: string;
+        appointmentId: string;
+      }
+    >({
+      query: (request) => ({
+        url: `${APPOINTMENT_SCHEDULE_BASE_URL}/${request.scheduleId}/appointments/${request.appointmentId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Appointment schedules", "Appointments"],
     }),
   }),
 });

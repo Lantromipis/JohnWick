@@ -90,6 +90,7 @@ const ScheduleTimeslotComponent: FC<ScheduleTimeslotComponentProps> = ({
   const isScheduled = !!intersectedAppointmentSchedule;
   const isScheduledAndFree = isScheduled && !intersectedAppointment;
   const slotEndTime = slotStartTime.add(TIMESLOT_DURATION_HOURS, "hours");
+  const timeslotIsAfterNow = slotStartTime.isAfter(todayTime.add(1, "hours"));
 
   return (
     <TableCell
@@ -136,11 +137,13 @@ const ScheduleTimeslotComponent: FC<ScheduleTimeslotComponentProps> = ({
               <Typography>
                 {isScheduled
                   ? intersectedAppointment
-                    ? `Timeslot is booked`
-                    : "Timeslot is free"
-                  : "Timeslot is not scheduled for appointments"}
+                    ? "Timeslot is already booked"
+                    : timeslotIsAfterNow
+                      ? "Timeslot is free and can be booked"
+                      : "Timeslot is free but can not be booked anymore"
+                  : "Timeslot is not scheduled for appointments and can not be booked"}
               </Typography>
-              {isScheduled && !intersectedAppointment && (
+              {isScheduled && !intersectedAppointment && timeslotIsAfterNow && (
                 <Button
                   variant={"contained"}
                   onClick={() =>

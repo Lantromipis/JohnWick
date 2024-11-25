@@ -32,4 +32,5 @@ export interface AppointmentDtoModel {
   startTime: string;
   endTime: string;
   message: string;
+  appointmentSchedule?: AppointmentScheduleDtoModel;
 }

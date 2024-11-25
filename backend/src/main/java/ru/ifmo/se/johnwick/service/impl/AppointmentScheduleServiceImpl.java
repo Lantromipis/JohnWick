@@ -73,7 +73,7 @@ public class AppointmentScheduleServiceImpl implements AppointmentScheduleServic
         appointmentScheduleDto.setHost(null);
         appointmentScheduleDto.setAppointments(null);
 
-        AppointmentScheduleEntity appointmentScheduleEntity = appointmentScheduleMapper.appointmentScheduleDtoToEntity(appointmentScheduleDto);
+        AppointmentScheduleEntity appointmentScheduleEntity = appointmentScheduleMapper.mapAppointmentScheduleDtoToEntity(appointmentScheduleDto);
         UserEntity host = userRepository.findByUsername(securityContext.getUserPrincipal().getName());
         if (!UserRole.TAILOR.equals(host.getRole()) && !UserRole.SOMMELIER.equals(host.getRole())) {
             throw new ValidationException("User has no role TAILOR or SOMMELIER.");
@@ -86,7 +86,7 @@ public class AppointmentScheduleServiceImpl implements AppointmentScheduleServic
         appointmentScheduleEntity.setHost(host);
         appointmentsScheduleRepository.persistAndFlush(appointmentScheduleEntity);
 
-        return appointmentScheduleMapper.appointmentScheduleEntityToDto(appointmentScheduleEntity);
+        return appointmentScheduleMapper.mapAppointmentScheduleEntityToDto(appointmentScheduleEntity);
     }
 
     @Override
@@ -123,15 +123,36 @@ public class AppointmentScheduleServiceImpl implements AppointmentScheduleServic
         typedQuery.setFirstResult(0);
         List<AppointmentScheduleEntity> entities = typedQuery.getResultList();
         if (securityContext.isUserInRole(ApiConstant.ROLE_KILLER)) {
-            return appointmentScheduleMapper.appointmentScheduleEntityToDtoWithoutBooker(entities);
+            return appointmentScheduleMapper.mapAppointmentScheduleEntityToDtoWithoutBookerAndSchedule(entities);
         } else {
-            return appointmentScheduleMapper.appointmentScheduleEntityToDto(entities);
+            return appointmentScheduleMapper.mapAppointmentScheduleEntityToDto(entities);
         }
+    }
+
+    @Override
+    public List<AppointmentDto> listAppointments(String rsqlPredicate) {
+        UserEntity booker = userRepository.findByUsername(securityContext.getUserPrincipal().getName());
+        List<AppointmentEntity> entities = appointmentRepository.findByUser(booker);
+        return appointmentScheduleMapper.mapAppointmentEntityToDto(entities);
     }
 
     @Override
     @Transactional
     public AppointmentDto createAppointment(UUID appointmentScheduleId, AppointmentDto appointmentDto) {
+        if (appointmentDto.getStartTime().isAfter(appointmentDto.getEndTime())) {
+            throw new ValidationException("Appointment start time must be before end time.");
+        }
+        if (appointmentDto.getStartTime().getMinute() != 0 || appointmentDto.getStartTime().getSecond() != 0
+                || appointmentDto.getEndTime().getMinute() != 0 || appointmentDto.getEndTime().getSecond() != 0) {
+            throw new ValidationException("Appointment start and end time minutes and seconds must be zero.");
+        }
+        if (ChronoUnit.HOURS.between(appointmentDto.getStartTime(), appointmentDto.getEndTime()) != 1) {
+            throw new ValidationException("Appointment must continue for exactly 1 hour.");
+        }
+        if (ChronoUnit.MINUTES.between(OffsetDateTime.now(), appointmentDto.getStartTime()) <= 60) {
+            throw new ValidationException("Only appointments which are at least 1 hour from now can be booked.");
+        }
+
         AppointmentScheduleEntity appointmentScheduleEntity = appointmentsScheduleRepository.findById(
                 appointmentScheduleId,
                 LockModeType.PESSIMISTIC_WRITE
@@ -146,28 +167,39 @@ public class AppointmentScheduleServiceImpl implements AppointmentScheduleServic
         if (!isWithinRange(appointmentDto.getStartTime(), appointmentScheduleEntity.getStartTime(), appointmentScheduleEntity.getEndTime())) {
             throw new ValidationException("Appointment end time is not in schedule.");
         }
-        if (appointmentDto.getStartTime().isAfter(appointmentScheduleEntity.getEndTime())) {
-            throw new ValidationException("Appointment start time must be before end time.");
-        }
-        if (appointmentDto.getStartTime().getMinute() != 0 || appointmentDto.getStartTime().getSecond() != 0
-                || appointmentDto.getEndTime().getMinute() != 0 || appointmentDto.getEndTime().getSecond() != 0) {
-            throw new ValidationException("Appointment start and end time minutes and seconds must be zero.");
-        }
-        if (ChronoUnit.HOURS.between(appointmentDto.getStartTime(), appointmentDto.getEndTime()) != 1) {
-            throw new ValidationException("Appointment must continue for exactly 1 hour.");
-        }
 
         appointmentDto.setId(null);
         appointmentDto.setBookedBy(null);
 
         UserEntity booker = userRepository.findByUsername(securityContext.getUserPrincipal().getName());
 
-        AppointmentEntity appointmentEntity = appointmentScheduleMapper.appointmentEntityToDto(appointmentDto);
+        AppointmentEntity appointmentEntity = appointmentScheduleMapper.mapAppointmentDtoToEntity(appointmentDto);
         appointmentEntity.setAppointmentSchedule(appointmentScheduleEntity);
         appointmentEntity.setBookedBy(booker);
 
         appointmentRepository.persistAndFlush(appointmentEntity);
-        return appointmentScheduleMapper.appointmentEntityToDto(appointmentEntity);
+        return appointmentScheduleMapper.mapAppointmentEntityToDto(appointmentEntity);
+    }
+
+    @Override
+    @Transactional
+    public void deleteAppointment(UUID appointmentScheduleId, UUID appointmentId) {
+        UserEntity booker = userRepository.findByUsername(securityContext.getUserPrincipal().getName());
+        AppointmentEntity appointmentEntity = appointmentRepository.findById(appointmentId);
+
+        if (appointmentEntity == null) {
+            return;
+        }
+
+        if (!booker.getId().equals(appointmentEntity.getBookedBy().getId())) {
+            throw new ValidationException("Current user does not have permission to delete this appointment.");
+        }
+
+        if (appointmentEntity.getStartTime().isBefore(OffsetDateTime.now())) {
+            throw new ValidationException("Appointment can not be deleted because it already started.");
+        }
+
+        appointmentRepository.deleteAppointment(appointmentEntity.getId());
     }
 
     private boolean isWithinRange(OffsetDateTime testDate, OffsetDateTime startDate, OffsetDateTime endDate) {

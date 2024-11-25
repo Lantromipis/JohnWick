@@ -94,7 +94,12 @@ const PlanAppointmentStepperContainer: FC<
       .then(() => {
         handleNext();
       });
-  }, [createNewAppointment, selectedTimeslotEnd, selectedTimeslotStart]);
+  }, [
+    createNewAppointment,
+    selectedScheduleId,
+    selectedTimeslotEnd,
+    selectedTimeslotStart,
+  ]);
 
   return (
     <Stack sx={{ width: "100%" }} spacing={2}>
@@ -112,8 +117,14 @@ const PlanAppointmentStepperContainer: FC<
       {activeStep === STEPS_COUNT - 1 ? (
         <React.Fragment>
           <Alert sx={{ mt: 2, mb: 1 }} severity={"success"}>
-            You successfully created appointment for XX-XX. Please, do not be
-            late.
+            You successfully created appointment{"  "}
+            {selectedTimeslotStart &&
+              selectedTimeslotEnd &&
+              formatTimeslotDayAndHours(
+                selectedTimeslotStart,
+                selectedTimeslotEnd,
+              )}
+            . Please, do not be late.
           </Alert>
           <Box
             display="flex"
@@ -150,7 +161,9 @@ const PlanAppointmentStepperContainer: FC<
             )}
             {activeStep == 1 && (
               <Button
-                disabled={!selectedScheduleId}
+                disabled={
+                  !selectedScheduleId && createNewAppointmentResponse.isLoading
+                }
                 variant="contained"
                 type={"submit"}
                 onClick={onScheduleAppointmentClicked}
@@ -184,6 +197,9 @@ const PlanAppointmentStepperContainer: FC<
                     )}
                   </Alert>
                 )}
+                <Alert severity={"warning"}>
+                  You can book timeslot only if it starts after 1 hour from now.
+                </Alert>
 
                 <AppointmentScheduleContainer
                   onTimeSlotClicked={onTimeSlotClicked}

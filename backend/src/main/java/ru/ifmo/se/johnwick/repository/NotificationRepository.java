@@ -11,6 +11,9 @@ import java.util.UUID;
 @ApplicationScoped
 public class NotificationRepository implements PanacheRepositoryBase<NotificationEntity, UUID> {
     public List<NotificationEntity> findAllByRecipient(UserEntity recipient) {
-        return find("recipient = ?1", recipient).list();
+        return find(
+                "SELECT entity FROM NotificationEntity entity WHERE recipient = ?1 ORDER BY createdTimestamp DESC",
+                recipient
+        ).list();
     }
 }

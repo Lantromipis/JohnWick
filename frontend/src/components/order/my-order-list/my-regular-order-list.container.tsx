@@ -1,11 +1,11 @@
 import { FC, memo, useEffect } from "react";
 import { orderApi } from "../../../store/order/order.api.ts";
 import { Alert, Stack } from "@mui/material";
-import MyRegularOrderCardComponent from "./my-regular-order-card.component.tsx";
 import { useSelector } from "react-redux";
 import { selectCurrentUserId } from "../../../store/user/user.selectors.ts";
 import { emit } from "@rsql/emitter";
 import builder from "@rsql/builder";
+import MyRegularOrderListComponent from "./my-regular-order-list.component.tsx";
 
 type MyRegularOrderListContainerProps = {};
 
@@ -31,9 +31,7 @@ const MyRegularOrderListContainer: FC<
           page!
         </Alert>
       )}
-      {regularOrders?.map((order) => (
-        <MyRegularOrderCardComponent order={order} />
-      ))}
+      {regularOrders && <MyRegularOrderListComponent orders={regularOrders} />}
     </Stack>
   );
 };

@@ -33,6 +33,7 @@ import ru.ifmo.se.johnwick.repository.UserRepository;
 import ru.ifmo.se.johnwick.rsql.JpaRsqlVisitorParams;
 import ru.ifmo.se.johnwick.rsql.visitor.RegularOrderApplicationEntityJpaRsqlVisitor;
 import ru.ifmo.se.johnwick.rsql.visitor.RegularOrderEntityJpaRsqlVisitor;
+import ru.ifmo.se.johnwick.service.api.CleaningRequestService;
 import ru.ifmo.se.johnwick.service.api.NotificationService;
 import ru.ifmo.se.johnwick.service.api.RegularOrderService;
 import ru.ifmo.se.johnwick.utils.RsqlParserUtils;
@@ -69,6 +70,9 @@ public class RegularOrderServiceImpl implements RegularOrderService {
 
     @Inject
     BabaYagaProperties babaYagaProperties;
+
+    @Inject
+    CleaningRequestService cleaningRequestService;
 
     @Transactional
     @Scheduled(every = "{baba-yaga.regular-order.cancellation-interval}")
@@ -259,8 +263,14 @@ public class RegularOrderServiceImpl implements RegularOrderService {
             throw new EntityNotFoundByIdException("regularOrder", regularOrderDto.getId().toString());
         }
 
+        UserEntity currentUser = userRepository.findByUsername(securityContext.getUserPrincipal().getName());
+
         // select assignee
         if (regularOrderDto.getAssignee() != null && regularOrderDto.getAssignee().getId() != null) {
+            if (!UserRole.ADMIN.equals(currentUser.getRole())) {
+                throw new ValidationException("Current user has no permissions to select assignee");
+            }
+
             UserEntity selectedKillerEntity = userRepository.findById(regularOrderDto.getAssignee().getId());
             if (selectedKillerEntity == null) {
                 throw new EntityNotFoundByIdException("user", regularOrderDto.getId().toString());
@@ -295,9 +305,66 @@ public class RegularOrderServiceImpl implements RegularOrderService {
             regularOrderEntity.setAssignee(selectedKillerEntity);
             regularOrderEntity.setStatus(OrderStatus.AWAITING_ASSIGNEE);
             regularOrderEntity.getApplications().clear();
-            regularOrderRepository.persistAndFlush(regularOrderEntity);
         }
 
+        // change status
+        if (regularOrderDto.getStatus() != null) {
+            if (!currentUser.getRole().equals(UserRole.ADMIN) && !regularOrderEntity.getAssignee().getId().equals(currentUser.getId())) {
+                throw new ValidationException("Current user have no permission to modify this order");
+            }
+
+            OrderStatus newStatus = regularOrderDto.getStatus();
+            OrderStatus oldStatus = regularOrderEntity.getStatus();
+
+            switch (newStatus) {
+                case AWAITING_SUIT -> {
+                    if (oldStatus != OrderStatus.AWAITING_ASSIGNEE) {
+                        throw new ValidationException("Order in current status can not be transitioned to status AWAITING_SUIT");
+                    }
+                    regularOrderEntity.setStatus(OrderStatus.AWAITING_SUIT);
+                }
+                case AWAITING_DEGUSTATION -> {
+                    if (oldStatus != OrderStatus.AWAITING_SUIT) {
+                        throw new ValidationException("Order in current status can not be transitioned to status AWAITING_DEGUSTATION");
+                    }
+                    regularOrderEntity.setStatus(OrderStatus.AWAITING_DEGUSTATION);
+                }
+                case AWAITING_SUBMISSION -> {
+                    if (oldStatus != OrderStatus.AWAITING_DEGUSTATION) {
+                        throw new ValidationException("Order in current status can not be transitioned to status AWAITING_SUBMISSION");
+                    }
+                    regularOrderEntity.setStatus(OrderStatus.AWAITING_SUBMISSION);
+                }
+                case AWAITING_CLEANING -> {
+                    if (oldStatus != OrderStatus.AWAITING_SUBMISSION) {
+                        throw new ValidationException("Order in current status can not be transitioned to status AWAITING_CLEANING");
+                    }
+                    if (!currentUser.getRole().equals(UserRole.KILLER)) {
+                        throw new ValidationException("Only killer can complete order");
+                    }
+
+                    cleaningRequestService.createCleaningForOrder(regularOrderEntity, currentUser);
+                    regularOrderEntity.setStatus(OrderStatus.AWAITING_CLEANING);
+                }
+                case COMPLETED -> {
+                    if (oldStatus != OrderStatus.AWAITING_APPROVAL) {
+                        throw new ValidationException("Order in current status can not be transitioned to status COMPLETED");
+                    }
+                    if (!UserRole.ADMIN.equals(currentUser.getRole())) {
+                        throw new ValidationException("Current user has no permissions to complete order");
+                    }
+                    notificationService.sendNotificationToUser(
+                            regularOrderEntity.getAssignee(),
+                            "Your regular order is marked as completed",
+                            "Administrator reviewed your regular order with id " + regularOrderEntity.getId() + " and concluded that it is completed. Congratulations!"
+                    );
+                    regularOrderEntity.setStatus(OrderStatus.COMPLETED);
+                }
+                default -> throw new ValidationException("Invalid target order status");
+            }
+        }
+
+        regularOrderRepository.persistAndFlush(regularOrderEntity);
         return orderMapper.mapRegularToDto(regularOrderEntity);
     }
 }

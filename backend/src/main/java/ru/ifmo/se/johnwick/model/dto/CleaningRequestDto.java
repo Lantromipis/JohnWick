@@ -21,4 +21,5 @@ public class CleaningRequestDto {
     private OffsetDateTime createdTimestamp;
     private CleaningRequestStatus status;
     private String details;
+    private UserDto appliedCleaner;
 }

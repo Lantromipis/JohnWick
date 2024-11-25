@@ -33,4 +33,8 @@ public class CleaningRequestEntity {
 
     @Column(name = "details")
     private String details;
+
+    @ManyToOne
+    @JoinColumn(name = "applied_cleaner_id")
+    private UserEntity appliedCleaner;
 }

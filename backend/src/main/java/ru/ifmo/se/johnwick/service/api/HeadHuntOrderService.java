@@ -8,4 +8,6 @@ public interface HeadHuntOrderService {
     HeadHuntOrderDto createHeadHuntOrder(HeadHuntOrderDto headHuntOrderDto);
 
     List<HeadHuntOrderDto> listHeadHuntOrders(String rsqlPredicate);
+
+    HeadHuntOrderDto updateHeadHuntOrder(HeadHuntOrderDto headHuntOrderDto);
 }

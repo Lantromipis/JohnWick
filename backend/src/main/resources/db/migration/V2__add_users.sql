@@ -8,4 +8,5 @@ VALUES (gen_random_uuid(), 'admin', 'admin adminovich', '$2a$10$/FarO5LVt.6SAUGB
        (gen_random_uuid(), 'sommelier', 'sommelier sommelierovich',
         '$2a$10$aThS1WuNwMp.mMQ24hNqJ.LkBX92H6xJ1a1nEw0l3I7Dis6NbZWlu', 'SOMMELIER'),
        (gen_random_uuid(), 'cleaner', 'cleaner cleanerovich',
-        '$2a$10$hNJ9CpvbrmPwYJTx//fQRea2Dj4GAWiUwsn/qH7J2nzPqNfjbObia', 'CLEANER');
+        '$2a$12$6w.4KSLZcSa128ZlccU1x..eBxpMFwtdiHjN2.rj3CZGYdZtawLfC', 'CLEANER');
+--поменял пароль у cleaner на cleaner)

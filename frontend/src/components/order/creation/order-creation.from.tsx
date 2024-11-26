@@ -15,11 +15,11 @@ import {
   OrderType,
 } from "../../../models/order.model.ts";
 import { orderTypeToLabel } from "../../../utils/order-utils.ts";
-import { UserDtoModel } from "../../../models/user.model.ts";
+import { UserDtoModel, UserRole } from "../../../models/user.model.ts";
 
 type OrderCreationFormProps = {
   onSubmit: SubmitHandler<OrderCreationFormModel>;
-  killers: UserDtoModel[];
+  users: UserDtoModel[];
 };
 
 const orderTypes = [
@@ -28,10 +28,7 @@ const orderTypes = [
   OrderType.PROMISSORY_NOTE,
 ];
 
-const OrderCreationForm: FC<OrderCreationFormProps> = ({
-  onSubmit,
-  killers,
-}) => {
+const OrderCreationForm: FC<OrderCreationFormProps> = ({ onSubmit, users }) => {
   const {
     control,
     handleSubmit,
@@ -50,6 +47,8 @@ const OrderCreationForm: FC<OrderCreationFormProps> = ({
       beneficiaryId: "",
     },
   });
+
+  const killers = users.filter((u: UserDtoModel) => u.role === UserRole.KILLER);
 
   return (
     <form
@@ -177,7 +176,7 @@ const OrderCreationForm: FC<OrderCreationFormProps> = ({
                     required
                     value={field.value}
                   >
-                    {killers.map((killer) => (
+                    {users.map((killer) => (
                       <MenuItem key={killer.username} value={killer.id}>
                         {killer.displayName}
                       </MenuItem>

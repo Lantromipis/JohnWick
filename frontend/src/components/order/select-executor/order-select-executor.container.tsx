@@ -3,7 +3,9 @@ import { orderApi } from "../../../store/order/order.api.ts";
 import { SubmitHandler } from "react-hook-form";
 import {
   Alert,
+  Box,
   Button,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -60,28 +62,49 @@ const OrderSelectExecutorContainer: FC<OrderSelectExecutorContainerProps> = ({
     [onClose, orderId, pathOrder],
   );
 
+  const isExecutorsListLoading = getRegularOrderResponse.isFetching;
+
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>Select executor for order</DialogTitle>
       <DialogContent>
-        <Stack spacing={2} sx={{ paddingTop: "10px" }}>
-          {selectError && (
-            <Alert severity="error">
-              Failed to select executor for order. Please try again.
-            </Alert>
+        <Box sx={{ paddingTop: "10px", position: "relative", width: "500px" }}>
+          <Stack
+            spacing={2}
+            sx={() =>
+              isExecutorsListLoading
+                ? { opacity: 0.5, pointerEvents: "none" }
+                : {}
+            }
+          >
+            {selectError && (
+              <Alert severity="error">
+                Failed to select executor for order. Please try again.
+              </Alert>
+            )}
+            {(getRegularOrderResponse.data?.applications?.length === 0 ||
+              getRegularOrderResponse.error) && (
+              <Alert severity="warning">
+                There are no applications for this order yet. Please try again
+                later.
+              </Alert>
+            )}
+            <OrderSelectExecutorForm
+              onSubmit={handleSubmit}
+              applications={getRegularOrderResponse.data?.applications ?? []}
+            />
+          </Stack>
+          {isExecutorsListLoading && (
+            <CircularProgress
+              sx={{
+                position: "absolute",
+                top: "20%",
+                left: "50%",
+                transform: "translate(-50%, 0)",
+              }}
+            />
           )}
-          {(getRegularOrderResponse.data?.applications?.length === 0 ||
-            getRegularOrderResponse.error) && (
-            <Alert severity="warning">
-              There are no applications for this order yet. Please try again
-              later.
-            </Alert>
-          )}
-          <OrderSelectExecutorForm
-            onSubmit={handleSubmit}
-            applications={getRegularOrderResponse.data?.applications ?? []}
-          />
-        </Stack>
+        </Box>
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} disabled={pathOrderResponse.isLoading}>

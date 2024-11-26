@@ -114,7 +114,7 @@ const OrderCreationContainer: FC<OrderCreationContainerProps> = () => {
                 Failed to create order. Please try again.
               </Alert>
             )}
-            <OrderCreationFrom onSubmit={handleSubmit} killers={users ?? []} />
+            <OrderCreationFrom onSubmit={handleSubmit} users={users ?? []} />
           </Stack>
         </DialogContent>
         <DialogActions>

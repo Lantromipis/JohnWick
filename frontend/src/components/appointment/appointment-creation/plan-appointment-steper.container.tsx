@@ -162,7 +162,7 @@ const PlanAppointmentStepperContainer: FC<
             {activeStep == 1 && (
               <Button
                 disabled={
-                  !selectedScheduleId && !createNewAppointmentResponse.isLoading
+                  !selectedScheduleId || createNewAppointmentResponse.isLoading
                 }
                 variant="contained"
                 type={"submit"}

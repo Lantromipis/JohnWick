@@ -3,15 +3,17 @@ import { orderApi } from "../../../store/order/order.api.ts";
 import PromissoryNoteOrderManagementListComponent from "./promissory-note-order-management-list.component.tsx";
 import { OrderStatus, OrderType } from "../../../models/order.model.ts";
 import { enqueueSnackbar } from "notistack";
+import { Alert, Box, CircularProgress, Stack } from "@mui/material";
 
 type PromissoryNoteOrderManagementListContainerProps = {};
 
 const PromissoryNoteOrderManagementListContainer: FC<
   PromissoryNoteOrderManagementListContainerProps
 > = () => {
-  const { data, refetch } = orderApi.useListPromissoryNoteOrdersQuery({});
+  const { data, refetch, isLoading, isFetching } =
+    orderApi.useListPromissoryNoteOrdersQuery({});
 
-  const [updateOrder] = orderApi.usePatchOrderMutation();
+  const [updateOrder, updateOrderResponse] = orderApi.usePatchOrderMutation();
 
   const onOrderCompleted = (orderId: string | undefined) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -34,11 +36,52 @@ const PromissoryNoteOrderManagementListContainer: FC<
     refetch();
   }, [refetch]);
 
+  if (isLoading) {
+    return (
+      <Stack
+        spacing={2}
+        alignItems="center"
+        justifyContent="center"
+        display="flex"
+      >
+        <CircularProgress />
+      </Stack>
+    );
+  }
+
+  if (!data || data.length === 0) {
+    return (
+      <Alert severity="info">
+        There are no orders. Please create a new one.
+      </Alert>
+    );
+  }
+
+  const isListRefreshing = isFetching || updateOrderResponse.isLoading;
+
   return (
-    <PromissoryNoteOrderManagementListComponent
-      onOrderCompleted={onOrderCompleted}
-      orders={data ?? []}
-    />
+    <Stack sx={{ position: "relative" }}>
+      <Box
+        sx={() =>
+          isListRefreshing ? { opacity: 0.5, pointerEvents: "none" } : {}
+        }
+      >
+        <PromissoryNoteOrderManagementListComponent
+          onOrderCompleted={onOrderCompleted}
+          orders={data ?? []}
+        />
+      </Box>
+      {isListRefreshing && (
+        <CircularProgress
+          sx={{
+            position: "absolute",
+            top: "20%",
+            left: "50%",
+            transform: "translate(-50%, 0)",
+          }}
+        />
+      )}
+    </Stack>
   );
 };
 

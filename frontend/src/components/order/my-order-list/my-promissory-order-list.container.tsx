@@ -1,6 +1,6 @@
 import { FC, memo, useEffect } from "react";
 import { orderApi } from "../../../store/order/order.api.ts";
-import { Alert, Stack } from "@mui/material";
+import { Alert, Box, CircularProgress, Stack } from "@mui/material";
 import MyPromissoryNoteOrderListComponent from "./my-promissory-note-order-list.component.tsx";
 import { useSelector } from "react-redux";
 import { selectCurrentUserId } from "../../../store/user/user.selectors.ts";
@@ -15,14 +15,19 @@ const MyPromissoryNoteOrderListContainer: FC<
   MyPromissoryNoteOrderListContainerProps
 > = () => {
   const currentUserId: string | undefined = useSelector(selectCurrentUserId);
-  const { data: promissoryNoteOrders, refetch } =
-    orderApi.useListPromissoryNoteOrdersQuery({
-      rsqlPredicate: currentUserId
-        ? emit(builder.eq("debtor.id", currentUserId))
-        : undefined,
-    });
+  const {
+    data: promissoryNoteOrders,
+    refetch,
+    isLoading: listOrdersLoading,
+    isFetching: listOrdersFetching,
+  } = orderApi.useListPromissoryNoteOrdersQuery({
+    rsqlPredicate: currentUserId
+      ? emit(builder.eq("debtor.id", currentUserId))
+      : undefined,
+  });
 
-  const [updateOrder] = orderApi.usePatchOrderMutation();
+  const [updateOrder, { isLoading: updateOrderLoading }] =
+    orderApi.usePatchOrderMutation();
 
   useEffect(() => {
     refetch();
@@ -48,17 +53,49 @@ const MyPromissoryNoteOrderListContainer: FC<
       });
   };
 
+  if (listOrdersLoading) {
+    return (
+      <Stack
+        spacing={2}
+        alignItems="center"
+        justifyContent="center"
+        display="flex"
+      >
+        <CircularProgress />
+      </Stack>
+    );
+  }
+
+  if (!promissoryNoteOrders || promissoryNoteOrders.length === 0) {
+    return (
+      <Alert severity="info">
+        You have no promissory note orders. Lucky you!
+      </Alert>
+    );
+  }
+
+  const isUpdatingList = listOrdersFetching || updateOrderLoading;
+
   return (
-    <Stack spacing={4}>
-      {promissoryNoteOrders?.length === 0 && (
-        <Alert severity="info">
-          You have no promissory note orders. Lucky you!
-        </Alert>
-      )}
-      {promissoryNoteOrders && (
+    <Stack spacing={4} sx={{ position: "relative" }}>
+      <Box
+        sx={() =>
+          isUpdatingList ? { opacity: 0.5, pointerEvents: "none" } : {}
+        }
+      >
         <MyPromissoryNoteOrderListComponent
           onOrderAction={onOrderAction}
           orders={promissoryNoteOrders}
+        />
+      </Box>
+      {isUpdatingList && (
+        <CircularProgress
+          sx={{
+            position: "absolute",
+            top: "20%",
+            left: "50%",
+            transform: "translate(-50%, 0)",
+          }}
         />
       )}
     </Stack>

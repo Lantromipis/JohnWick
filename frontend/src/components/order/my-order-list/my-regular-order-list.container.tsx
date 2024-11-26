@@ -1,6 +1,6 @@
 import { FC, memo, useEffect } from "react";
 import { orderApi } from "../../../store/order/order.api.ts";
-import { Alert, Stack } from "@mui/material";
+import { Alert, Box, CircularProgress, Stack } from "@mui/material";
 import { useSelector } from "react-redux";
 import { selectCurrentUserId } from "../../../store/user/user.selectors.ts";
 import { emit } from "@rsql/emitter";
@@ -15,13 +15,19 @@ const MyRegularOrderListContainer: FC<
   MyRegularOrderListContainerProps
 > = () => {
   const currentUserId: string | undefined = useSelector(selectCurrentUserId);
-  const { data: regularOrders, refetch } = orderApi.useListRegularOrdersQuery({
+  const {
+    data: regularOrders,
+    refetch,
+    isLoading: listOrdersLoading,
+    isFetching: listOrdersFetching,
+  } = orderApi.useListRegularOrdersQuery({
     rsqlPredicate: currentUserId
       ? emit(builder.eq("assignee.id", currentUserId))
       : undefined,
   });
 
-  const [updateOrder] = orderApi.usePatchOrderMutation();
+  const [updateOrder, { isLoading: updateOrderLoading }] =
+    orderApi.usePatchOrderMutation();
 
   useEffect(() => {
     refetch();
@@ -45,18 +51,50 @@ const MyRegularOrderListContainer: FC<
       });
   };
 
+  if (listOrdersLoading) {
+    return (
+      <Stack
+        spacing={2}
+        alignItems="center"
+        justifyContent="center"
+        display="flex"
+      >
+        <CircularProgress />
+      </Stack>
+    );
+  }
+
+  if (!regularOrders || regularOrders?.length === 0) {
+    return (
+      <Alert severity="info">
+        You have no active orders. Apply for a new one using "Explore orders"
+        page!
+      </Alert>
+    );
+  }
+
+  const isUpdatingList = listOrdersFetching || updateOrderLoading;
+
   return (
-    <Stack spacing={2}>
-      {regularOrders?.length === 0 && (
-        <Alert severity="info">
-          You have no active orders. Apply for a new one using "Explore orders"
-          page!
-        </Alert>
-      )}
-      {regularOrders && (
+    <Stack spacing={2} sx={{ position: "relative" }}>
+      <Box
+        sx={() =>
+          isUpdatingList ? { opacity: 0.5, pointerEvents: "none" } : {}
+        }
+      >
         <MyRegularOrderListComponent
           onOrderAction={onOrderAction}
           orders={regularOrders}
+        />
+      </Box>
+      {isUpdatingList && (
+        <CircularProgress
+          sx={{
+            position: "absolute",
+            top: "20%",
+            left: "50%",
+            transform: "translate(-50%, 0)",
+          }}
         />
       )}
     </Stack>

@@ -49,7 +49,7 @@ const UserLoginContainer: FC<UserLoginContainerProps> = () => {
     <Paper
       sx={{
         width: 350,
-        minHeight: 460,
+        minHeight: 350,
         padding: "15px 20px",
       }}
     >

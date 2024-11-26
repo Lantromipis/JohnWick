@@ -1,7 +1,9 @@
 import { FC, memo, useState } from "react";
 import {
   Alert,
+  Box,
   Button,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -16,8 +18,12 @@ import NotificationCardComponent from "./notification-card.component.tsx";
 type NotificationsListContainerProps = {};
 
 const NotificationsListContainer: FC<NotificationsListContainerProps> = () => {
-  const { data: notifications, refetch } =
-    notificationApi.useGetNotificationsQuery();
+  const {
+    data: notifications,
+    refetch,
+    isLoading,
+    isFetching,
+  } = notificationApi.useGetNotificationsQuery();
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
 
   const handleDialogOpen = () => {
@@ -37,16 +43,33 @@ const NotificationsListContainer: FC<NotificationsListContainerProps> = () => {
       <Dialog open={dialogOpen} onClose={handleDialogClose}>
         <DialogTitle>Notifications</DialogTitle>
         <DialogContent sx={{ width: "350px" }}>
-          <Stack spacing={2}>
-            {notifications?.length === 0 && (
-              <Alert severity="info" key={"alert"}>
-                There are no notifications now. Come back later!
-              </Alert>
+          {isLoading && <CircularProgress />}
+          <Box
+            sx={() =>
+              isFetching ? { opacity: 0.5, pointerEvents: "none" } : {}
+            }
+          >
+            <Stack spacing={2}>
+              {notifications?.length === 0 && (
+                <Alert severity="info" key={"alert"}>
+                  There are no notifications now. Come back later!
+                </Alert>
+              )}
+              {notifications?.map((notification) => (
+                <NotificationCardComponent notification={notification} />
+              ))}
+            </Stack>
+            {isFetching && (
+              <CircularProgress
+                sx={{
+                  position: "absolute",
+                  top: "20%",
+                  left: "50%",
+                  transform: "translate(-50%, 0)",
+                }}
+              />
             )}
-            {notifications?.map((notification) => (
-              <NotificationCardComponent notification={notification} />
-            ))}
-          </Stack>
+          </Box>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleDialogClose}>Close</Button>

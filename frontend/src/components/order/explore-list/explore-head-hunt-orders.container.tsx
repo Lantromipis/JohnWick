@@ -1,6 +1,6 @@
 import { FC, memo, useEffect } from "react";
 import { orderApi } from "../../../store/order/order.api.ts";
-import { Alert, Stack } from "@mui/material";
+import { Alert, Box, CircularProgress, Stack } from "@mui/material";
 import HeadHauntOrderExploreCardComponent from "./head-haunt-order-explore-list.component.tsx";
 import { OrderStatus, OrderType } from "../../../models/order.model.ts";
 import { enqueueSnackbar } from "notistack";
@@ -12,12 +12,16 @@ type ExploreRegularOrdersContainerProps = {};
 const ExploreRegularOrdersContainer: FC<
   ExploreRegularOrdersContainerProps
 > = () => {
-  const { data: headHauntOrderList, refetch: refetchHeadHauntOrderList } =
-    orderApi.useListHeadHuntOrdersQuery({
-      rsqlPredicate: emit(builder.eq("status", "AWAITING_SUBMISSION")),
-    });
+  const {
+    data: headHauntOrderList,
+    refetch: refetchHeadHauntOrderList,
+    isFetching: isFetchingHeadHuntOrders,
+    isLoading: isLoadingHeadHuntOrders,
+  } = orderApi.useListHeadHuntOrdersQuery({
+    rsqlPredicate: emit(builder.eq("status", "AWAITING_SUBMISSION")),
+  });
 
-  const [updateOrder] = orderApi.usePatchOrderMutation();
+  const [updateOrder, updateOrderResponse] = orderApi.usePatchOrderMutation();
 
   const onTargetEliminated = (orderId: string) => {
     updateOrder({
@@ -38,17 +42,50 @@ const ExploreRegularOrdersContainer: FC<
     refetchHeadHauntOrderList();
   }, [refetchHeadHauntOrderList]);
 
+  if (isLoadingHeadHuntOrders) {
+    return (
+      <Stack
+        spacing={2}
+        alignItems="center"
+        justifyContent="center"
+        display="flex"
+      >
+        <CircularProgress />
+      </Stack>
+    );
+  }
+
+  if (!headHauntOrderList || headHauntOrderList.length === 0) {
+    return (
+      <Alert severity="info">
+        Sorry, there are no orders. Please check later.
+      </Alert>
+    );
+  }
+
+  const isListRefreshing =
+    isFetchingHeadHuntOrders || updateOrderResponse.isLoading;
+
   return (
-    <Stack spacing={2}>
-      {headHauntOrderList?.length === 0 && (
-        <Alert severity="info">
-          Sorry, currently there are no orders available. Please check later.
-        </Alert>
-      )}
-      {headHauntOrderList && (
+    <Stack sx={{ position: "relative" }}>
+      <Box
+        sx={() =>
+          isListRefreshing ? { opacity: 0.5, pointerEvents: "none" } : {}
+        }
+      >
         <HeadHauntOrderExploreCardComponent
           headHauntOrders={headHauntOrderList}
           onTargetEliminated={onTargetEliminated}
+        />
+      </Box>
+      {isListRefreshing && (
+        <CircularProgress
+          sx={{
+            position: "absolute",
+            top: "20%",
+            left: "50%",
+            transform: "translate(-50%, 0)",
+          }}
         />
       )}
     </Stack>

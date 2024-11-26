@@ -20,9 +20,9 @@ const ExploreRegularOrdersContainer: FC<
 
   const { data: regularOrderList, refetch: refetchRegularOrderList } =
     orderApi.useListRegularOrdersQuery({
-      rsqlPredicate: currentUserId
-        ? emit(builder.eq("status", OrderStatus.AWAITING_APPLICATIONS))
-        : undefined,
+      rsqlPredicate: emit(
+        builder.eq("status", OrderStatus.AWAITING_APPLICATIONS),
+      ),
     });
 
   const {

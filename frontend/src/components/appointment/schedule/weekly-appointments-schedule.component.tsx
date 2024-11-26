@@ -1,6 +1,7 @@
 import { FC, memo } from "react";
 import {
   alpha,
+  CircularProgress,
   Table,
   TableBody,
   TableCell,
@@ -32,6 +33,7 @@ type WeeklyAppointmentsScheduleComponentProps = {
   appointmentsSchedules: AppointmentScheduleDtoModel[];
   currentWeekStart: Dayjs;
   currentWeekEnd: Dayjs;
+  isLoading: boolean;
 };
 
 const WeeklyAppointmentsScheduleComponent: FC<
@@ -41,14 +43,17 @@ const WeeklyAppointmentsScheduleComponent: FC<
   appointmentsSchedules,
   currentWeekStart,
   onTimeSlotClicked,
+  isLoading,
 }) => {
   const theme = useTheme();
   const today = dayjs();
 
   return (
     <>
-      <TableContainer>
-        <Table>
+      <TableContainer sx={{ position: "relative" }}>
+        <Table
+          sx={() => (isLoading ? { opacity: 0.5, pointerEvents: "none" } : {})}
+        >
           <TableHead>
             <TableRow>
               <TableCell
@@ -112,6 +117,16 @@ const WeeklyAppointmentsScheduleComponent: FC<
             })}
           </TableBody>
         </Table>
+        {isLoading && (
+          <CircularProgress
+            sx={{
+              position: "absolute",
+              top: "20%",
+              left: "50%",
+              transform: "translate(-50%, 0)",
+            }}
+          />
+        )}
       </TableContainer>
     </>
   );

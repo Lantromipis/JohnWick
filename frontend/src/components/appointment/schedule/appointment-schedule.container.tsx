@@ -25,6 +25,16 @@ type AppointmentScheduleContainerProps = {
   ) => void;
 };
 
+function buildRsqlPredicate(start: Dayjs, end: Dayjs, hostId: string) {
+  return emit(
+    builder.and(
+      builder.ge("startTime", start.toISOString()),
+      builder.le("endTime", end.toISOString()),
+      builder.eq("host.id", hostId),
+    ),
+  );
+}
+
 const AppointmentScheduleContainer: FC<AppointmentScheduleContainerProps> = ({
   onTimeSlotClicked,
   hostId,
@@ -38,32 +48,46 @@ const AppointmentScheduleContainer: FC<AppointmentScheduleContainerProps> = ({
   );
   const [currentWeekEnd, setCurrentWeekEnd] = useState(today.endOf("week"));
 
+  const [listAppoitnemntSchedule, listAppoitnemntScheduleResponse] =
+    scheduleApi.useLazyListAppointmentScheduleQuery();
+
   const handleChangeWeekPrevOpen = () => {
-    setCurrentWeekStart(currentWeekStart.subtract(7, "days"));
-    setCurrentWeekEnd(currentWeekEnd.subtract(7, "days"));
+    const newWeekStart = currentWeekStart.subtract(7, "days");
+    const newWeekEnd = currentWeekEnd.subtract(7, "days");
+
+    listAppoitnemntSchedule({
+      rsqlPredicate: buildRsqlPredicate(newWeekStart, newWeekEnd, hostId),
+    })
+      .unwrap()
+      .then(() => {
+        setCurrentWeekStart(newWeekStart);
+        setCurrentWeekEnd(newWeekEnd);
+      });
   };
 
   const handleChangeWeekNextOpen = () => {
-    setCurrentWeekStart(currentWeekStart.add(7, "days"));
-    setCurrentWeekEnd(currentWeekEnd.add(7, "days"));
+    const newWeekStart = currentWeekStart.add(7, "days");
+    const newWeekEnd = currentWeekEnd.add(7, "days");
+
+    listAppoitnemntSchedule({
+      rsqlPredicate: buildRsqlPredicate(newWeekStart, newWeekEnd, hostId),
+    })
+      .unwrap()
+      .then(() => {
+        setCurrentWeekStart(newWeekStart);
+        setCurrentWeekEnd(newWeekEnd);
+      });
   };
 
-  const {
-    data: appointmentScheduleList,
-    refetch: refetchAppointmentScheduleList,
-  } = scheduleApi.useListAppointmentScheduleQuery({
-    rsqlPredicate: emit(
-      builder.and(
-        builder.ge("endTime", currentWeekStart.toISOString()),
-        builder.le("startTime", currentWeekEnd.toISOString()),
-        builder.eq("host.id", hostId),
-      ),
-    ),
-  });
-
   useEffect(() => {
-    refetchAppointmentScheduleList();
-  }, [refetchAppointmentScheduleList]);
+    listAppoitnemntSchedule({
+      rsqlPredicate: buildRsqlPredicate(
+        currentWeekStart,
+        currentWeekEnd,
+        hostId,
+      ),
+    });
+  }, []);
 
   return (
     <Stack spacing={2}>
@@ -71,13 +95,17 @@ const AppointmentScheduleContainer: FC<AppointmentScheduleContainerProps> = ({
         <Stack direction={"row"}>
           <Button
             onClick={handleChangeWeekPrevOpen}
-            disabled={currentWeekStart.isBefore(today)}
+            disabled={
+              currentWeekStart.isBefore(today) ||
+              listAppoitnemntScheduleResponse.isFetching
+            }
             startIcon={<ArrowBackIosNewIcon />}
-          ></Button>
+          />
           <Button
             onClick={handleChangeWeekNextOpen}
+            disabled={listAppoitnemntScheduleResponse.isFetching}
             endIcon={<ArrowForwardIosIcon />}
-          ></Button>
+          />
         </Stack>
         <Typography variant={"h5"}>
           {currentWeekStart.format("D MMMM")} —{" "}
@@ -85,11 +113,12 @@ const AppointmentScheduleContainer: FC<AppointmentScheduleContainerProps> = ({
         </Typography>
       </Stack>
       <WeeklyAppointmentsScheduleComponent
-        appointmentsSchedules={appointmentScheduleList ?? []}
+        appointmentsSchedules={listAppoitnemntScheduleResponse.data ?? []}
         currentWeekStart={currentWeekStart}
         currentWeekEnd={currentWeekEnd}
         onTimeSlotClicked={onTimeSlotClicked}
         userRole={currentUserRole}
+        isLoading={listAppoitnemntScheduleResponse.isFetching}
       />
     </Stack>
   );

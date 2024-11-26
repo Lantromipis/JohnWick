@@ -3,7 +3,6 @@ package ru.ifmo.se.johnwick.model;
 public enum OrderStatus {
     CREATED,
     AWAITING_APPLICATIONS,
-    AWAITING_ASSIGMENT,
     AWAITING_ASSIGNEE,
     AWAITING_SUIT,
     AWAITING_DEGUSTATION,

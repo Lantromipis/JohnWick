@@ -19,7 +19,6 @@ import {
   OrderType,
 } from "../../../models/order.model.ts";
 import OrderCreationFrom from "./order-creation.from.tsx";
-import { UserDtoModel, UserRole } from "../../../models/user.model.ts";
 import { orderApi } from "../../../store/order/order.api.ts";
 
 type OrderCreationContainerProps = {};
@@ -115,16 +114,7 @@ const OrderCreationContainer: FC<OrderCreationContainerProps> = () => {
                 Failed to create order. Please try again.
               </Alert>
             )}
-            <OrderCreationFrom
-              onSubmit={handleSubmit}
-              killers={
-                users
-                  ? users.filter(
-                      (u: UserDtoModel) => u.role === UserRole.KILLER,
-                    )
-                  : []
-              }
-            />
+            <OrderCreationFrom onSubmit={handleSubmit} killers={users ?? []} />
           </Stack>
         </DialogContent>
         <DialogActions>

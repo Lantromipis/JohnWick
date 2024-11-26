@@ -1,22 +1,19 @@
 import { FC, memo } from "react";
 import MainLayout from "../layouts/main.layout.tsx";
-import { Typography } from "@mui/material";
+import { Avatar, Stack, Typography } from "@mui/material";
 
 type HomePageProps = {};
 
 const HomePage: FC<HomePageProps> = () => {
   return (
     <MainLayout>
-      <Typography variant="h3"> Home page</Typography>
-      <Typography>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum.
-      </Typography>
+      <Stack spacing={2} alignItems="center">
+        <Typography variant="h3">Welcome to The Baba Yaga System</Typography>
+        <Avatar src="/john-wick.png" sx={{ width: 256, height: 256 }} />
+        <Typography variant="h6">
+          Select any tab at the left to start your journey
+        </Typography>
+      </Stack>
     </MainLayout>
   );
 };

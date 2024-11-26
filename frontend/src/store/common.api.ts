@@ -67,6 +67,7 @@ export const commonApi = createApi({
     "Regular order applications",
     "Appointment schedules",
     "Appointments",
+    "Cleanings",
   ],
   endpoints: (_) => ({}),
 });

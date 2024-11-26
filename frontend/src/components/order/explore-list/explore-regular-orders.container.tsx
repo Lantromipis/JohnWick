@@ -1,6 +1,6 @@
 import { FC, memo, useCallback, useEffect, useMemo } from "react";
 import { orderApi } from "../../../store/order/order.api.ts";
-import RegularOrderCardComponent from "./regular-order-explore-card.component.tsx";
+import RegularOrderCardComponent from "./regular-order-explore-list.component.tsx";
 import { Alert, Stack } from "@mui/material";
 import { useSelector } from "react-redux";
 import { selectCurrentUserId } from "../../../store/user/user.selectors.ts";
@@ -20,9 +20,9 @@ const ExploreRegularOrdersContainer: FC<
 
   const { data: regularOrderList, refetch: refetchRegularOrderList } =
     orderApi.useListRegularOrdersQuery({
-      rsqlPredicate: currentUserId
-        ? emit(builder.eq("status", OrderStatus.AWAITING_APPLICATIONS))
-        : undefined,
+      rsqlPredicate: emit(
+        builder.eq("status", OrderStatus.AWAITING_APPLICATIONS),
+      ),
     });
 
   const {
@@ -70,13 +70,13 @@ const ExploreRegularOrdersContainer: FC<
           Sorry, currently there are no orders available. Please check later.
         </Alert>
       )}
-      {regularOrderList?.map((regularOrder) => (
+      {regularOrderList && (
         <RegularOrderCardComponent
-          regularOrder={regularOrder}
+          regularOrders={regularOrderList}
           existingOrderApplicationsByOrderId={applicationByOrderId}
           onApplyForOrder={handleApplyForOrder}
         />
-      ))}
+      )}
     </Stack>
   );
 };

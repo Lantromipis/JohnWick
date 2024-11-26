@@ -42,9 +42,9 @@ public class OrderServiceImpl implements OrderService {
         if (orderDto instanceof RegularOrderDto regularOrderDto) {
             return regularOrderService.updateRegularOrder(regularOrderDto);
         } else if (orderDto instanceof HeadHuntOrderDto headHuntOrderDto) {
-            throw new ValidationException("Path for head hunt order not supported");
+            return headHuntOrderService.updateHeadHuntOrder(headHuntOrderDto);
         } else if (orderDto instanceof PromissoryNoteOrderDto promissoryNoteOrderDto) {
-            throw new ValidationException("Path for promissory order not supported");
+            return promissoryNoteOrderService.updatePromissoryNoteOrder(promissoryNoteOrderDto);
         } else {
             throw new ValidationException("Unknown order type");
         }

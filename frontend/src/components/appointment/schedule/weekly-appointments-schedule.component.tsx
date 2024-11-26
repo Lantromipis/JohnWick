@@ -1,6 +1,7 @@
 import { FC, memo } from "react";
 import {
   alpha,
+  CircularProgress,
   Table,
   TableBody,
   TableCell,
@@ -32,6 +33,7 @@ type WeeklyAppointmentsScheduleComponentProps = {
   appointmentsSchedules: AppointmentScheduleDtoModel[];
   currentWeekStart: Dayjs;
   currentWeekEnd: Dayjs;
+  isLoading: boolean;
 };
 
 const WeeklyAppointmentsScheduleComponent: FC<
@@ -41,14 +43,17 @@ const WeeklyAppointmentsScheduleComponent: FC<
   appointmentsSchedules,
   currentWeekStart,
   onTimeSlotClicked,
+  isLoading,
 }) => {
   const theme = useTheme();
   const today = dayjs();
 
   return (
     <>
-      <TableContainer>
-        <Table>
+      <TableContainer sx={{ position: "relative" }}>
+        <Table
+          sx={() => (isLoading ? { opacity: 0.5, pointerEvents: "none" } : {})}
+        >
           <TableHead>
             <TableRow>
               <TableCell
@@ -78,12 +83,19 @@ const WeeklyAppointmentsScheduleComponent: FC<
           </TableHead>
           <TableBody>
             {[...Array(24)].map((_, i) => {
+              const currentRowTime = currentWeekStart.add(i, "hours");
               return (
                 <TableRow key={i}>
                   <TableCell
                     key={i}
                     align={"center"}
                     width={FIRST_COLUMN_WIDTH}
+                    sx={{
+                      ...(currentRowTime.get("hours") ===
+                        today.get("hours") && {
+                        backgroundColor: alpha(theme.palette.info.dark, 0.2),
+                      }),
+                    }}
                   >
                     <b>{formatHour(i)}</b>
                   </TableCell>
@@ -105,6 +117,16 @@ const WeeklyAppointmentsScheduleComponent: FC<
             })}
           </TableBody>
         </Table>
+        {isLoading && (
+          <CircularProgress
+            sx={{
+              position: "absolute",
+              top: "20%",
+              left: "50%",
+              transform: "translate(-50%, 0)",
+            }}
+          />
+        )}
       </TableContainer>
     </>
   );

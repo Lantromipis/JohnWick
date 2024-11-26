@@ -8,4 +8,6 @@ public interface PromissoryNoteOrderService {
     PromissoryNoteOrderDto createPromissoryNoteOrder(PromissoryNoteOrderDto promissoryNoteOrderDto);
 
     List<PromissoryNoteOrderDto> listPromissoryNoteOrders(String rsqlPredicate);
+
+    PromissoryNoteOrderDto updatePromissoryNoteOrder(PromissoryNoteOrderDto promissoryNoteOrderDto);
 }

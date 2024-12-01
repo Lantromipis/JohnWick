@@ -26,9 +26,8 @@ public class IndexHtmlRejectingPreMatchingRequestFilter implements ContainerRequ
             return;
         }
 
-        try {
-            final InputStream indexIS = this.getClass().getClassLoader().getResourceAsStream("/META-INF/resources/index.html");
-            final InputStreamReader isr = new InputStreamReader(indexIS, StandardCharsets.UTF_8);
+        try (InputStream indexIS = this.getClass().getClassLoader().getResourceAsStream("/META-INF/resources/index.html");
+             InputStreamReader isr = new InputStreamReader(indexIS, StandardCharsets.UTF_8)) {
             final StringBuilder sb = new StringBuilder();
             int c;
             while ((c = isr.read()) != -1) {
@@ -39,7 +38,7 @@ public class IndexHtmlRejectingPreMatchingRequestFilter implements ContainerRequ
                             .ok(sb.toString(), MediaType.TEXT_HTML_TYPE)
                             .build()
             );
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             containerRequestContext.abortWith(
                     Response.temporaryRedirect(URI.create("/")).build()
             );

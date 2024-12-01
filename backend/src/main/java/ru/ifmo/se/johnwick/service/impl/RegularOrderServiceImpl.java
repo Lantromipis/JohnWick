@@ -1,18 +1,18 @@
 package ru.ifmo.se.johnwick.service.impl;
 
+import com.cronutils.utils.StringUtils;
 import cz.jirutka.rsql.parser.RSQLParser;
 import cz.jirutka.rsql.parser.RSQLParserException;
 import cz.jirutka.rsql.parser.UnknownOperatorException;
 import cz.jirutka.rsql.parser.ast.Node;
 import io.quarkus.scheduler.Scheduled;
+import io.quarkus.security.identity.SecurityIdentity;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.*;
 import jakarta.transaction.Transactional;
-import jakarta.ws.rs.core.Context;
-import jakarta.ws.rs.core.SecurityContext;
 import lombok.extern.slf4j.Slf4j;
 import ru.ifmo.se.johnwick.constant.ApiConstant;
 import ru.ifmo.se.johnwick.exception.EntityNotFoundByIdException;
@@ -47,8 +47,8 @@ import java.util.UUID;
 @ApplicationScoped
 public class RegularOrderServiceImpl implements RegularOrderService {
 
-    @Context
-    SecurityContext securityContext;
+    @Inject
+    SecurityIdentity securityIdentity;
 
     @Inject
     RegularOrderApplicationRepository regularOrderApplicationRepository;
@@ -88,6 +88,16 @@ public class RegularOrderServiceImpl implements RegularOrderService {
     @Override
     @Transactional
     public RegularOrderDto createRegularOrder(RegularOrderDto regularOrderDto) {
+        if (StringUtils.isEmpty(regularOrderDto.getTargetName())) {
+            throw new ValidationException("Target name is required");
+        }
+        if (StringUtils.isEmpty(regularOrderDto.getCustomerName())) {
+            throw new ValidationException("Customer name is required");
+        }
+        if (regularOrderDto.getPrice() <= 0) {
+            throw new ValidationException("Price must be greater than 0");
+        }
+
         RegularOrderEntity orderEntity = orderMapper.mapRegularToEntity(regularOrderDto);
 
         orderEntity.setApplications(null);
@@ -149,9 +159,9 @@ public class RegularOrderServiceImpl implements RegularOrderService {
         }
 
         // security
-        if (securityContext.isUserInRole(ApiConstant.ROLE_KILLER)) {
+        if (securityIdentity.getRoles().contains(ApiConstant.ROLE_KILLER)) {
             Join<RegularOrderEntity, UserEntity> assignee = root.join("assignee", JoinType.LEFT);
-            Predicate currentKillerIsAssignee = criteriaBuilder.equal(assignee.get("username"), securityContext.getUserPrincipal().getName());
+            Predicate currentKillerIsAssignee = criteriaBuilder.equal(assignee.get("username"), securityIdentity.getPrincipal().getName());
             Predicate statusIsAwaitingApplications = criteriaBuilder.equal(root.get("status"), OrderStatus.AWAITING_APPLICATIONS);
             Predicate orPredicate = criteriaBuilder.or(currentKillerIsAssignee, statusIsAwaitingApplications);
 
@@ -200,8 +210,8 @@ public class RegularOrderServiceImpl implements RegularOrderService {
         }
 
         // security
-        if (securityContext.isUserInRole(ApiConstant.ROLE_KILLER)) {
-            Predicate currentKillerApplicationsPredicate = criteriaBuilder.equal(root.get("killer").get("username"), securityContext.getUserPrincipal().getName());
+        if (securityIdentity.getRoles().contains(ApiConstant.ROLE_KILLER)) {
+            Predicate currentKillerApplicationsPredicate = criteriaBuilder.equal(root.get("killer").get("username"), securityIdentity.getPrincipal().getName());
             if (predicate != null) {
                 predicate = criteriaBuilder.and(predicate, currentKillerApplicationsPredicate);
             } else {
@@ -231,11 +241,11 @@ public class RegularOrderServiceImpl implements RegularOrderService {
             throw new EntityNotFoundByIdException("regularOrder", orderId.toString());
         }
 
-        if (!regularOrderEntity.getStatus().equals(OrderStatus.AWAITING_APPLICATIONS)) {
+        if (!OrderStatus.AWAITING_APPLICATIONS.equals(regularOrderEntity.getStatus())) {
             throw new ValidationException("Order is not in AWAITING_APPLICATIONS status");
         }
 
-        UserEntity userEntity = userRepository.findByUsername(securityContext.getUserPrincipal().getName());
+        UserEntity userEntity = userRepository.findByUsername(securityIdentity.getPrincipal().getName());
         if (!UserRole.KILLER.equals(userEntity.getRole())) {
             throw new ValidationException("Assignee has no role KILLER");
         }
@@ -263,7 +273,7 @@ public class RegularOrderServiceImpl implements RegularOrderService {
             throw new EntityNotFoundByIdException("regularOrder", regularOrderDto.getId().toString());
         }
 
-        UserEntity currentUser = userRepository.findByUsername(securityContext.getUserPrincipal().getName());
+        UserEntity currentUser = userRepository.findByUsername(securityIdentity.getPrincipal().getName());
 
         // select assignee
         if (regularOrderDto.getAssignee() != null && regularOrderDto.getAssignee().getId() != null) {

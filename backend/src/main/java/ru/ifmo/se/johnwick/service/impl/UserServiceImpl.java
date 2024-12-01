@@ -1,5 +1,6 @@
 package ru.ifmo.se.johnwick.service.impl;
 
+import com.cronutils.utils.StringUtils;
 import cz.jirutka.rsql.parser.RSQLParser;
 import cz.jirutka.rsql.parser.RSQLParserException;
 import cz.jirutka.rsql.parser.UnknownOperatorException;
@@ -104,12 +105,24 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public UserDto createUser(UserDto user) {
+        if (StringUtils.isEmpty(user.getUsername())) {
+            throw new ValidationException("Provided user dada does not contain password");
+        }
+        if (StringUtils.isEmpty(user.getUsername())) {
+            throw new ValidationException("Provided user dada does not contain username");
+        }
+        if (StringUtils.isEmpty(user.getDisplayName())) {
+            throw new ValidationException("Provided user dada does not contain display name");
+        }
+
         UserEntity userEntity = userMapper.fromDtoWithPassword(user);
+        userEntity.setId(null);
+
         UserEntity existingUser = userRepository.findByUsername(userEntity.getUsername());
         if (existingUser != null) {
             throw new ValidationException("User with provided username already exists");
         }
-        userEntity.setId(null);
+
         userRepository.persistAndFlush(userEntity);
         return userMapper.toDto(userEntity);
     }
@@ -130,6 +143,10 @@ public class UserServiceImpl implements UserService {
             existingUser.setDisplayName(newUserEntity.getDisplayName());
         }
         if (newUserEntity.getUsername() != null) {
+            UserEntity existingUserWithSameUsername = userRepository.findByUsername(newUserEntity.getUsername());
+            if (existingUserWithSameUsername != null) {
+                throw new ValidationException("User with provided username already exists");
+            }
             existingUser.setUsername(newUserEntity.getUsername());
         }
 

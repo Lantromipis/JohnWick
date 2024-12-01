@@ -1,6 +1,7 @@
 package ru.ifmo.se.johnwick.service.impl;
 
 import cz.jirutka.rsql.parser.ast.Node;
+import io.quarkus.security.identity.SecurityIdentity;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
@@ -11,8 +12,7 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
-import jakarta.ws.rs.core.Context;
-import jakarta.ws.rs.core.SecurityContext;
+import org.apache.commons.collections4.CollectionUtils;
 import ru.ifmo.se.johnwick.constant.ApiConstant;
 import ru.ifmo.se.johnwick.exception.EntityNotFoundByIdException;
 import ru.ifmo.se.johnwick.exception.ValidationException;
@@ -55,8 +55,8 @@ public class AppointmentScheduleServiceImpl implements AppointmentScheduleServic
     @Inject
     RsqlParserUtils rsqlParserUtils;
 
-    @Context
-    SecurityContext securityContext;
+    @Inject
+    SecurityIdentity securityIdentity;
 
     @Override
     @Transactional
@@ -74,7 +74,7 @@ public class AppointmentScheduleServiceImpl implements AppointmentScheduleServic
         appointmentScheduleDto.setAppointments(null);
 
         AppointmentScheduleEntity appointmentScheduleEntity = appointmentScheduleMapper.mapAppointmentScheduleDtoToEntity(appointmentScheduleDto);
-        UserEntity host = userRepository.findByUsername(securityContext.getUserPrincipal().getName());
+        UserEntity host = userRepository.findByUsername(securityIdentity.getPrincipal().getName());
         if (!UserRole.TAILOR.equals(host.getRole()) && !UserRole.SOMMELIER.equals(host.getRole())) {
             throw new ValidationException("User has no role TAILOR or SOMMELIER.");
         }
@@ -122,7 +122,7 @@ public class AppointmentScheduleServiceImpl implements AppointmentScheduleServic
         typedQuery.setMaxResults(1000);
         typedQuery.setFirstResult(0);
         List<AppointmentScheduleEntity> entities = typedQuery.getResultList();
-        if (securityContext.isUserInRole(ApiConstant.ROLE_KILLER)) {
+        if (securityIdentity.getRoles().contains(ApiConstant.ROLE_KILLER)) {
             return appointmentScheduleMapper.mapAppointmentScheduleEntityToDtoWithoutBookerAndSchedule(entities);
         } else {
             return appointmentScheduleMapper.mapAppointmentScheduleEntityToDto(entities);
@@ -131,7 +131,7 @@ public class AppointmentScheduleServiceImpl implements AppointmentScheduleServic
 
     @Override
     public List<AppointmentDto> listAppointments(String rsqlPredicate) {
-        UserEntity booker = userRepository.findByUsername(securityContext.getUserPrincipal().getName());
+        UserEntity booker = userRepository.findByUsername(securityIdentity.getPrincipal().getName());
         List<AppointmentEntity> entities = appointmentRepository.findByUser(booker);
         return appointmentScheduleMapper.mapAppointmentEntityToDto(entities);
     }
@@ -164,14 +164,22 @@ public class AppointmentScheduleServiceImpl implements AppointmentScheduleServic
         if (!isWithinRange(appointmentDto.getStartTime(), appointmentScheduleEntity.getStartTime(), appointmentScheduleEntity.getEndTime())) {
             throw new ValidationException("Appointment start time is not in schedule.");
         }
-        if (!isWithinRange(appointmentDto.getStartTime(), appointmentScheduleEntity.getStartTime(), appointmentScheduleEntity.getEndTime())) {
+        if (!isWithinRange(appointmentDto.getEndTime(), appointmentScheduleEntity.getStartTime(), appointmentScheduleEntity.getEndTime())) {
             throw new ValidationException("Appointment end time is not in schedule.");
+        }
+
+        if (CollectionUtils.isNotEmpty(appointmentScheduleEntity.getAppointments())) {
+            for (AppointmentEntity existingAppointmentEntity : appointmentScheduleEntity.getAppointments()) {
+                if (existingAppointmentEntity.getStartTime().equals(appointmentDto.getStartTime())) {
+                    throw new ValidationException("Appointment intersects with existing appointment.");
+                }
+            }
         }
 
         appointmentDto.setId(null);
         appointmentDto.setBookedBy(null);
 
-        UserEntity booker = userRepository.findByUsername(securityContext.getUserPrincipal().getName());
+        UserEntity booker = userRepository.findByUsername(securityIdentity.getPrincipal().getName());
 
         AppointmentEntity appointmentEntity = appointmentScheduleMapper.mapAppointmentDtoToEntity(appointmentDto);
         appointmentEntity.setAppointmentSchedule(appointmentScheduleEntity);
@@ -184,7 +192,7 @@ public class AppointmentScheduleServiceImpl implements AppointmentScheduleServic
     @Override
     @Transactional
     public void deleteAppointment(UUID appointmentScheduleId, UUID appointmentId) {
-        UserEntity booker = userRepository.findByUsername(securityContext.getUserPrincipal().getName());
+        UserEntity booker = userRepository.findByUsername(securityIdentity.getPrincipal().getName());
         AppointmentEntity appointmentEntity = appointmentRepository.findById(appointmentId);
 
         if (appointmentEntity == null) {

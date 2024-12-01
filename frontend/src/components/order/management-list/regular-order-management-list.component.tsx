@@ -40,14 +40,14 @@ const RegularOrderManagementListComponent: FC<
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell align={"center"}>Id</TableCell>
-              <TableCell align={"center"}>Status</TableCell>
-              <TableCell align={"center"}>Customer</TableCell>
-              <TableCell align={"center"}>Target</TableCell>
-              <TableCell align={"center"}>Creation time</TableCell>
-              <TableCell align={"center"}>Price</TableCell>
-              <TableCell align={"center"}>Assigned killer</TableCell>
-              <TableCell align={"center"}>Actions</TableCell>
+              <TableCell>Id</TableCell>
+              <TableCell>Status</TableCell>
+              <TableCell>Customer</TableCell>
+              <TableCell>Target</TableCell>
+              <TableCell>Creation time</TableCell>
+              <TableCell>Price</TableCell>
+              <TableCell>Assigned killer</TableCell>
+              <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

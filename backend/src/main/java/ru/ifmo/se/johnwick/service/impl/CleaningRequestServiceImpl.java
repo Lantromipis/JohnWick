@@ -4,14 +4,13 @@ import cz.jirutka.rsql.parser.RSQLParser;
 import cz.jirutka.rsql.parser.RSQLParserException;
 import cz.jirutka.rsql.parser.UnknownOperatorException;
 import cz.jirutka.rsql.parser.ast.Node;
+import io.quarkus.security.identity.SecurityIdentity;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.*;
 import jakarta.transaction.Transactional;
-import jakarta.ws.rs.core.Context;
-import jakarta.ws.rs.core.SecurityContext;
 import ru.ifmo.se.johnwick.constant.ApiConstant;
 import ru.ifmo.se.johnwick.exception.EntityNotFoundByIdException;
 import ru.ifmo.se.johnwick.exception.UnsupportedRsqlOperatorException;
@@ -26,7 +25,6 @@ import ru.ifmo.se.johnwick.model.entity.OrderEntity;
 import ru.ifmo.se.johnwick.model.entity.RegularOrderEntity;
 import ru.ifmo.se.johnwick.model.entity.UserEntity;
 import ru.ifmo.se.johnwick.repository.CleaningRequestRepository;
-import ru.ifmo.se.johnwick.repository.OrderRepository;
 import ru.ifmo.se.johnwick.repository.UserRepository;
 import ru.ifmo.se.johnwick.rsql.JpaRsqlVisitorParams;
 import ru.ifmo.se.johnwick.rsql.visitor.CleaningRequestEntityJpaRsqlVisitor;
@@ -48,14 +46,11 @@ public class CleaningRequestServiceImpl implements CleaningRequestService {
     @Inject
     NotificationService notificationService;
 
-    @Context
-    SecurityContext securityContext;
+    @Inject
+    SecurityIdentity securityIdentity;
 
     @Inject
     CleaningRequestMapper cleaningRequestMapper;
-
-    @Inject
-    OrderRepository orderRepository;
 
     @Override
     @Transactional
@@ -109,9 +104,9 @@ public class CleaningRequestServiceImpl implements CleaningRequestService {
         }
 
         // security
-        if (securityContext.isUserInRole(ApiConstant.ROLE_CLEANER)) {
+        if (securityIdentity.getRoles().contains(ApiConstant.ROLE_CLEANER)) {
             Join<RegularOrderEntity, UserEntity> assignee = root.join("appliedCleaner", JoinType.LEFT);
-            Predicate currentCleanerIsAssignee = criteriaBuilder.equal(assignee.get("username"), securityContext.getUserPrincipal().getName());
+            Predicate currentCleanerIsAssignee = criteriaBuilder.equal(assignee.get("username"), securityIdentity.getPrincipal().getName());
             Predicate statusIsCreated = criteriaBuilder.equal(root.get("status"), CleaningRequestStatus.CREATED);
             Predicate orPredicate = criteriaBuilder.or(currentCleanerIsAssignee, statusIsCreated);
 
@@ -158,7 +153,7 @@ public class CleaningRequestServiceImpl implements CleaningRequestService {
                         throw new ValidationException("Cleaning already assigned to another cleaner.");
                     }
 
-                    UserEntity currentUser = userRepository.findByUsername(securityContext.getUserPrincipal().getName());
+                    UserEntity currentUser = userRepository.findByUsername(securityIdentity.getPrincipal().getName());
                     cleaningRequestEntity.setAppliedCleaner(currentUser);
                     cleaningRequestEntity.setStatus(CleaningRequestStatus.IN_PROGRESS);
                 }
@@ -167,7 +162,7 @@ public class CleaningRequestServiceImpl implements CleaningRequestService {
                         throw new ValidationException("Cleaning request can not be transitioned to status COMPLETED");
                     }
 
-                    UserEntity currentUser = userRepository.findByUsername(securityContext.getUserPrincipal().getName());
+                    UserEntity currentUser = userRepository.findByUsername(securityIdentity.getPrincipal().getName());
                     if (!currentUser.getId().equals(cleaningRequestEntity.getAppliedCleaner().getId())) {
                         throw new ValidationException("Only applied cleaner can complete cleaning request");
                     }

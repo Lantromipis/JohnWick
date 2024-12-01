@@ -18,7 +18,6 @@ public class RsqlParserUtils {
     }
 
     public Node parsePredicate(String rsqlPredicate) throws UnsupportedRsqlOperatorException, RSQLParserException {
-        RSQLParser rsqlParser = new RSQLParser();
         try {
             return rsqlParser.parse(rsqlPredicate);
         } catch (RSQLParserException e) {

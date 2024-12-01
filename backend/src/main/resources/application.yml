@@ -35,3 +35,20 @@ quarkus:
         sql: true
     log:
       level: INFO
+
+"%test":
+  quarkus:
+    scheduler:
+      enabled: false
+    datasource:
+      db-kind: h2
+      jdbc:
+        url: jdbc:h2:mem:db
+    flyway:
+      migrate-at-start: true
+    hibernate-orm:
+      log:
+        bind-parameters: true
+        sql: true
+    log:
+      level: INFO

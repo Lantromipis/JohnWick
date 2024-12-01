@@ -1,6 +1,7 @@
 package ru.ifmo.se.johnwick.service.impl;
 
 import cz.jirutka.rsql.parser.ast.Node;
+import io.quarkus.security.identity.SecurityIdentity;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
@@ -10,8 +11,6 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
-import jakarta.ws.rs.core.Context;
-import jakarta.ws.rs.core.SecurityContext;
 import ru.ifmo.se.johnwick.exception.EntityNotFoundByIdException;
 import ru.ifmo.se.johnwick.exception.ValidationException;
 import ru.ifmo.se.johnwick.mapper.OrderMapper;
@@ -54,12 +53,20 @@ public class PromissoryNoteOrderServiceImpl implements PromissoryNoteOrderServic
     @Inject
     CleaningRequestService cleaningRequestService;
 
-    @Context
-    SecurityContext securityContext;
+    @Inject
+    SecurityIdentity securityIdentity;
 
     @Override
     @Transactional
     public PromissoryNoteOrderDto createPromissoryNoteOrder(PromissoryNoteOrderDto promissoryNoteOrderDto) {
+        if (promissoryNoteOrderDto.getBeneficiary() == null || promissoryNoteOrderDto.getBeneficiary().getId() == null) {
+            throw new ValidationException("Beneficiary is required");
+        }
+
+        if (promissoryNoteOrderDto.getDebtor() == null || promissoryNoteOrderDto.getDebtor().getId() == null) {
+            throw new ValidationException("Debtor is required");
+        }
+
         PromissoryNoteOrderEntity orderEntity = orderMapper.mapPromissoryNoteToEntity(promissoryNoteOrderDto);
 
         UserEntity debtor = userRepository.findById(orderEntity.getDebtor().getId());
@@ -132,7 +139,7 @@ public class PromissoryNoteOrderServiceImpl implements PromissoryNoteOrderServic
             throw new EntityNotFoundByIdException("promissoryNoteOrder", promissoryNoteOrderDto.getId().toString());
         }
 
-        UserEntity currentUser = userRepository.findByUsername(securityContext.getUserPrincipal().getName());
+        UserEntity currentUser = userRepository.findByUsername(securityIdentity.getPrincipal().getName());
         if (!currentUser.getRole().equals(UserRole.ADMIN) && !promissoryNoteOrderEntity.getDebtor().getId().equals(currentUser.getId())) {
             throw new ValidationException("Current user have no permission to modify this order");
         }

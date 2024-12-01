@@ -1,7 +1,9 @@
 package ru.ifmo.se.johnwick.service.impl;
 
+import com.cronutils.utils.StringUtils;
 import cz.jirutka.rsql.parser.ast.Node;
 import io.quarkus.scheduler.Scheduled;
+import io.quarkus.security.identity.SecurityIdentity;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
@@ -11,8 +13,6 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
-import jakarta.ws.rs.core.Context;
-import jakarta.ws.rs.core.SecurityContext;
 import ru.ifmo.se.johnwick.exception.EntityNotFoundByIdException;
 import ru.ifmo.se.johnwick.exception.ValidationException;
 import ru.ifmo.se.johnwick.mapper.OrderMapper;
@@ -55,8 +55,8 @@ public class HeadHuntOrderServiceImpl implements HeadHuntOrderService {
     @Inject
     UserRepository userRepository;
 
-    @Context
-    SecurityContext securityContext;
+    @Inject
+    SecurityIdentity securityIdentity;
 
     @Inject
     CleaningRequestService cleaningRequestService;
@@ -70,6 +70,16 @@ public class HeadHuntOrderServiceImpl implements HeadHuntOrderService {
     @Override
     @Transactional
     public HeadHuntOrderDto createHeadHuntOrder(HeadHuntOrderDto headHuntOrderDto) {
+        if (StringUtils.isEmpty(headHuntOrderDto.getTargetName())) {
+            throw new ValidationException("Target name is required");
+        }
+        if (StringUtils.isEmpty(headHuntOrderDto.getCustomerName())) {
+            throw new ValidationException("Customer name is required");
+        }
+        if (headHuntOrderDto.getCurrentPrice() <= 0) {
+            throw new ValidationException("Current price must be greater than 0");
+        }
+
         HeadHuntOrderEntity orderEntity = orderMapper.mapHeadHuntToEntity(headHuntOrderDto);
 
         orderEntity.setSucceededKiller(null);
@@ -127,7 +137,7 @@ public class HeadHuntOrderServiceImpl implements HeadHuntOrderService {
     public HeadHuntOrderDto updateHeadHuntOrder(HeadHuntOrderDto headHuntOrderDto) {
         HeadHuntOrderEntity headHuntOrderEntity = headHuntOrderRepository.findById(headHuntOrderDto.getId());
         if (headHuntOrderEntity == null) {
-            throw new EntityNotFoundByIdException("headHuntOrder", headHuntOrderEntity.getId().toString());
+            throw new EntityNotFoundByIdException("headHuntOrder", headHuntOrderDto.getId().toString());
         }
 
         // change status
@@ -135,7 +145,7 @@ public class HeadHuntOrderServiceImpl implements HeadHuntOrderService {
             OrderStatus newStatus = headHuntOrderDto.getStatus();
             OrderStatus oldStatus = headHuntOrderEntity.getStatus();
 
-            UserEntity currentUser = userRepository.findByUsername(securityContext.getUserPrincipal().getName());
+            UserEntity currentUser = userRepository.findByUsername(securityIdentity.getPrincipal().getName());
 
             switch (newStatus) {
                 case AWAITING_CLEANING -> {

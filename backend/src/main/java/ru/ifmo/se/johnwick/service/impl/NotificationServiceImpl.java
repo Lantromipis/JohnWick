@@ -1,10 +1,9 @@
 package ru.ifmo.se.johnwick.service.impl;
 
+import io.quarkus.security.identity.SecurityIdentity;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
-import jakarta.ws.rs.core.Context;
-import jakarta.ws.rs.core.SecurityContext;
 import ru.ifmo.se.johnwick.mapper.NotificationMapper;
 import ru.ifmo.se.johnwick.model.UserRole;
 import ru.ifmo.se.johnwick.model.dto.NotificationDto;
@@ -26,8 +25,8 @@ public class NotificationServiceImpl implements NotificationService {
     @Inject
     UserRepository userRepository;
 
-    @Context
-    SecurityContext securityContext;
+    @Inject
+    SecurityIdentity securityIdentity;
 
     @Inject
     NotificationMapper notificationMapper;
@@ -64,8 +63,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public List<NotificationDto> listCurrentUserNotifications() {
-        UserEntity user = userRepository.findByUsername(securityContext.getUserPrincipal().getName());
-        List<NotificationEntity> notifications = notificationRepository.findAllByRecipient(user);
+        List<NotificationEntity> notifications = notificationRepository.findAllByRecipientUsername(securityIdentity.getPrincipal().getName());
         return notificationMapper.toDto(notifications);
     }
 }

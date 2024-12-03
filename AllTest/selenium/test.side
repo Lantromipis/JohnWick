@@ -1716,6 +1716,95 @@
         ["xpath=//div[2]/button[2]", "xpath:position"]
       ],
       "value": ""
+    }, {
+      "id": "a6c6709e-9b11-4c8b-8dab-425d6f5d621d",
+      "comment": "",
+      "command": "click",
+      "target": "(//button)[2]",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3e0d4321-1992-48dc-860a-0e425fe50e6a",
+      "comment": "",
+      "command": "click",
+      "target": "//*[contains(text(),'Logout')]",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "cee96a5c-ec9d-46c1-961c-e55163a8d20a",
+      "comment": "",
+      "command": "click",
+      "target": "//*[@name=\"username\"]",
+      "targets": [
+        ["id=:r0:", "id"],
+        ["name=username", "name"],
+        ["css=#\\3Ar0\\3A", "css:finder"],
+        ["xpath=//input[@id=':r0:']", "xpath:attributes"],
+        ["xpath=//form[@id='userLoginForm']/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "66a55167-d38f-4125-9a01-53c710ed232d",
+      "comment": "",
+      "command": "type",
+      "target": "//*[@name=\"username\"]",
+      "targets": [
+        ["id=:r0:", "id"],
+        ["name=username", "name"],
+        ["css=#\\3Ar0\\3A", "css:finder"],
+        ["xpath=//input[@id=':r0:']", "xpath:attributes"],
+        ["xpath=//form[@id='userLoginForm']/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "killer"
+    }, {
+      "id": "85ee9b05-65ac-4aba-93b5-61488d97a966",
+      "comment": "",
+      "command": "click",
+      "target": "//*[@name=\"password\"]",
+      "targets": [
+        ["id=:r1:", "id"],
+        ["name=password", "name"],
+        ["css=#\\3Ar1\\3A", "css:finder"],
+        ["xpath=//input[@id=':r1:']", "xpath:attributes"],
+        ["xpath=//form[@id='userLoginForm']/div/div[2]/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8068e612-fb93-444b-8ac5-873cb9bcb484",
+      "comment": "",
+      "command": "type",
+      "target": "//*[@name=\"password\"]",
+      "targets": [
+        ["id=:r1:", "id"],
+        ["name=password", "name"],
+        ["css=#\\3Ar1\\3A", "css:finder"],
+        ["xpath=//input[@id=':r1:']", "xpath:attributes"],
+        ["xpath=//form[@id='userLoginForm']/div/div[2]/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": "killer"
+    }, {
+      "id": "59d355ad-a7ca-4751-abb1-09e3985e91bc",
+      "comment": "",
+      "command": "click",
+      "target": "//*[@id=\"userLoginForm\"]/div/button",
+      "targets": [
+        ["css=.MuiButtonBase-root", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='userLoginForm']/div/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d2c16244-ba39-4fec-a3f9-c63ea973c2ed",
+      "comment": "",
+      "command": "click",
+      "target": "(//button)[1]",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "d7b063d9-ca2a-401e-8375-a2989273c5fd",
@@ -1914,6 +2003,95 @@
         ["xpath=//button[@type='submit']", "xpath:attributes"],
         ["xpath=//div[2]/button[2]", "xpath:position"]
       ],
+      "value": ""
+    }, {
+      "id": "b0961865-2039-4f31-8eaa-03ba24c386ef",
+      "comment": "",
+      "command": "click",
+      "target": "(//button)[2]",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "aa607057-1edb-45fc-9bec-bbdc47d5fae7",
+      "comment": "",
+      "command": "click",
+      "target": "//*[contains(text(),'Logout')]",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "486010a3-09a9-48cd-b02a-03ea012d8fd7",
+      "comment": "",
+      "command": "click",
+      "target": "//*[@name=\"username\"]",
+      "targets": [
+        ["id=:r0:", "id"],
+        ["name=username", "name"],
+        ["css=#\\3Ar0\\3A", "css:finder"],
+        ["xpath=//input[@id=':r0:']", "xpath:attributes"],
+        ["xpath=//form[@id='userLoginForm']/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2a98a338-157f-42a9-a8f5-bed2a03b32ac",
+      "comment": "",
+      "command": "type",
+      "target": "//*[@name=\"username\"]",
+      "targets": [
+        ["id=:r0:", "id"],
+        ["name=username", "name"],
+        ["css=#\\3Ar0\\3A", "css:finder"],
+        ["xpath=//input[@id=':r0:']", "xpath:attributes"],
+        ["xpath=//form[@id='userLoginForm']/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "killer"
+    }, {
+      "id": "2b0b2e0e-fa78-4600-a805-5ca2328907b4",
+      "comment": "",
+      "command": "click",
+      "target": "//*[@name=\"password\"]",
+      "targets": [
+        ["id=:r1:", "id"],
+        ["name=password", "name"],
+        ["css=#\\3Ar1\\3A", "css:finder"],
+        ["xpath=//input[@id=':r1:']", "xpath:attributes"],
+        ["xpath=//form[@id='userLoginForm']/div/div[2]/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1a89a47d-a3a4-4e6c-b986-656b1bacec13",
+      "comment": "",
+      "command": "type",
+      "target": "//*[@name=\"password\"]",
+      "targets": [
+        ["id=:r1:", "id"],
+        ["name=password", "name"],
+        ["css=#\\3Ar1\\3A", "css:finder"],
+        ["xpath=//input[@id=':r1:']", "xpath:attributes"],
+        ["xpath=//form[@id='userLoginForm']/div/div[2]/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": "killer"
+    }, {
+      "id": "5cf4ee94-e66a-48e4-8965-9b198e5caf02",
+      "comment": "",
+      "command": "click",
+      "target": "//*[@id=\"userLoginForm\"]/div/button",
+      "targets": [
+        ["css=.MuiButtonBase-root", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='userLoginForm']/div/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6fda0a60-f7ca-4eeb-bb13-81cd9f76f6f7",
+      "comment": "",
+      "command": "click",
+      "target": "(//button)[1]",
+      "targets": [],
       "value": ""
     }]
   }, {
@@ -2114,6 +2292,95 @@
         ["xpath=//div[2]/button[2]", "xpath:position"]
       ],
       "value": ""
+    }, {
+      "id": "17b2a550-c117-4ed2-84c1-f2129225ee33",
+      "comment": "",
+      "command": "click",
+      "target": "(//button)[2]",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "209f6c36-0534-45f4-8891-eed13afcf4db",
+      "comment": "",
+      "command": "click",
+      "target": "//*[contains(text(),'Logout')]",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f734b99e-3c44-4b1f-9628-287248f6f3b8",
+      "comment": "",
+      "command": "click",
+      "target": "//*[@name=\"username\"]",
+      "targets": [
+        ["id=:r0:", "id"],
+        ["name=username", "name"],
+        ["css=#\\3Ar0\\3A", "css:finder"],
+        ["xpath=//input[@id=':r0:']", "xpath:attributes"],
+        ["xpath=//form[@id='userLoginForm']/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0f8ae32d-7c27-495e-a625-c6e1c540d155",
+      "comment": "",
+      "command": "type",
+      "target": "//*[@name=\"username\"]",
+      "targets": [
+        ["id=:r0:", "id"],
+        ["name=username", "name"],
+        ["css=#\\3Ar0\\3A", "css:finder"],
+        ["xpath=//input[@id=':r0:']", "xpath:attributes"],
+        ["xpath=//form[@id='userLoginForm']/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "kek"
+    }, {
+      "id": "3ab19264-1510-49c8-b995-5f308e9d251c",
+      "comment": "",
+      "command": "click",
+      "target": "//*[@name=\"password\"]",
+      "targets": [
+        ["id=:r1:", "id"],
+        ["name=password", "name"],
+        ["css=#\\3Ar1\\3A", "css:finder"],
+        ["xpath=//input[@id=':r1:']", "xpath:attributes"],
+        ["xpath=//form[@id='userLoginForm']/div/div[2]/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3e7dc216-1702-4418-afaf-57999c48fbc6",
+      "comment": "",
+      "command": "type",
+      "target": "//*[@name=\"password\"]",
+      "targets": [
+        ["id=:r1:", "id"],
+        ["name=password", "name"],
+        ["css=#\\3Ar1\\3A", "css:finder"],
+        ["xpath=//input[@id=':r1:']", "xpath:attributes"],
+        ["xpath=//form[@id='userLoginForm']/div/div[2]/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": "1234"
+    }, {
+      "id": "1ede4ad7-6eab-4a34-9764-557664b0c0f1",
+      "comment": "",
+      "command": "click",
+      "target": "//*[@id=\"userLoginForm\"]/div/button",
+      "targets": [
+        ["css=.MuiButtonBase-root", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='userLoginForm']/div/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "977b50dc-0a10-4e45-8889-6519c4463de5",
+      "comment": "",
+      "command": "click",
+      "target": "(//button)[1]",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "6ef707f1-8418-4610-9545-3e6a6be93648",
@@ -2238,6 +2505,95 @@
       "comment": "",
       "command": "click",
       "target": "//button[@type=\"submit\"]",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b7430406-4490-43b4-9984-becf8c5b9292",
+      "comment": "",
+      "command": "click",
+      "target": "(//button)[2]",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a341d51f-f777-4d27-8fff-f5ab5a1292fe",
+      "comment": "",
+      "command": "click",
+      "target": "//*[contains(text(),'Logout')]",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "983aab57-4b1b-4659-ba29-20aa396cfc96",
+      "comment": "",
+      "command": "click",
+      "target": "//*[@name=\"username\"]",
+      "targets": [
+        ["id=:r0:", "id"],
+        ["name=username", "name"],
+        ["css=#\\3Ar0\\3A", "css:finder"],
+        ["xpath=//input[@id=':r0:']", "xpath:attributes"],
+        ["xpath=//form[@id='userLoginForm']/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "322ec01f-a6a8-4309-b426-6eab54db6783",
+      "comment": "",
+      "command": "type",
+      "target": "//*[@name=\"username\"]",
+      "targets": [
+        ["id=:r0:", "id"],
+        ["name=username", "name"],
+        ["css=#\\3Ar0\\3A", "css:finder"],
+        ["xpath=//input[@id=':r0:']", "xpath:attributes"],
+        ["xpath=//form[@id='userLoginForm']/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "killer"
+    }, {
+      "id": "fccd08b1-41c2-4f7b-b76d-df3a03401652",
+      "comment": "",
+      "command": "click",
+      "target": "//*[@name=\"password\"]",
+      "targets": [
+        ["id=:r1:", "id"],
+        ["name=password", "name"],
+        ["css=#\\3Ar1\\3A", "css:finder"],
+        ["xpath=//input[@id=':r1:']", "xpath:attributes"],
+        ["xpath=//form[@id='userLoginForm']/div/div[2]/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "763140a8-8c44-4a7c-b545-a9a4de1483e4",
+      "comment": "",
+      "command": "type",
+      "target": "//*[@name=\"password\"]",
+      "targets": [
+        ["id=:r1:", "id"],
+        ["name=password", "name"],
+        ["css=#\\3Ar1\\3A", "css:finder"],
+        ["xpath=//input[@id=':r1:']", "xpath:attributes"],
+        ["xpath=//form[@id='userLoginForm']/div/div[2]/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": "killer"
+    }, {
+      "id": "32635077-2a7b-46cd-99d0-00057cca33fa",
+      "comment": "",
+      "command": "click",
+      "target": "//*[@id=\"userLoginForm\"]/div/button",
+      "targets": [
+        ["css=.MuiButtonBase-root", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='userLoginForm']/div/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f546a4fc-545b-4fe2-9729-35bf8df3cebd",
+      "comment": "",
+      "command": "click",
+      "target": "(//button)[1]",
       "targets": [],
       "value": ""
     }]
@@ -2865,104 +3221,6 @@
       "command": "click",
       "target": "//button[@type=\"submit\"]",
       "targets": [],
-      "value": ""
-    }]
-  }, {
-    "id": "95d6f88e-1724-40cc-8f46-dbff3db6ba02",
-    "name": "Auth by admin - error (wrong password)",
-    "commands": [{
-      "id": "818faf97-1e76-4b1b-a3bf-e13913349060",
-      "comment": "",
-      "command": "open",
-      "target": "/login",
-      "targets": [],
-      "value": ""
-    }, {
-      "id": "89b20bf1-4e82-4797-834d-0932dad75f66",
-      "comment": "",
-      "command": "setWindowSize",
-      "target": "1920x1080",
-      "targets": [],
-      "value": ""
-    }, {
-      "id": "b0fa4cb0-dfd0-4057-a0f6-2c6e31972ab8",
-      "comment": "",
-      "command": "click",
-      "target": "//*[@name=\"username\"]",
-      "targets": [
-        ["id=:r0:", "id"],
-        ["name=username", "name"],
-        ["css=#\\3Ar0\\3A", "css:finder"],
-        ["xpath=//input[@id=':r0:']", "xpath:attributes"],
-        ["xpath=//form[@id='userLoginForm']/div/div/div/input", "xpath:idRelative"],
-        ["xpath=//input", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "b40ebdca-7b70-4051-8894-6040ffe17542",
-      "comment": "",
-      "command": "type",
-      "target": "//*[@name=\"username\"]",
-      "targets": [
-        ["id=:r0:", "id"],
-        ["name=username", "name"],
-        ["css=#\\3Ar0\\3A", "css:finder"],
-        ["xpath=//input[@id=':r0:']", "xpath:attributes"],
-        ["xpath=//form[@id='userLoginForm']/div/div/div/input", "xpath:idRelative"],
-        ["xpath=//input", "xpath:position"]
-      ],
-      "value": "admin"
-    }, {
-      "id": "017e2418-5aeb-4830-88fa-23ca64b02557",
-      "comment": "",
-      "command": "click",
-      "target": "//*[@name=\"password\"]",
-      "targets": [
-        ["id=:r1:", "id"],
-        ["name=password", "name"],
-        ["css=#\\3Ar1\\3A", "css:finder"],
-        ["xpath=//input[@id=':r1:']", "xpath:attributes"],
-        ["xpath=//form[@id='userLoginForm']/div/div[2]/div/input", "xpath:idRelative"],
-        ["xpath=//div[2]/div/input", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "391655b5-55c2-4e7f-b30a-a15fe723133e",
-      "comment": "",
-      "command": "type",
-      "target": "//*[@name=\"password\"]",
-      "targets": [
-        ["id=:r1:", "id"],
-        ["name=password", "name"],
-        ["css=#\\3Ar1\\3A", "css:finder"],
-        ["xpath=//input[@id=':r1:']", "xpath:attributes"],
-        ["xpath=//form[@id='userLoginForm']/div/div[2]/div/input", "xpath:idRelative"],
-        ["xpath=//div[2]/div/input", "xpath:position"]
-      ],
-      "value": "error"
-    }, {
-      "id": "40fd6661-2ee3-4505-9c7b-d3d2d465c810",
-      "comment": "",
-      "command": "click",
-      "target": "//*[@id=\"userLoginForm\"]/div/button",
-      "targets": [
-        ["css=.MuiButtonBase-root", "css:finder"],
-        ["xpath=//button[@type='submit']", "xpath:attributes"],
-        ["xpath=//form[@id='userLoginForm']/div/button", "xpath:idRelative"],
-        ["xpath=//button", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "ce70eda4-3786-42e3-85c2-2e4a222e88a1",
-      "comment": "",
-      "command": "click",
-      "target": "//*[contains(text(),'Manage orders')]",
-      "targets": [
-        ["css=.MuiListItem-root:nth-child(1) .MuiTypography-root", "css:finder"],
-        ["xpath=//div[@id='root']/div/div/div/ul/li/div/div[2]/span", "xpath:idRelative"],
-        ["xpath=//div[2]/span", "xpath:position"],
-        ["xpath=//span[contains(.,'Manage users')]", "xpath:innerText"]
-      ],
       "value": ""
     }]
   }, {

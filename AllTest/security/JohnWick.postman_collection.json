@@ -1845,7 +1845,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"type\": \"HEAD_HUNT\",\r\n    \"description\": \"213\",\r\n    \"targetName\": \"artem\",\r\n    \"price\": 231,\r\n    \"customerName\": \"test\"\r\n}",
+									"raw": "{\r\n    \"type\": \"HEAD_HUNT\",\r\n    \"description\": \"213\",\r\n    \"targetName\": \"artem\",\r\n    \"currentPrice\": 456,\r\n    \"customerName\": \"test\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -4568,7 +4568,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{ \"host\": {\r\n            \"id\": \"{{tailorId}}\",\r\n            \"username\": \"{{tailorName}}\",\r\n            \"displayName\": \"{{tailorDisplayName}}\",\r\n            \"role\": \"{{tailorRole}}\"\r\n        },\r\n        \"startTime\": \"2024-12-01T19:00:00Z\",\r\n        \"endTime\": \"2024-12-01T20:00:00Z\",\r\n        \"appointments\": []\r\n}",
+									"raw": "{ \"host\": {\r\n            \"id\": \"{{tailorId}}\",\r\n            \"username\": \"{{tailorName}}\",\r\n            \"displayName\": \"{{tailorDisplayName}}\",\r\n            \"role\": \"{{tailorRole}}\"\r\n        },\r\n        \"startTime\": \"2024-12-04T19:00:00Z\",\r\n        \"endTime\": \"2024-12-04T20:00:00Z\",\r\n        \"appointments\": []\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -4804,7 +4804,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{ \"host\": {\r\n            \"id\": \"{{sommelierId}}\",\r\n            \"username\": \"{{sommelierName}}\",\r\n            \"displayName\": \"{{sommelierDisplayName}}\",\r\n            \"role\": \"{{sommelierRole}}\"\r\n        },\r\n        \"startTime\": \"2024-12-01T19:00:00Z\",\r\n        \"endTime\": \"2024-12-01T20:00:00Z\",\r\n        \"appointments\": []\r\n}",
+									"raw": "{ \"host\": {\r\n            \"id\": \"{{sommelierId}}\",\r\n            \"username\": \"{{sommelierName}}\",\r\n            \"displayName\": \"{{sommelierDisplayName}}\",\r\n            \"role\": \"{{sommelierRole}}\"\r\n        },\r\n        \"startTime\": \"2024-12-04T19:00:00Z\",\r\n        \"endTime\": \"2024-12-04T20:00:00Z\",\r\n        \"appointments\": []\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -5058,7 +5058,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"bookedBy\":{\r\n        \"id\": \"{{beneficiaryId}}\",\r\n            \"username\": \"{{beneficiaryName}}\",\r\n            \"displayName\": \"{{beneficiaryDisplayName}}\",\r\n            \"role\": \"{{beneficiaryRole}}\"\r\n    },\r\n    \"startTime\": \"2024-12-01T19:00:00Z\",\r\n    \"endTime\": \"2024-12-01T20:00:00Z\",\r\n    \"message\":\"test\",\r\n    \"appointmentSchedule\": {\r\n        \"id\": \"{{appointmentScheduleId}}\",\r\n        \"host\": {\r\n            \"id\": \"{{tailorId}}\",\r\n            \"username\": \"{{tailorName}}\",\r\n            \"displayName\": \"{{tailorDisplayName}}\",\r\n            \"role\": \"{{tailorRole}}\"\r\n        },\r\n        \"startTime\": \"{{appointmentScheduleStartTime}}\",\r\n        \"endTime\": \"{{appointmentScheduleEndTime}}\",\r\n        \"appointments\": []\r\n    }\r\n}",
+									"raw": "{\r\n    \"bookedBy\":{\r\n        \"id\": \"{{beneficiaryId}}\",\r\n            \"username\": \"{{beneficiaryName}}\",\r\n            \"displayName\": \"{{beneficiaryDisplayName}}\",\r\n            \"role\": \"{{beneficiaryRole}}\"\r\n    },\r\n    \"startTime\": \"2024-12-04T19:00:00Z\",\r\n    \"endTime\": \"2024-12-04T20:00:00Z\",\r\n    \"message\":\"test\",\r\n    \"appointmentSchedule\": {\r\n        \"id\": \"{{appointmentScheduleId}}\",\r\n        \"host\": {\r\n            \"id\": \"{{tailorId}}\",\r\n            \"username\": \"{{tailorName}}\",\r\n            \"displayName\": \"{{tailorDisplayName}}\",\r\n            \"role\": \"{{tailorRole}}\"\r\n        },\r\n        \"startTime\": \"{{appointmentScheduleStartTime}}\",\r\n        \"endTime\": \"{{appointmentScheduleEndTime}}\",\r\n        \"appointments\": []\r\n    }\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -5432,7 +5432,7 @@
 			"name": "CleaningRequestService",
 			"item": [
 				{
-					"name": "get AppointmentSchedule Copy",
+					"name": "get CleaningRequest",
 					"item": [
 						{
 							"name": "get CleaningRequest by killer",
@@ -5679,6 +5679,311 @@
 										"api",
 										"v1",
 										"appointmentSchedule"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "update CleaningRequest",
+					"item": [
+						{
+							"name": "update CleaningRequest by killer",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "killer",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "killer",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "\"order\": {\r\n            \"id\": \"1c66ab33-e7c3-4ed4-8176-be8de921b08c\",\r\n            \"createdTimestamp\": \"2024-12-02T18:28:51.565263Z\",\r\n            \"type\": \"REGULAR\",\r\n            \"description\": \"213\",\r\n            \"status\": \"AWAITING_CLEANING\",\r\n            \"targetName\": \"artem\",\r\n            \"assignee\": {\r\n                \"id\": \"b6112e88-04f9-4c61-b5b5-bdd28a6d3157\",\r\n                \"username\": \"killer\",\r\n                \"displayName\": \"killer killerovich\",\r\n                \"password\": \"$2a$10$PuLEUApJSoMxQ4vLNDnMSePfhOCdCc83U9W9P77OOTW/GxoJ0wefW\",\r\n                \"role\": \"KILLER\",\r\n                \"roleString\": \"KILLER\"\r\n            },\r\n            \"price\": 231,\r\n            \"customerName\": \"test\",\r\n            \"applications\": []\r\n        },\r\n        \"requestedBy\": {\r\n            \"id\": \"b6112e88-04f9-4c61-b5b5-bdd28a6d3157\",\r\n            \"username\": \"killer\",\r\n            \"displayName\": \"killer killerovich\",\r\n            \"role\": \"KILLER\"\r\n        },\r\n        \"createdTimestamp\": \"2024-12-02T18:36:24.756062Z\",\r\n        \"status\": \"CREATED\"",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/cleaningRequest/74b6a08e-5f09-4ca5-99f5-5036520dc9a7",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"cleaningRequest",
+										"74b6a08e-5f09-4ca5-99f5-5036520dc9a7"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update CleaningRequest by admin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "admin",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "admin",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "\"order\": {\r\n            \"id\": \"1c66ab33-e7c3-4ed4-8176-be8de921b08c\",\r\n            \"createdTimestamp\": \"2024-12-02T18:28:51.565263Z\",\r\n            \"type\": \"REGULAR\",\r\n            \"description\": \"213\",\r\n            \"status\": \"AWAITING_CLEANING\",\r\n            \"targetName\": \"artem\",\r\n            \"assignee\": {\r\n                \"id\": \"b6112e88-04f9-4c61-b5b5-bdd28a6d3157\",\r\n                \"username\": \"killer\",\r\n                \"displayName\": \"killer killerovich\",\r\n                \"password\": \"$2a$10$PuLEUApJSoMxQ4vLNDnMSePfhOCdCc83U9W9P77OOTW/GxoJ0wefW\",\r\n                \"role\": \"KILLER\",\r\n                \"roleString\": \"KILLER\"\r\n            },\r\n            \"price\": 231,\r\n            \"customerName\": \"test\",\r\n            \"applications\": []\r\n        },\r\n        \"requestedBy\": {\r\n            \"id\": \"b6112e88-04f9-4c61-b5b5-bdd28a6d3157\",\r\n            \"username\": \"killer\",\r\n            \"displayName\": \"killer killerovich\",\r\n            \"role\": \"KILLER\"\r\n        },\r\n        \"createdTimestamp\": \"2024-12-02T18:36:24.756062Z\",\r\n        \"status\": \"CREATED\"",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/cleaningRequest/74b6a08e-5f09-4ca5-99f5-5036520dc9a7",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"cleaningRequest",
+										"74b6a08e-5f09-4ca5-99f5-5036520dc9a7"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update CleaningRequest by cleaner",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "cleaner",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "cleaner",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"74b6a08e-5f09-4ca5-99f5-5036520dc9a7\",\r\n    \"order\": {\r\n        \"id\": \"1c66ab33-e7c3-4ed4-8176-be8de921b08c\",\r\n        \"createdTimestamp\": \"2024-12-02T18:28:51.565263Z\",\r\n        \"type\": \"REGULAR\",\r\n        \"description\": \"213\",\r\n        \"status\": \"AWAITING_CLEANING\",\r\n        \"targetName\": \"artem\",\r\n        \"assignee\": {\r\n            \"id\": \"b6112e88-04f9-4c61-b5b5-bdd28a6d3157\",\r\n            \"username\": \"killer\",\r\n            \"displayName\": \"killer killerovich\",\r\n            \"password\": \"$2a$10$PuLEUApJSoMxQ4vLNDnMSePfhOCdCc83U9W9P77OOTW/GxoJ0wefW\",\r\n            \"role\": \"KILLER\",\r\n            \"roleString\": \"KILLER\"\r\n        },\r\n        \"price\": 231,\r\n        \"customerName\": \"test\",\r\n        \"applications\": []\r\n    },\r\n    \"requestedBy\": {\r\n        \"id\": \"b6112e88-04f9-4c61-b5b5-bdd28a6d3157\",\r\n        \"username\": \"killer\",\r\n        \"displayName\": \"killer killerovich\",\r\n        \"role\": \"KILLER\"\r\n    },\r\n    \"createdTimestamp\": \"2024-12-02T18:36:24.756062Z\",\r\n    \"status\": \"COMPLETED\",\r\n    \"appliedCleaner\": {\r\n        \"id\": \"9fc37498-fa88-466a-b102-2d7f2458061c\",\r\n        \"username\": \"cleaner\",\r\n        \"displayName\": \"cleaner cleanerovich\",\r\n        \"role\": \"CLEANER\"\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/cleaningRequest/74b6a08e-5f09-4ca5-99f5-5036520dc9a7",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"cleaningRequest",
+										"74b6a08e-5f09-4ca5-99f5-5036520dc9a7"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update CleaningRequest by tailor",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "tailor",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "tailor",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "\"order\": {\r\n            \"id\": \"1c66ab33-e7c3-4ed4-8176-be8de921b08c\",\r\n            \"createdTimestamp\": \"2024-12-02T18:28:51.565263Z\",\r\n            \"type\": \"REGULAR\",\r\n            \"description\": \"213\",\r\n            \"status\": \"AWAITING_CLEANING\",\r\n            \"targetName\": \"artem\",\r\n            \"assignee\": {\r\n                \"id\": \"b6112e88-04f9-4c61-b5b5-bdd28a6d3157\",\r\n                \"username\": \"killer\",\r\n                \"displayName\": \"killer killerovich\",\r\n                \"password\": \"$2a$10$PuLEUApJSoMxQ4vLNDnMSePfhOCdCc83U9W9P77OOTW/GxoJ0wefW\",\r\n                \"role\": \"KILLER\",\r\n                \"roleString\": \"KILLER\"\r\n            },\r\n            \"price\": 231,\r\n            \"customerName\": \"test\",\r\n            \"applications\": []\r\n        },\r\n        \"requestedBy\": {\r\n            \"id\": \"b6112e88-04f9-4c61-b5b5-bdd28a6d3157\",\r\n            \"username\": \"killer\",\r\n            \"displayName\": \"killer killerovich\",\r\n            \"role\": \"KILLER\"\r\n        },\r\n        \"createdTimestamp\": \"2024-12-02T18:36:24.756062Z\",\r\n        \"status\": \"CREATED\"",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/cleaningRequest/74b6a08e-5f09-4ca5-99f5-5036520dc9a7",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"cleaningRequest",
+										"74b6a08e-5f09-4ca5-99f5-5036520dc9a7"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update CleaningRequest by sommelier",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "sommelier",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "sommelier",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "\"order\": {\r\n            \"id\": \"1c66ab33-e7c3-4ed4-8176-be8de921b08c\",\r\n            \"createdTimestamp\": \"2024-12-02T18:28:51.565263Z\",\r\n            \"type\": \"REGULAR\",\r\n            \"description\": \"213\",\r\n            \"status\": \"AWAITING_CLEANING\",\r\n            \"targetName\": \"artem\",\r\n            \"assignee\": {\r\n                \"id\": \"b6112e88-04f9-4c61-b5b5-bdd28a6d3157\",\r\n                \"username\": \"killer\",\r\n                \"displayName\": \"killer killerovich\",\r\n                \"password\": \"$2a$10$PuLEUApJSoMxQ4vLNDnMSePfhOCdCc83U9W9P77OOTW/GxoJ0wefW\",\r\n                \"role\": \"KILLER\",\r\n                \"roleString\": \"KILLER\"\r\n            },\r\n            \"price\": 231,\r\n            \"customerName\": \"test\",\r\n            \"applications\": []\r\n        },\r\n        \"requestedBy\": {\r\n            \"id\": \"b6112e88-04f9-4c61-b5b5-bdd28a6d3157\",\r\n            \"username\": \"killer\",\r\n            \"displayName\": \"killer killerovich\",\r\n            \"role\": \"KILLER\"\r\n        },\r\n        \"createdTimestamp\": \"2024-12-02T18:36:24.756062Z\",\r\n        \"status\": \"CREATED\"",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/cleaningRequest/74b6a08e-5f09-4ca5-99f5-5036520dc9a7",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"cleaningRequest",
+										"74b6a08e-5f09-4ca5-99f5-5036520dc9a7"
 									]
 								}
 							},

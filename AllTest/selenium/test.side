@@ -1805,6 +1805,13 @@
       "target": "(//button)[1]",
       "targets": [],
       "value": ""
+    }, {
+      "id": "95f2a134-a07f-424b-bdd8-09bf51b61a18",
+      "comment": "",
+      "command": "click",
+      "target": "//span[contains(text(),'New regular order')]",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "d7b063d9-ca2a-401e-8375-a2989273c5fd",
@@ -2093,6 +2100,13 @@
       "target": "(//button)[1]",
       "targets": [],
       "value": ""
+    }, {
+      "id": "89350a7b-70fc-49ef-bca0-0fa9f0c8860e",
+      "comment": "",
+      "command": "click",
+      "target": "//span[contains(text(),'New head haunt order')]",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "4ff0cb6f-d93f-481a-8b81-3b37ddcba2f5",
@@ -2333,7 +2347,7 @@
         ["xpath=//form[@id='userLoginForm']/div/div/div/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
-      "value": "kek"
+      "value": "killer"
     }, {
       "id": "3ab19264-1510-49c8-b995-5f308e9d251c",
       "comment": "",
@@ -2361,7 +2375,7 @@
         ["xpath=//form[@id='userLoginForm']/div/div[2]/div/input", "xpath:idRelative"],
         ["xpath=//div[2]/div/input", "xpath:position"]
       ],
-      "value": "1234"
+      "value": "killer"
     }, {
       "id": "1ede4ad7-6eab-4a34-9764-557664b0c0f1",
       "comment": "",
@@ -2379,6 +2393,13 @@
       "comment": "",
       "command": "click",
       "target": "(//button)[1]",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "30140020-07a4-4ecc-ab6e-65d62c793aaf",
+      "comment": "",
+      "command": "click",
+      "target": "//span[contains(text(),'New promissory note order')]",
       "targets": [],
       "value": ""
     }]
@@ -2596,6 +2617,13 @@
       "target": "(//button)[1]",
       "targets": [],
       "value": ""
+    }, {
+      "id": "3611bffc-07de-4367-a088-52eebd546c40",
+      "comment": "",
+      "command": "click",
+      "target": "//span[contains(text(),'You are selected as assignee')]",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "e2c1ea9b-b15f-4218-8f08-e20aad3a8a2d",
@@ -2809,7 +2837,7 @@
       "command": "type",
       "target": "//*[@name=\"fromTime\"]",
       "targets": [],
-      "value": "27/11/2024 10:00"
+      "value": "27/12/2024 10:00"
     }, {
       "id": "122e8a6a-7d2d-44af-9c3e-b9a57d378756",
       "comment": "",
@@ -2823,7 +2851,7 @@
       "command": "type",
       "target": "//*[@name=\"toTime\"]",
       "targets": [],
-      "value": "27/11/2024 12:00"
+      "value": "27/12/2024 12:00"
     }, {
       "id": "503590cd-efea-44b6-880f-cef90fd6e5a5",
       "comment": "",
